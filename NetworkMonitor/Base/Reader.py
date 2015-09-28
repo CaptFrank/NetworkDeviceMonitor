@@ -44,7 +44,7 @@ class Reader(Singleton):
     _configs        = {}
 
     # Config extension
-    _ext            = ".wink"
+    _ext            = ".net"
 
     def __init__(self):
         """
