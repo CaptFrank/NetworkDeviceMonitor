@@ -19,6 +19,8 @@ Imports
 =============================================
 """
 
+import logging
+
 """
 =============================================
 Constants
@@ -41,3 +43,7 @@ Variables
 Source
 =============================================
 """
+
+LOGGER_LEVEL        = logging.INFO
+LOG_FILE_DIR        = '/var/log/NetworkMonitor/'
+LOG_FILE_NAME       = '/var/log/NetworkMonitor/mon-%s.log'
