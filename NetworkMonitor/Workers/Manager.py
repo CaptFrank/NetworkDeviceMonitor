@@ -24,6 +24,7 @@ Imports
 """
 
 import multiprocessing
+from multiprocessing.managers import SyncManager
 from ..Base.Resource import ManagedResource
 
 """
@@ -44,7 +45,7 @@ Source
 =============================================
 """
 
-class ResourceManager(object):
+class ResourceManager(SyncManager):
     """
     This is the resource manager that takes care of the management
     of each data queue and data repository. It also manages the caches
@@ -54,28 +55,29 @@ class ResourceManager(object):
     # The managers name
     __name          = None
 
-    # The manager handle
-    __handle        = None
-
     # The management structure
     # We index the dict by management type
     __management    = {}
 
 
-    def __int__(self, name):
+    def __int__(self, name, address, authkey):
         """
         This is the default constructor for the class.
 
         :param name:    The manager name
+        :param address: The address of the server
+        :param authkey: The auth key
         :return:
         """
 
         # Set internals
         self.__name     = name
-        self.__handle   = multiprocessing.Manager()
+
+        # Override the manager
+        SyncManager.__init__(address, authkey)
         return
 
-    def register(self, type, cls):
+    def register_resource(self, type, cls):
         """
         This is the main registering method for the class.
         It takes in a task type and a class object.
@@ -106,7 +108,7 @@ class ResourceManager(object):
             )
         return
 
-    def unregister(self, type, cls):
+    def unregister_resource(self, type, cls):
         """
         This is the main unregistering method for the class.
         It takes in a task type and a class object.
@@ -119,7 +121,7 @@ class ResourceManager(object):
         # Delete lock based on task type
         return
 
-    def activate(self, type):
+    def activate_resource(self, type):
         """
         This activates the management handles for a particular
         resource type.
@@ -131,7 +133,7 @@ class ResourceManager(object):
 
         return
 
-    def deactivate(self, type):
+    def deactivate_resource(self, type):
         """
         This deactivates the management handles for a particular
         resource type.
