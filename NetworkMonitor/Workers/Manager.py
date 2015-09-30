@@ -23,6 +23,9 @@ Imports
 =============================================
 """
 
+import multiprocessing
+from ..Base.Resource import ManagedResource
+
 """
 =============================================
 Constants
@@ -40,3 +43,101 @@ __date__    =   "9/28/2015"
 Source
 =============================================
 """
+
+class ResourceManager(object):
+    """
+    This is the resource manager that takes care of the management
+    of each data queue and data repository. It also manages the caches
+    between applications.
+    """
+
+    # The managers name
+    __name          = None
+
+    # The manager handle
+    __handle        = None
+
+    # The management structure
+    # We index the dict by management type
+    __management    = {}
+
+
+    def __int__(self, name):
+        """
+        This is the default constructor for the class.
+
+        :param name:    The manager name
+        :return:
+        """
+
+        # Set internals
+        self.__name     = name
+        self.__handle   = multiprocessing.Manager()
+        return
+
+    def register(self, type, cls):
+        """
+        This is the main registering method for the class.
+        It takes in a task type and a class object.
+
+        :param type:    The task type
+        :param cls:     The class object
+        :return:
+        """
+
+        # Make a new lock based on task type
+        if self.__management[type] is None:
+
+            # Create a resource entity to manage
+            self.__management[type] = []
+            self.__management[type].append(
+                ManagedResource(
+                    cls
+                )
+            )
+
+        else:
+
+            # Append the class object to the managed resource
+            self.__management[type].append(
+                ManagedResource(
+                    cls
+                )
+            )
+        return
+
+    def unregister(self, type, cls):
+        """
+        This is the main unregistering method for the class.
+        It takes in a task type and a class object.
+
+        :param type:    The task type
+        :param cls:     The class object
+        :return:
+        """
+
+        # Delete lock based on task type
+        return
+
+    def activate(self, type):
+        """
+        This activates the management handles for a particular
+        resource type.
+
+        :param type:
+        :return:
+        """
+
+
+        return
+
+    def deactivate(self, type):
+        """
+        This deactivates the management handles for a particular
+        resource type.
+
+        :param type:
+        :return:
+        """
+
+        return
