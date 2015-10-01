@@ -54,13 +54,16 @@ class ManagedResource(object):
     """
 
     # Name of the resource
-    __name  = None
+    __name          = None
 
     # Tag for the resource
-    __tag   = None
+    __tag           = None
 
-    # Is it synched?
-    __sync  = None
+    # Is it synched ?
+    __sync          = None
+
+    # Active flag
+    __active        = False
 
     def __init__(self, name=None, tag=None, sync=False):
         """
@@ -72,5 +75,8 @@ class ManagedResource(object):
         :return:
         """
 
-
+        # Set the internals of the class
+        self.__name = name
+        self.__sync = sync
+        self.__tag  = tag
         return

@@ -60,7 +60,7 @@ class ResourceManager(SyncManager):
     __management    = {}
 
 
-    def __int__(self, name, address, authkey):
+    def __int__(self, name='default', address=None, authkey=None):
         """
         This is the default constructor for the class.
 
