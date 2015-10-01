@@ -70,7 +70,10 @@ class Access(Document):
     meta        = {
         'allow_inheritance'     : True,
         'collection'            : 'access',
-
+        'ordering'              : [
+            '-uuid',
+            '-name'
+        ],
         'indexes'               : [
             '#name',
             '#uuid',
