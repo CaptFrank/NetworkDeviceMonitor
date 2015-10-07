@@ -5,12 +5,12 @@
 
     :description:
 
-    :copyright: (c) 9/28/2015 by fpapinea.
+    :copyright: (c) 10/7/2015 by fpapinea.
     :license: BSD, see LICENSE for more details.
 
     Author:         fpapinea
     Version:        :version: #TODO
-    Date:           9/28/2015
+    Date:           10/7/2015
 """
 
 """
@@ -28,7 +28,7 @@ Constants
 # Program Attributes
 __author__ = 'fpapinea'
 __version__ = ""  #TODO
-__date__ = "9/28/2015"
+__date__ = "10/7/2015"
 
 """
 =============================================
