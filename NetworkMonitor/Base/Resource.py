@@ -23,7 +23,11 @@ Imports
 =============================================
 """
 
+from ..config import *
+
 import multiprocessing
+from multiprocessing import Lock
+from multiprocessing import JoinableQueue
 
 """
 =============================================
@@ -32,16 +36,35 @@ Constants
 """
 
 # Program Attributes
-__author__  =   "gammaRay"
-__version__ =   "1.0"
-__date__    =   "9/28/2015"
+__author__          =   "gammaRay"
+__version__         =   "1.0"
+__date__            =   "9/28/2015"
 
+# ===========================================
+# Types
+RESOURCE_DEFAULT    = 0
 
 """
 =============================================
 Source
 =============================================
 """
+
+
+RESOURCE_TYPES      = [
+    "DEFAULT"
+]
+
+
+def add_type(type):
+    """
+    Adds a type to monitor.
+    """
+    RESOURCE_TYPES.append(type)
+    return
+
+# ===========================================
+# Managed Resource
 
 class ManagedResource(object):
     """
@@ -65,6 +88,12 @@ class ManagedResource(object):
     # Active flag
     __active        = False
 
+    # The resource lock needed
+    __lock          = None
+
+    # The resource to manage
+    __resource      = None
+
     def __init__(self, name=None, tag=None, sync=False):
         """
         This is the default constructor for the class object.
@@ -79,4 +108,45 @@ class ManagedResource(object):
         self.__name = name
         self.__sync = sync
         self.__tag  = tag
+        self.__lock = Lock()
         return
+
+    def lock(self):
+        """
+        Locks the resource to gain access to the data and objects within
+        the resource.
+
+        :return:
+        """
+        return self.__lock.acquire()
+
+    def unlock(self):
+        """
+        Unlocks the resource to leave it behind for other processes to use.
+
+        :return:
+        """
+        return self.__lock.release()
+
+    def setObj(self, obj):
+        """
+        Sets the object in the resource.
+
+        :param obj:         The object to manage.
+        :return:
+        """
+
+        self.__resource = obj
+        return
+
+    def getObj(self):
+        """
+        Gets the object within the resource.
+
+        :return:
+        """
+        return self.__resource
+
+    __obj = property(getObj, setObj)
+
+
