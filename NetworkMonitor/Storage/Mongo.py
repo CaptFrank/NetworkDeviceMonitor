@@ -5,7 +5,9 @@
 
     :
     This is the mongo database interface for the stats that
-    are acquired in the applications.
+    are acquired in the applications. Inherently this database
+    is not a persistent database. We use this as a caching
+    mechanism.
     :
 
     :copyright: (c) 9/28/2015 by gammaRay.

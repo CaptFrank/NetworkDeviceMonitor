@@ -7,7 +7,8 @@ a scalable architecture that can be distributed within a network
 infrastructure. 
 
 Some of the features that are included include:
-    - Real time device monitoring
-    - Real time device control
-    - Real time device analyses
+
+- Real time device monitoring
+- Real time device control
+- Real time device analysis
 
