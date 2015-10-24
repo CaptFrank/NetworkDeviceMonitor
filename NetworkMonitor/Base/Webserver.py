@@ -1,17 +1,24 @@
 """
 
-    :History:
+    :Webserver:
     ==========
 
-    :description:
+    :
+    This is the lightweight interface to the web, that
+    will dictate the status of the engine.
+    :
 
-    :copyright: (c) 15-09-30 by francispapineau.
+    :copyright: (c) 2015-10-23 by francispapineau.
     :license: BSD, see LICENSE for more details.
 
-    Author:         francispapineau
-    Version:        :version: #TODO
-    Date:           15-09-30
-    
+
+    :copyright: (c) 2015-10-23 by gammaRay.
+    :license: BSD, see LICENSE for more details.
+
+    Author:         gammaRay
+    Version:        :1.0:
+    Date:           2015-10-23
+
 """
 
 """
@@ -27,9 +34,9 @@ Constants
 """
 
 # Program Attributes
-__author__ = "francispapineau"
-__version__ = ""  # TODO
-__date__ = "15-09-30"
+__author__      =   "gammaRay"
+__version__     =   "1.0"
+__date__        =   "9/28/2015"
 
 """
 =============================================

@@ -23,11 +23,7 @@ Imports
 =============================================
 """
 
-from ..config import *
-
-import multiprocessing
-from multiprocessing import Lock
-from multiprocessing import JoinableQueue
+from NetworkMonitor.config import *
 
 """
 =============================================
@@ -82,19 +78,10 @@ class ManagedResource(object):
     # Tag for the resource
     __tag           = None
 
-    # Is it synched ?
-    __sync          = None
-
-    # Active flag
-    __active        = False
-
-    # The resource lock needed
-    __lock          = None
-
     # The resource to manage
     __resource      = None
 
-    def __init__(self, name=None, tag=None, sync=False):
+    def __init__(self, name=None, tag=None):
         """
         This is the default constructor for the class object.
 
@@ -106,27 +93,8 @@ class ManagedResource(object):
 
         # Set the internals of the class
         self.__name = name
-        self.__sync = sync
         self.__tag  = tag
-        self.__lock = Lock()
         return
-
-    def lock(self):
-        """
-        Locks the resource to gain access to the data and objects within
-        the resource.
-
-        :return:
-        """
-        return self.__lock.acquire()
-
-    def unlock(self):
-        """
-        Unlocks the resource to leave it behind for other processes to use.
-
-        :return:
-        """
-        return self.__lock.release()
 
     def setObj(self, obj):
         """

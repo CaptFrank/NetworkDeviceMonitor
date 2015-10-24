@@ -23,9 +23,10 @@ Imports
 """
 
 import os
+import logging
 
 from configobj import ConfigObj
-from .Singleton import Singleton
+from Singleton import Singleton
 
 """
 =============================================
@@ -46,6 +47,9 @@ class Reader(Singleton):
     # Config extension
     _ext            = ".net"
 
+    # The logger object
+    _logger         = None
+
     def __init__(self):
         """
          This is the default constructor for the class. We do not pass
@@ -53,6 +57,9 @@ class Reader(Singleton):
          within the entire context of the application.
         :return:
         """
+
+        # Create a logger
+        self._logger = logging.getLogger("Reader")
 
         # Make the class now a singleton class
         Singleton.__init__(self)
@@ -72,7 +79,7 @@ class Reader(Singleton):
 
         # Go through the folders and look for the configs
         for dir, subdirs, files in os.walk(root):
-            print("[+] Reading configs in: %s" %dir)
+            self._logger.info("Reading configs in: %s" %dir)
 
             # Get the directory name
             dirname = (dir.split("/")[-1]).lower()
@@ -80,7 +87,7 @@ class Reader(Singleton):
 
             # Go through the file one after another
             for file in files:
-                print("\t [+] Config: %s" %file)
+                self._logger.info("\t Config: %s" %file)
 
                 # Read the args
                 args = self.read(dir + "/" + file)
@@ -90,7 +97,7 @@ class Reader(Singleton):
 
                     # Add the config to the internals
                     self._configs[dirname].append(args)
-                    print("\t\t[+] Added Config: %s" %file)
+                    self._logger.info("\t\t Added Config: %s" %file)
         return
 
     def read(self, file):

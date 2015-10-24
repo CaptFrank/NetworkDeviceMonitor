@@ -23,11 +23,17 @@ Imports
 """
 
 import os
-import time
-import logging.handlers
-from splunk_logger import SplunkLogger
+import logging
+import tempfile
 
-from ..config import *
+try:
+    # Python 2.6
+    from logutils.dictconfig import dictConfig
+
+except ImportError:
+
+    # Python >= 2.7
+    from logging.config import dictConfig
 
 """
 =============================================
@@ -46,103 +52,78 @@ Source
 =============================================
 """
 
-def set_logger(syslog=None, splunk=None):
+# Define the logging configuration
+LOGGING_CFG = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'root': {
+        'level': 'INFO',
+        'handlers': ['file', 'console']
+    },
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s -- %(levelname)s -- %(message)s'
+        },
+        'short': {
+            'format': '%(levelname)s: %(message)s'
+        },
+        'free': {
+            'format': '%(message)s'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            # http://stackoverflow.com/questions/847850/cross-platform-way-of-getting-temp-directory-in-python
+            'filename': os.path.join(tempfile.gettempdir(), 'netmonitor.log')
+        },
+        'console': {
+            'level': 'CRITICAL',
+            'class': 'logging.StreamHandler',
+            'formatter': 'free'
+        }
+    },
+    'loggers': {
+        'debug': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+        },
+        'verbose': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO'
+        },
+        'standard': {
+            'handlers': ['file'],
+            'level': 'INFO'
+        }
+    }
+}
+
+
+def tempfile_name():
     """
-    This method sets the LOGGER for the context of the
-    program.
-
-    The splunk api logging struct is as followed:
-
-        syslog = (
-
-            'address',
-            'port'
-
-        )
-
-        splunk = {
-
-            'token' : < access token >,
-            'project' : < project id >,
-            'api' : < api domain >
-            }
-
-    :param syslog:                the syslog server address
-    :param splunk:                the configs for the splunk logging engine
-    """
-
-    # Check to see if the dir is existent
-    if not os.path.isdir(LOG_FILE_DIR):
-        print('[-] Logging directory does not exist, creating.')
-
-        # We create a dir
-        os.makedirs(LOG_FILE_DIR)
-        print('[+] Logging directory created: %s.' % LOG_FILE_DIR)
-
-    # We set the file name
-    filename = LOG_FILE_NAME % time.strftime('%d-%m-%y')
-
-    # set up logging to file - see previous section for more details
-    logging.basicConfig(
-        level       =   logging.DEBUG,
-        format      =   '[%(asctime)s]: %(name)-20s %(levelname)-20s %(message)s',
-        datefmt     =   '%y-%m-%d %H:%M:%S',
-        filename    =   filename,
-        filemode    =   'a'
-    )
-
-    # We create the root LOGGER for console
-    logger_console = logging.StreamHandler()
-    logger_console.setLevel(LOGGER_LEVEL)
-
-    # Create a formatter
-    logger_formatter = logging.Formatter('[%(asctime)s]: %(name)-50s: %(levelname)-20s %(message)s')
-
-    # We set the formatters
-    logger_console.setFormatter(logger_formatter)
-
-    # We set the root handlers
-    logging.getLogger('').addHandler(logger_console)
-    print('[+] Added a console logging engine...')
-
-    if syslog:
-        add_syslogger(syslog)
-
-    if splunk:
-        add_splunklogger(splunk)
-    return
-
-def add_syslogger(address):
-    """
-    This adds a syslogger instance to the root logger
-    instance.
-
-    :param address:             the address of the syslog server
-    :return:
+    Return the tempfile name (full path).
     """
 
-    # Add the syslogger
-    syslogger = logging.handlers.SysLogHandler(
-        address=address
-    )  #('syslog.haligonia.home.com',514))
+    ret = os.path.join(tempfile.gettempdir(), 'netmonitor.log')
+    if os.access(ret, os.F_OK) and not os.access(ret, os.W_OK):
+        print("WARNING: Couldn't write to log file {0}: (Permission denied)".format(ret))
+        ret = tempfile.mkstemp(prefix='glances', suffix='.tmp', text=True)
+        print("Create a new log file: {0}".format(ret[1]))
+        return ret[1]
+    return ret
 
-    logging.getLogger('').addHandler(syslogger)
-    print('[+] Added a syslog logging engine...')
-    return
 
-def add_splunklogger(configs):
+def logger():
     """
-    This adds a splunk logger instance to the root logger
-    instance.
-
-    :param configs:             the dict containing the configs
-    :return:
+    Build and return the logger.
     """
 
-    # Add the splunk logger
-    splunk = SplunkLogger(
-        **configs
-    )
-    logging.getLogger('').addHandler(splunk)
-    print('[+] Added a splunk logging engine...')
-    return
+    # Create the logger
+    temp_path = tempfile_name()
+    _logger = logging.getLogger()
+    LOGGING_CFG['handlers']['file']['filename'] = temp_path
+    dictConfig(LOGGING_CFG)
+    return _logger
