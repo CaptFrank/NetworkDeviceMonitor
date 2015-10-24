@@ -1,0 +1,9 @@
+[Core]
+Name        = Test Plugin
+Module      = test
+
+[Documentation]
+Author      = gammaRay
+Version     = 1.0
+Website     = github.com
+Description = Testing the yapsy plugin framework
