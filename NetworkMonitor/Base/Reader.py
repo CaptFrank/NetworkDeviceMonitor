@@ -30,9 +30,34 @@ from Singleton import Singleton
 
 """
 =============================================
+Constants
+=============================================
+"""
+
+""" The supported configs extensions """
+SUPPORTED_EXT   = [
+    '.ext',
+    '.net'
+]
+
+"""
+=============================================
 Source
 =============================================
 """
+
+def add_extension(ext):
+    """
+    This is the public access method to add
+    a supported configs extension to the config reader
+    framework.
+
+    :param ext:                 The extension string to add
+    :return:
+    """
+
+    SUPPORTED_EXT.append(ext)
+    return
 
 class Reader(Singleton):
     """
@@ -45,7 +70,7 @@ class Reader(Singleton):
     _configs        = {}
 
     # Config extension
-    _ext            = ".net"
+    _ext            = SUPPORTED_EXT
 
     # The logger object
     _logger         = None
@@ -87,17 +112,21 @@ class Reader(Singleton):
 
             # Go through the file one after another
             for file in files:
-                self._logger.info("\t Config: %s" %file)
 
-                # Read the args
-                args = self.read(dir + "/" + file)
 
-                # Check if none
-                if args is not None:
+                # Check the extension
+                if self.__check_extension(file):
+                    self._logger.info("\t Found config: %s" %file)
 
-                    # Add the config to the internals
-                    self._configs[dirname].append(args)
-                    self._logger.info("\t\t Added Config: %s" %file)
+                    # Read the args
+                    args = self.read(dir + "/" + file)
+
+                    # Check if none
+                    if args is not None:
+
+                        # Add the config to the internals
+                        self._configs[dirname].append(args)
+                        self._logger.info("\t\t Added config: %s" %file)
         return
 
     def read(self, file):
@@ -111,6 +140,28 @@ class Reader(Singleton):
         """
 
         # Check the extension
-        filename, ext = os.path.splitext(file)
-        if ext == self._ext:
+        if self.__check_extension(file):
             return ConfigObj(os.path.abspath(file))
+
+    def get_configs(self):
+        """
+        This is the getter method for the read configurations
+        internally stored.
+        :return:
+        """
+        return self._configs
+
+    def __check_extension(self, file):
+        """
+        This method returns true is the extension is a supported configs
+        extension.
+
+        :param file:                The file to read
+        :return:                    True is supported
+        """
+
+        filename, ext = os.path.splitext(file)
+        if ext in self._ext:
+            return True
+        else:
+            return False

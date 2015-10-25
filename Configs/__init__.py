@@ -1,20 +1,17 @@
 """
 
-    :Plugin:
+    :__init__.py:
     ==========
 
-    :
-    This is the plugin manager for the probes needed to
-    monitor divers attributes. We use a plugin architecture
-    to allow for scalability and modularity within the system.
-    :
+    :description:
 
-    :copyright: (c) 9/28/2015 by gammaRay.
+    :copyright: (c) 2015-10-24 by francispapineau.
     :license: BSD, see LICENSE for more details.
 
-    Author:         gammaRay
-    Version:        :1.0:
-    Date:           9/28/2015
+    Author:         francispapineau
+    Version:        :version: #TODO
+    Date:           2015-10-24
+    
 """
 
 """
@@ -23,7 +20,6 @@ Imports
 =============================================
 """
 
-
 """
 =============================================
 Constants
@@ -31,9 +27,15 @@ Constants
 """
 
 # Program Attributes
-__author__  =   "gammaRay"
-__version__ =   "1.0"
-__date__    =   "9/28/2015"
+__author__ = "francispapineau"
+__version__ = ""  # TODO
+__date__ = "2015-10-24"
+
+"""
+=============================================
+Variables
+=============================================
+"""
 
 """
 =============================================

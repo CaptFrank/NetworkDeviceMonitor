@@ -74,3 +74,10 @@ class Node(object):
 
 
         return
+
+    def generate_password(self):
+
+        import getpass
+        getpass.AskPassword()
+
+        #encode 64

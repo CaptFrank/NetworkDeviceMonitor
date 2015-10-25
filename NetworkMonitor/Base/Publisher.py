@@ -25,6 +25,7 @@ Imports
 
 import pika
 import json
+import Queue
 import multiprocessing
 
 from NetworkMonitor.config import *
@@ -44,11 +45,9 @@ __author__          =   "gammaRay"
 __version__         =   "1.0"
 __date__            =   "9/28/2015"
 
-"""
-=============================================
-Variables
-=============================================
-"""
+AMQP_URL            = 'amqp://{user}:{password}' \
+                      '@{server}:{port}/%2F?connection_attempts={attempts}' \
+                      '&heartbeat_interval={heartbeat}'
 
 """
 =============================================
@@ -96,11 +95,11 @@ class NodePublisher(multiprocessing.Process):
     # The channel object to issue messages
     _channel            = None
 
-    # The application queue
-    _application_queue  = None
-
     # The logging engine
     _logger             = None
+
+    # The application queue
+    _queue              = None
 
 
     # =============================
@@ -131,7 +130,7 @@ class NodePublisher(multiprocessing.Process):
     _queue_type         = None
 
 
-    def __init__(self, amqp_url, app_queue, queue_type=RESOURCE_TYPES[RESOURCE_DEFAULT],):
+    def __init__(self, amqp_url, queue, queue_type=RESOURCE_TYPES[RESOURCE_DEFAULT]):
         """
         Setup the example publisher object, passing in the URL we will use
         to connect to RabbitMQ.
@@ -151,8 +150,8 @@ class NodePublisher(multiprocessing.Process):
         self._stopping          = False
         self._url               = amqp_url
         self._closing           = False
+        self._queue             = queue
         self._queue_type        = queue_type
-        self._application_queue = app_queue
         self._logger            = logging.getLogger('NodePublisher - ' + queue_type)
 
         # Super the class
@@ -502,9 +501,12 @@ class NodePublisher(multiprocessing.Process):
         if self._stopping:
             return
 
-        # Get a message to publish
-        message = self._application_queue.get()
-        if message:
+
+        if not self._queue.empty():
+
+            message = self._queue.get()
+
+            # Get a message to publish
             properties = pika.BasicProperties(
                 app_id=self._queue_type + '-publisher',
                 content_type='application/json',
@@ -575,3 +577,28 @@ class NodePublisher(multiprocessing.Process):
         self._closing = True
         self._connection.close()
         return
+
+    @staticmethod
+    def format_url(kwargs):
+        """
+        Formats the amqp url to the server.
+
+        :param kwargs:          The dict with the params to format.
+        :return:
+        """
+        import base64
+
+        password = kwargs['password']
+        kwargs['password'] = base64.b64decode(password)
+        return AMQP_URL.format(**kwargs)
+
+    def publish(self, message):
+        """
+        Add a message to send
+
+        :param message:         The message to send
+        :return:
+        """
+        self._queue.put(message)
+        return
+

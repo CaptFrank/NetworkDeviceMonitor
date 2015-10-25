@@ -80,7 +80,7 @@ LOGGING_CFG = {
             'filename': os.path.join(tempfile.gettempdir(), 'netmonitor.log')
         },
         'console': {
-            'level': 'CRITICAL',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'free'
         }

@@ -49,3 +49,9 @@ LOG_FILE_DIR        = '/var/log/NetworkMonitor/'
 LOG_FILE_NAME       = '/var/log/NetworkMonitor/mon-%s.log'
 
 DEFAULT_SIZE        = 1024
+
+
+# Default location for plugins. This can be changed to suit the
+# users preferred plugins directory
+PLUGIN_WORKSPACE    = './Configs/Plugins/'
+CONFIG_WORKSPACE    = './Configs/'

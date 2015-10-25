@@ -1,0 +1,60 @@
+# This is a default test file that tests teh configuration reader.
+# We use this to read out the configurations for each applications
+# and sub applications.
+
+[APP_NAME]
+
+    # This tag tells the configs engine that this config section
+    # is a designated applications configuration section.
+    type            = APP_CONFIG
+
+    [[CONFIGS]]
+
+[PLUGIN_NAME_1]
+
+    # This tag tells the configs engine that this config section
+    # is a designated plugin configuration section.
+    type            = PLUGIN_CONFIG
+
+    # This is the plugin name that correlates to the yapsy plugin
+    # name in the Plugins folder.
+    name            = TEST
+
+    # This is the location of the plugin.
+    location        = DEFAULT
+
+    # This is the mandatory section of the plugin that defines the
+    # communication interface with to the results broker (i.e. Rabbitmq)
+    # broker. We can leave this as the default of edit them to fit
+    # our needs and network architecture.
+    [[RESULT_COMS]]
+
+        # The server address, in this case the application is localized
+        # within only one node. We could extend the functionality to
+        # support remote messaging. [Default = localhost]
+        server      = localhost
+
+        # This is the server Rabbitmq application port definition. In this
+        # case we use the default port number, although this can be changed
+        # if the server port is changed within Rabbitmq. [Default = 5672]
+        port        = 5672
+
+        # This is the number of tries the client plublisher will attempt
+        # at connecting to the server before quitting. This value can be
+        # changed to address different situations. [Default = 3]
+        attempts    = 3
+
+        # This is the heartbeat interval configuration. It dictates to the
+        # server that we only want a heartbeat every x seconds. We can change
+        # this value as needed. [Default = 3600]
+        heartbeat   = 3600
+
+        # This is the username that is going to access the server. We can change this
+        # as needed. In fact it is highly encouraged to change the username.
+        # [Default = test]
+        user        = test
+
+        # This is the password associated to the username defined above.
+        # In order to make these configuration files safer, we encode the password
+        # with a base64 encoder. [Default = unencoded password 'test']
+        password    = 'dGVzdA==' # test

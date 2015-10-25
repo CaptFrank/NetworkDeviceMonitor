@@ -1,9 +1,0 @@
-# This is a default test file that tests teh configuration reader.
-# We use this to read out the configurations for each applications
-# and sub applications.
-
-[TEST]
-
-    [[TEST1]]
-
-        test = True

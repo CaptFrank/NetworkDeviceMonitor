@@ -1,16 +1,16 @@
 """
 
-    :test:
+    :__init__.py:
     ==========
 
     :description:
 
-    :copyright: (c) 2015-10-23 by francispapineau.
+    :copyright: (c) 2015-10-24 by francispapineau.
     :license: BSD, see LICENSE for more details.
 
     Author:         francispapineau
     Version:        :version: #TODO
-    Date:           2015-10-23
+    Date:           2015-10-24
     
 """
 
@@ -29,7 +29,7 @@ Constants
 # Program Attributes
 __author__ = "francispapineau"
 __version__ = ""  # TODO
-__date__ = "2015-10-23"
+__date__ = "2015-10-24"
 
 """
 =============================================
@@ -42,6 +42,3 @@ Variables
 Source
 =============================================
 """
-
-def test():
-    print("Testing~!!!")
