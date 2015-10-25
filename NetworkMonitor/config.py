@@ -5,12 +5,12 @@
 
     :description:
 
-    :copyright: (c) 9/28/2015 by fpapinea.
+    :copyright: (c) 2015-10-23 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
-    Author:         fpapinea
-    Version:        :version: #TODO
-    Date:           9/28/2015
+    Author:         gammaRay
+    Version:        :1.0:
+    Date:           9/30/2015
 """
 
 """
@@ -27,10 +27,12 @@ Constants
 =============================================
 """
 
+
 # Program Attributes
-__author__ = 'fpapinea'
-__version__ = ""  #TODO
-__date__ = "9/28/2015"
+__author__          =   "gammaRay"
+__version__         =   "1.0"
+__date__            =   "9/28/2015"
+
 
 """
 =============================================
@@ -55,3 +57,5 @@ DEFAULT_SIZE        = 1024
 # users preferred plugins directory
 PLUGIN_WORKSPACE    = './Configs/Plugins/'
 CONFIG_WORKSPACE    = './Configs/'
+
+CONNECTION_TIMEOUT  = 5

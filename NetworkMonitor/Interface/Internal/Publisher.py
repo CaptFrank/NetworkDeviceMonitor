@@ -25,11 +25,12 @@ Imports
 
 import pika
 import json
-import Queue
 import multiprocessing
 
+from multiprocessing \
+    import Process
 from NetworkMonitor.config import *
-from Resource import (
+from NetworkMonitor.Base.Resource import (
     RESOURCE_TYPES,
     RESOURCE_DEFAULT
 )
@@ -45,7 +46,7 @@ __author__          =   "gammaRay"
 __version__         =   "1.0"
 __date__            =   "9/28/2015"
 
-AMQP_URL            = 'amqp://{user}:{password}' \
+PUB_AMQP_URL        = 'amqp://{user}:{password}' \
                       '@{server}:{port}/%2F?connection_attempts={attempts}' \
                       '&heartbeat_interval={heartbeat}'
 
@@ -55,7 +56,7 @@ Source
 =============================================
 """
 
-class NodePublisher(multiprocessing.Process):
+class NodePublisher(Process):
     """
     This is an example publisher that will handle unexpected interactions
     with RabbitMQ such as channel and connection closures.
@@ -85,7 +86,6 @@ class NodePublisher(multiprocessing.Process):
     Attributes
     """
 
-
     # =============================
     # Objects
 
@@ -103,7 +103,7 @@ class NodePublisher(multiprocessing.Process):
 
 
     # =============================
-    # Attrbiutes
+    # Attributes
 
     # The number of issues
     _deliveries         = None
@@ -130,14 +130,14 @@ class NodePublisher(multiprocessing.Process):
     _queue_type         = None
 
 
-    def __init__(self, amqp_url, queue, queue_type=RESOURCE_TYPES[RESOURCE_DEFAULT]):
+    def __init__(self, amqp_url, queue, queue_type):
         """
         Setup the example publisher object, passing in the URL we will use
         to connect to RabbitMQ.
 
         :param amqp_url:        The URL for connecting to RabbitMQ
         :param queue_type:      The queue_type to bind to
-        :param app_queue:       The application queue
+        :param queue:           The application queue
         """
 
         # Set internals
@@ -151,8 +151,8 @@ class NodePublisher(multiprocessing.Process):
         self._url               = amqp_url
         self._closing           = False
         self._queue             = queue
-        self._queue_type        = queue_type
-        self._logger            = logging.getLogger('NodePublisher - ' + queue_type)
+        self._queue_type        =
+        self._logger            = logging.getLogger('NodePublisher - ' + self._queue_type)
 
         # Super the class
         multiprocessing.Process.__init__(self)
@@ -184,7 +184,7 @@ class NodePublisher(multiprocessing.Process):
         been established. It passes the handle to the connection object in
         case we need it, but in this case, we'll just mark it unused.
 
-        :type unused_connection: pika.SelectConnection
+        :type unused_connection:        pika.SelectConnection
         """
         self._logger.info('Connection opened')
         self.add_on_connection_close_callback()
@@ -210,8 +210,8 @@ class NodePublisher(multiprocessing.Process):
         RabbitMQ if it disconnects.
 
         :param pika.connection.Connection connection: The closed connection obj
-        :param int reply_code: The server provided reply_code if given
-        :param str reply_text: The server provided reply_text if given
+        :param int reply_code:      The server provided reply_code if given
+        :param str reply_text:      The server provided reply_text if given
         """
         self._channel = None
 
@@ -590,7 +590,7 @@ class NodePublisher(multiprocessing.Process):
 
         password = kwargs['password']
         kwargs['password'] = base64.b64decode(password)
-        return AMQP_URL.format(**kwargs)
+        return PUB_AMQP_URL.format(**kwargs)
 
     def publish(self, message):
         """

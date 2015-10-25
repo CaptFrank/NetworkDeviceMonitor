@@ -23,9 +23,11 @@ Imports
 =============================================
 """
 
-import Queue
+import uuid
 import logging
 
+from NetworkMonitor.Base.Resource \
+    import ManagedResource
 from abc import ABCMeta, abstractmethod
 from multiprocessing import Process, Queue
 
@@ -69,6 +71,9 @@ class Plugin(Process):
     # This is the name of the process
     _name               = None
 
+    # The plugin id to route on
+    _id                 = None
+
     # This is the logger object for the class
     _logger             = None
 
@@ -78,11 +83,18 @@ class Plugin(Process):
     # The application queue
     _queue              = None
 
-    def __init__(self, name):
+    # The managed resource that will be published
+    _resource           = None
+
+    # App names
+    _apps               = {}
+
+    def __init__(self, name, tag):
         """
         This is the base constructor method that receives
-        :param name:
-        :param info:
+
+        :param name:            The plugin name
+        :param tag:             The plugin category
         :return:
         """
 
@@ -94,8 +106,17 @@ class Plugin(Process):
         # Setup the queue
         self._queue = Queue()
 
+        # Setup the resource needed to publish the data
+        self._resource = ManagedResource(
+            name = name,
+            tag = tag
+        )
+
         # Override the super class
-        Process.__init__(self, name=name)
+        Process.__init__(
+            self,
+            name=name
+        )
         return
 
     @abstractmethod
@@ -164,3 +185,26 @@ class Plugin(Process):
         :return:
         """
         raise NotImplemented
+
+    @staticmethod
+    def _format(name, app):
+        """
+        Formats the queue name based on the plugin name and the app
+
+        :param name:                The plugin name
+        :param app:                 The sub app to use th queue
+        :return:
+        """
+        return "{name}.{app}".format(name=name, app=app)
+
+    def _register_app(self, app, queue):
+        """
+        Registers a new app in the plugin.
+
+        :param app:                 The app name
+        :param queue:               The queue name
+        :return:
+        """
+
+        self._apps['app'] = queue
+        return

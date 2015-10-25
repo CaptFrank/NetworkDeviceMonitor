@@ -25,11 +25,12 @@ Imports
 """
 
 from yapsy.IPlugin import IPlugin
+
 from NetworkMonitor.Base.Plugin \
     import Plugin
-
-from NetworkMonitor.Base.Publisher \
+from NetworkMonitor.Interface.Internal.Publisher \
     import NodePublisher
+
 
 """
 =============================================
@@ -59,6 +60,9 @@ class TestPlugin(Plugin, IPlugin):
     # The plugin name
     __name          = 'TEST'
 
+    # The plugin category
+    __tag           = 'TEST'
+
     def __init__(self):
         """
         This is the constructor for the class.
@@ -67,7 +71,7 @@ class TestPlugin(Plugin, IPlugin):
         :return:
         """
 
-        Plugin.__init__(self, self.__name)
+        Plugin.__init__(self, self.__name, self.__tag)
         return
 
     def setup(self, info):
@@ -78,15 +82,23 @@ class TestPlugin(Plugin, IPlugin):
         :param info:            The configs
         :return:
         """
+
         self._configs = info
 
         # Setup the publisher for the task
         # Setup the amqp url
         self._publisher = NodePublisher(
+
+            # Get the URL
             NodePublisher.format_url(
                 info['RESULT_COMS']
             ),
-            self._queue
+
+            # Pass the application queue to receive data
+            self._queue,
+
+            # Pass the Queue type
+            self.__name
         )
 
         # Start the publisher
@@ -130,9 +142,13 @@ class TestPlugin(Plugin, IPlugin):
         message = {
                 'info' : "Testing !!!"
             }
+
+        self._resource.setObj(message)
         self._logger.info(
-            str(message)
+            self._resource.getObj()
         )
-        self._queue.put(message)
+
+        # Publish the entire resource to track...
+        self._queue.put(self._resource.__dict__)
         time.sleep(2)
         return

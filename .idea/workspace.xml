@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40305192-6c91-4cc8-9f68-6ee740308138" name="Default" comment="Started looking at the structure of the entities">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Configs/App/Test.net" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Configs/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Configs/Plugins/__init__.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Configs/Test.net" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugins/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/NetworkMonitor/Plugin/__init__.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugin.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugins/test.py" afterPath="$PROJECT_DIR$/Configs/Plugins/test.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugins/test.yapsy-plugin" afterPath="$PROJECT_DIR$/Configs/Plugins/test.plugin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Logger.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Logger.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Manager.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Manager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Node.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Node.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Reader.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Reader.py" />
+    <list default="true" id="40305192-6c91-4cc8-9f68-6ee740308138" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Subscriber.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Publisher.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/Resource.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/Resource.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/config.py" afterPath="$PROJECT_DIR$/NetworkMonitor/config.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configs/Plugins/test.py" afterPath="$PROJECT_DIR$/Configs/Plugins/test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NetworkDeviceMonitor.iws" />
@@ -44,101 +36,40 @@
     <favorites_list name="NetworkDeviceMonitor" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="Webserver.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Webserver.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-                  <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="test.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/Configs/Plugins/test.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.7627965" vertical-offset="829" max-vertical-offset="2145">
-                  <caret line="96" column="19" selection-start-line="96" selection-start-column="19" selection-end-line="96" selection-end-column="19" />
-                  <folding>
-                    <element signature="e#478#511#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="Test.net" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
-                  <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Node.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Node.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="433" max-vertical-offset="1320">
-                  <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Plugin.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="857" max-vertical-offset="2565">
-                  <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
-                  <folding>
-                    <element signature="e#505#517#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Manager.py" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Manager.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.8189763" vertical-offset="3394" max-vertical-offset="4710">
-                  <caret line="403" column="30" selection-start-line="403" selection-start-column="30" selection-end-line="403" selection-end-column="30" />
-                  <folding>
-                    <element signature="e#507#521#0" expanded="true" />
-                    <element signature="e#1996#2494#0" expanded="false" />
-                    <element signature="e#2525#2801#0" expanded="false" />
-                    <element signature="e#3422#3636#0" expanded="false" />
-                    <element signature="e#3679#4227#0" expanded="false" />
-                    <element signature="e#4261#4477#0" expanded="false" />
-                    <element signature="e#6170#7029#0" expanded="false" />
-                    <element signature="e#8773#9752#0" expanded="false" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Publisher.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0" vertical-offset="7817" max-vertical-offset="9150">
-                  <caret line="602" column="14" selection-start-line="602" selection-start-column="14" selection-end-line="602" selection-end-column="14" />
-                  <folding>
-                    <element signature="e#424#435#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="Test.net" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="990">
+              <caret line="26" column="72" selection-start-line="26" selection-start-column="72" selection-end-line="26" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="255" max-vertical-offset="990">
+              <caret line="17" column="7" selection-start-line="17" selection-start-column="7" selection-end-line="18" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Subscriber.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Subscriber.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5597015" vertical-offset="1440" max-vertical-offset="9210">
+              <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
+              <folding>
+                <element signature="e#735#746#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -153,9 +84,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/NetworkMonitor/Base/Singleton.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/.Config/Test.net" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/Base/ManagedResource.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Workers/Manager.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Storage/Tables/Device.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Storage/Tables/Stats.py" />
@@ -189,21 +117,24 @@
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Cache.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Channel.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Queue.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/Base/Resource.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugins/test.yapsy-plugin" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Plugin/Plugins/test.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Logger.py" />
         <option value="$PROJECT_DIR$/Configs/Test.net" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Reader.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/config.py" />
         <option value="$PROJECT_DIR$/Configs/Plugins/test.yapsy-plugin" />
         <option value="$PROJECT_DIR$/Configs/App/Test.net" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Node.py" />
         <option value="$PROJECT_DIR$/Configs/Plugins/test.plugin" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Manager.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Base/Subscriber.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/config.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Base/Resource.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Publisher.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" />
         <option value="$PROJECT_DIR$/Configs/Plugins/test.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Subscriber.py" />
       </list>
     </option>
   </component>
@@ -257,6 +188,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -286,6 +218,68 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkDeviceMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkDeviceMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Internal" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkDeviceMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Distributed" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -339,27 +333,8 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NetworkMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NetworkDeviceMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Configs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="App" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -384,11 +359,11 @@
       <recent name="C:\Users\fpapinea\Documents\Coding\NetworkDeviceMonitor\NetworkMonitor\Base" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/NetworkMonitor/Interface/Internal" />
       <recent name="$PROJECT_DIR$/Configs/Configs" />
       <recent name="$PROJECT_DIR$/Configs/Plugins" />
       <recent name="$PROJECT_DIR$/NetworkMonitor/Base" />
       <recent name="C:\Users\fpapinea\Documents\Coding\NetworkDeviceMonitor\NetworkMonitor\Probe\Probes\Host" />
-      <recent name="C:\Users\fpapinea\Documents\Coding\NetworkDeviceMonitor\NetworkMonitor\Probe\Probes\Network" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Publisher">
@@ -405,7 +380,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="NetworkMonitor" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Publisher.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <RunnerSettings RunnerId="PyDebugRunner" />
@@ -510,9 +485,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -534,6 +506,9 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
     <configuration default="true" type="PyBehaveRunConfigurationType" factoryName="Behave">
@@ -579,20 +554,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="NetworkMonitor" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="ADDITIONAL_ARGS" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Attests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -611,6 +572,20 @@
       <option name="TEST_TYPE" value="TEST_SCRIPT" />
       <option name="PATTERN" value="" />
       <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PyLettuceRunConfigurationType" factoryName="Lettuce">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="NetworkMonitor" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="ADDITIONAL_ARGS" value="" />
       <method />
     </configuration>
     <list size="1">
@@ -675,7 +650,13 @@
       <option name="project" value="LOCAL" />
       <updated>1445646728298</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Started looking at the structure of the entities">
+      <created>1445735210754</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1445735210754</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -683,26 +664,26 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296131" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32711038" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296131" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31919643" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32711038" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24900715" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2573471" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3221726" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25892857" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2593328" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32142857" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32886904" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31919643" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25892857" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -733,11 +714,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/NetworkMonitor/Base/Manager.py</url>
-          <line>399</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/NetworkMonitor/Base/Manager.py</url>
           <line>135</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
@@ -746,41 +722,12 @@
           <line>203</line>
           <option name="timeStamp" value="27" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/NetworkMonitor/Base/Manager.py</url>
-          <line>414</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/Configs/Plugins/test.py</url>
-          <line>92</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/Configs/Plugins/test.py</url>
-          <line>132</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="32" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydev_import_hook.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43589744" vertical-offset="0" max-vertical-offset="0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Probe/Probes/Network/IpProbe.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Workers/Server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.685633" vertical-offset="0" max-vertical-offset="0">
@@ -949,13 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda/lib/python2.7/site-packages/pika/channel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33247754" vertical-offset="4661" max-vertical-offset="18765">
-          <caret line="337" column="0" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda/lib/python2.7/site-packages/pika/connection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33247754" vertical-offset="23171" max-vertical-offset="24480">
@@ -991,19 +931,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Resource.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="1890">
-          <caret line="95" column="25" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Logger.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.6887417" vertical-offset="0" max-vertical-offset="1980">
           <caret line="121" column="7" selection-start-line="121" selection-start-column="7" selection-end-line="121" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1011,7 +942,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7615894" vertical-offset="2555" max-vertical-offset="7755">
           <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1019,7 +949,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3614002" vertical-offset="188" max-vertical-offset="1245">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1027,23 +956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27909178" vertical-offset="6020" max-vertical-offset="7200">
           <caret line="431" column="0" selection-start-line="431" selection-start-column="0" selection-end-line="431" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.89807475" vertical-offset="47" max-vertical-offset="930">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Reader.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38618347" vertical-offset="1384" max-vertical-offset="2520">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1051,7 +963,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.15288788" vertical-offset="0" max-vertical-offset="883">
           <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1067,7 +978,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.592299" vertical-offset="2342" max-vertical-offset="3225">
           <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1075,31 +985,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65388954" vertical-offset="44210" max-vertical-offset="49950">
           <caret line="3050" column="23" selection-start-line="3050" selection-start-column="23" selection-end-line="3050" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
-          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="433" max-vertical-offset="1320">
-          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Webserver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="840">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1111,30 +996,101 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py">
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="857" max-vertical-offset="2565">
-          <caret line="94" column="26" selection-start-line="94" selection-start-column="26" selection-end-line="94" selection-end-column="26" />
+        <state vertical-scroll-proportion="1.2734083" vertical-offset="0" max-vertical-offset="1320">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Reader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.153558" vertical-offset="0" max-vertical-offset="2520">
+          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="801">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Webserver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17602997" vertical-offset="39" max-vertical-offset="840">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="26" column="72" selection-start-line="26" selection-start-column="72" selection-end-line="26" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="17" column="7" selection-start-line="17" selection-start-column="7" selection-end-line="18" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Resource.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6441948" vertical-offset="1134" max-vertical-offset="2100">
+          <caret line="110" column="40" selection-start-line="110" selection-start-column="40" selection-end-line="110" selection-end-column="40" />
           <folding>
-            <element signature="e#505#517#0" expanded="true" />
+            <element signature="e#497#512#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Publisher.py">
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Publisher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7817" max-vertical-offset="9150">
-          <caret line="602" column="14" selection-start-line="602" selection-start-column="14" selection-end-line="602" selection-end-column="14" />
+        <state vertical-scroll-proportion="1.9061462" vertical-offset="0" max-vertical-offset="9150">
+          <caret line="153" column="24" selection-start-line="153" selection-start-column="13" selection-end-line="153" selection-end-column="24" />
           <folding>
             <element signature="e#424#435#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Configs/Plugins/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6196013" vertical-offset="1181" max-vertical-offset="2385">
+          <caret line="29" column="17" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.63538206" vertical-offset="1110" max-vertical-offset="3225">
+          <caret line="23" column="3" selection-start-line="23" selection-start-column="3" selection-end-line="23" selection-end-column="3" />
+          <folding>
+            <element signature="e#505#516#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda/lib/python2.7/site-packages/pika/channel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36981758" vertical-offset="9004" max-vertical-offset="18765">
+          <caret line="639" column="35" selection-start-line="639" selection-start-column="35" selection-end-line="639" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8189763" vertical-offset="3394" max-vertical-offset="4710">
-          <caret line="403" column="30" selection-start-line="403" selection-start-column="30" selection-end-line="403" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.4154229" vertical-offset="984" max-vertical-offset="2655">
+          <caret line="131" column="16" selection-start-line="131" selection-start-column="16" selection-end-line="131" selection-end-column="16" />
           <folding>
             <element signature="e#507#521#0" expanded="true" />
             <element signature="e#1996#2494#0" expanded="false" />
@@ -1142,18 +1098,23 @@
             <element signature="e#3422#3636#0" expanded="false" />
             <element signature="e#3679#4227#0" expanded="false" />
             <element signature="e#4261#4477#0" expanded="false" />
+            <element signature="e#5437#6107#0" expanded="false" />
             <element signature="e#6170#7029#0" expanded="false" />
+            <element signature="e#7068#8725#0" expanded="false" />
             <element signature="e#8773#9752#0" expanded="false" />
+            <element signature="e#9793#10392#0" expanded="false" />
+            <element signature="e#10437#10808#0" expanded="false" />
+            <element signature="e#10848#11283#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Configs/Plugins/test.py">
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Subscriber.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7627965" vertical-offset="829" max-vertical-offset="2145">
-          <caret line="96" column="19" selection-start-line="96" selection-start-column="19" selection-end-line="96" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.5597015" vertical-offset="1440" max-vertical-offset="9210">
+          <caret line="141" column="0" selection-start-line="141" selection-start-column="0" selection-end-line="141" selection-end-column="0" />
           <folding>
-            <element signature="e#478#511#0" expanded="true" />
+            <element signature="e#735#746#0" expanded="true" />
           </folding>
         </state>
       </provider>

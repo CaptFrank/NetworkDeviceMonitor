@@ -23,7 +23,8 @@ Imports
 =============================================
 """
 
-from NetworkMonitor.config import *
+import datetime
+from uuid import uuid4
 
 """
 =============================================
@@ -38,7 +39,9 @@ __date__            =   "9/28/2015"
 
 # ===========================================
 # Types
+
 RESOURCE_DEFAULT    = 0
+RESOURCE_TEST       = 1
 
 """
 =============================================
@@ -48,9 +51,9 @@ Source
 
 
 RESOURCE_TYPES      = [
-    "DEFAULT"
+    "DEFAULT",
+    "TEST"
 ]
-
 
 def add_type(type):
     """
@@ -73,13 +76,19 @@ class ManagedResource(object):
     """
 
     # Name of the resource
-    __name          = None
+    name          = None
 
     # Tag for the resource
-    __tag           = None
+    tag           = None
+
+    # Tracking
+    uuid          = None
 
     # The resource to manage
-    __resource      = None
+    resource      = None
+
+    # Time at which the resource is set
+    time          = None
 
     def __init__(self, name=None, tag=None):
         """
@@ -92,8 +101,9 @@ class ManagedResource(object):
         """
 
         # Set the internals of the class
-        self.__name = name
-        self.__tag  = tag
+        self.name = name
+        self.tag  = tag
+        self.uuid = str(uuid4())
         return
 
     def setObj(self, obj):
@@ -104,7 +114,11 @@ class ManagedResource(object):
         :return:
         """
 
-        self.__resource = obj
+        # Set the object
+        self.resource = obj
+
+        # Set the time at which the object is set
+        self.time     = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         return
 
     def getObj(self):
@@ -113,7 +127,7 @@ class ManagedResource(object):
 
         :return:
         """
-        return self.__resource
+        return self.resource
 
     __obj = property(getObj, setObj)
 
