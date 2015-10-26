@@ -90,11 +90,14 @@ class ManagedResource(object):
     # Time at which the resource is set
     time          = None
 
+    # The queue name where the resource will be published to.
+    __queue       = None
+
     def __init__(self, name=None, tag=None):
         """
         This is the default constructor for the class object.
 
-        :param name:        Name of the resource
+        :param name:        Name of the plugin
         :param tag:         Tag for the resource
         :param sync:        Synchronization enabled
         :return:
@@ -104,6 +107,10 @@ class ManagedResource(object):
         self.name = name
         self.tag  = tag
         self.uuid = str(uuid4())
+        self.__queue = "{plugin}.{app}".format(
+            plugin = name,
+            app = tag
+        )
         return
 
     def setObj(self, obj):

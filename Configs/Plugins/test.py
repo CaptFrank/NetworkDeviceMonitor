@@ -28,8 +28,8 @@ from yapsy.IPlugin import IPlugin
 
 from NetworkMonitor.Base.Plugin \
     import Plugin
-from NetworkMonitor.Interface.Internal.Publisher \
-    import NodePublisher
+from NetworkMonitor.Interface.Internal.RabbitPublisher \
+    import RabbitmqPublisher
 
 
 """
@@ -49,7 +49,7 @@ Source
 =============================================
 """
 
-class TestPlugin(Plugin, IPlugin):
+class RabbitTestPlugin(Plugin, IPlugin):
     """
     This class is an example of plugin object, that
     can be implemented for each type of Probe task.
@@ -87,19 +87,7 @@ class TestPlugin(Plugin, IPlugin):
 
         # Setup the publisher for the task
         # Setup the amqp url
-        self._publisher = NodePublisher(
-
-            # Get the URL
-            NodePublisher.format_url(
-                info['RESULT_COMS']
-            ),
-
-            # Pass the application queue to receive data
-            self._queue,
-
-            # Pass the Queue type
-            self.__name
-        )
+        #TODO self._publisher =
 
         # Start the publisher
         self._publisher.start()
@@ -152,3 +140,4 @@ class TestPlugin(Plugin, IPlugin):
         self._queue.put(self._resource.__dict__)
         time.sleep(2)
         return
+

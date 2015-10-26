@@ -23,38 +23,46 @@
     # This is the location of the plugin.
     location        = DEFAULT
 
-    # This is the mandatory section of the plugin that defines the
-    # communication interface with to the results broker (i.e. Rabbitmq)
-    # broker. We can leave this as the default of edit them to fit
-    # our needs and network architecture.
-    [[RESULT_COMS]]
+    # This is the number of apps in the plugin.
+    apps            = 3
 
-        # The server address, in this case the application is localized
-        # within only one node. We could extend the functionality to
-        # support remote messaging. [Default = localhost]
-        server      = localhost
+    # This section represents the applications within a plugin.
+    # We can define each application with one of these sections.
+    [[APP_1]]
 
-        # This is the server Rabbitmq application port definition. In this
-        # case we use the default port number, although this can be changed
-        # if the server port is changed within Rabbitmq. [Default = 5672]
-        port        = 5672
+        # This is the application name
+        name        = DEFAULT
 
-        # This is the number of tries the client plublisher will attempt
-        # at connecting to the server before quitting. This value can be
-        # changed to address different situations. [Default = 3]
-        attempts    = 3
+        # This is the application type
+        type        = MONITOR
 
-        # This is the heartbeat interval configuration. It dictates to the
-        # server that we only want a heartbeat every x seconds. We can change
-        # this value as needed. [Default = 3600]
-        heartbeat   = 3600
+        # This is the mandatory section of the plugin that defines the
+        # communication interface with to the resutls queues
+        # We can leave this as the default of edit them to fit
+        # our needs and network architecture.
+        [[[ZERO_COMS]]]
 
-        # This is the username that is going to access the server. We can change this
-        # as needed. In fact it is highly encouraged to change the username.
-        # [Default = test]
-        user        = test
+            # This is the flag that represents if the queue is monitored
+            # or not. If the channel is monitored, the port number will be offset
+            # by 3. (i.e. in = 1, mon = 2, out = 3)
+            monitored   = True
 
-        # This is the password associated to the username defined above.
-        # In order to make these configuration files safer, we encode the password
-        # with a base64 encoder. [Default = unencoded password 'test']
-        password    = 'dGVzdA==' # test
+            # The server address, in this case the application is localized
+            # within only one node. We could extend the functionality to
+            # support remote messaging. [Default = localhost]
+            server      = localhost
+
+            # This is the server application port definition. In this
+            # case we use the default port number, although this can be changed
+            # if the server port is changed. [Default = 5672]
+            port        = 5672
+
+            # This is the username that is going to access the server. We can change this
+            # as needed. In fact it is highly encouraged to change the username.
+            # [Default = test]
+            user        = test
+
+            # This is the password associated to the username defined above.
+            # In order to make these configuration files safer, we encode the password
+            # with a base64 encoder. [Default = unencoded password 'test']
+            password    = 'dGVzdA==' # test
