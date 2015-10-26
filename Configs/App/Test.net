@@ -26,6 +26,9 @@
     # This is the number of apps in the plugin.
     apps            = 3
 
+    # This is the app domains (i.e. ips to allow)
+    domains         = ['localhost']
+
     # This section represents the applications within a plugin.
     # We can define each application with one of these sections.
     [[APP_1]]

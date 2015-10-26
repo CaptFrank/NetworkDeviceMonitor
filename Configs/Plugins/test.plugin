@@ -7,5 +7,5 @@ Author      = gammaRay
 Version     = 1.0
 Website     = github.com
 Copyright   = None
-Category    = Default
+Category    = MONITOR
 Description = Testing the yapsy plugin framework
