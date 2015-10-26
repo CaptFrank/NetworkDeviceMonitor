@@ -25,6 +25,7 @@ Imports
 
 import zmq
 import time
+import logging
 
 from zmq.devices.basedevice \
     import ProcessDevice
@@ -49,6 +50,9 @@ __author__          =   "gammaRay"
 __version__         =   "1.0"
 __date__            =   "9/28/2015"
 
+# Zeromq Transport mechanism
+__TRANSPORT__       = "tcp://{server}:{port}"
+
 """
 =============================================
 Source
@@ -71,6 +75,12 @@ class ZeroMonitor(Process):
     # The configs
     __configs           = None
 
+    # The application name
+    __name              = None
+
+    # The logger
+    __logger            = None
+
     # Prefixes
     __prefixes          = {
 
@@ -78,17 +88,20 @@ class ZeroMonitor(Process):
         "OUT"   : asbytes("OUT")
     }
 
-    def __init__(self, configs):
+    def __init__(self, name, configs):
         """
         This is the main constructor for the class.
         We pass it the configurations as a dict.
 
+        :param name:                The app name
         :param configs:             The configurations dict
         :return:
         """
 
         # Set internal configs
         self.__configs = configs
+        self.__name = name
+        self.__logger = logging.getLogger('ZeroMonitor - ' + name)
         Process.__init__(self)
         return
 
@@ -100,7 +113,7 @@ class ZeroMonitor(Process):
         :return:
         """
 
-        # Create a montoring devie
+        # Create a monitoring devie
         self.__monitor = MonitoredQueue(
             zmq.XREP,
             zmq.PUB,
@@ -109,9 +122,43 @@ class ZeroMonitor(Process):
         )
 
         # Bind to the sockets.
+        # - In
+        # - Out
+        # - Mon
         self.__monitor.bind_in(
-            "tcp://{server}:{port}".format(
+            __TRANSPORT__.format(
                 server = self.__configs['server'],
-                port = self.__configs['port']
+                port = self.__configs['rx_port']
             )
         )
+        self.__monitor.bind_out(
+            __TRANSPORT__.format(
+                server = self.__configs['server'],
+                port = self.__configs['tx_port']
+            )
+        )
+        self.__monitor.bind_mon(
+            __TRANSPORT__.format(
+                server = self.__configs['server'],
+                port = self.__configs['mon_port']
+            )
+        )
+
+        # Set the socket options
+        # Make the sockets monitored
+        self.__monitor.setsockopt_in(zmq.HWM, 1)
+        self.__monitor.setsockopt_out(zmq.HWM, 1)
+        return
+
+    def start(self):
+        """
+        Starts the monitoring thread.
+
+        :return:
+        """
+
+        # Start the monitor
+        self.__monitor.start()
+
+        # TODO
+        return

@@ -58,7 +58,9 @@
             # This is the server application port definition. In this
             # case we use the default port number, although this can be changed
             # if the server port is changed. [Default = 5672]
-            port        = 5672
+            rx_port        = 5672
+            tx_port        = 5673
+            mon_port       = 5674
 
             # This is the username that is going to access the server. We can change this
             # as needed. In fact it is highly encouraged to change the username.
