@@ -168,12 +168,12 @@ class ZeroMonitor(Process):
         # Start the monitor
         self.__monitor.start()
 
-        # We store the data to a REDIS database.
-        # TODO
-
         # From the registered monitoring applications,
         # we execute each one in a round robin fashion.
         while self.__alive:
+
+
+            # For each app we run it.
             for app in self.__apps:
                 app(self)
         return
@@ -193,14 +193,6 @@ class ZeroMonitor(Process):
         self.__alive = False
         return
 
-    def __register_storage(self, storage):
-        """
-        Registers the storage handle to the object.
-
-        :param storage:         The storage handle
-        :return:
-        """
-
 """
 =============================================
 Monitoring applications
@@ -208,13 +200,34 @@ Monitoring applications
 """
 
 def __monitor_size(obj):
+    """
+    This is the monitoring of the size of the packet.
+    Here we output to the terminal, (i.e. curses window)
+    how big the packets are coming in are.
 
+    :param obj:             The monitor device
+    :return:
+    """
     return
 
 def __monitor_ids(obj):
+    """
+    This is the monitoring of the id of the packet.
+    Here we output to the terminal, (i.e. curses window)
+    what ids of the packets are coming in are.
 
+    :param obj:             The monitor device
+    :return:
+    """
     return
 
 def __monitor_timestamps(obj):
+    """
+    This is the monitoring of the timestamps of the packet.
+    Here we output to the terminal, (i.e. curses window)
+    when the packets were sent.
 
+    :param obj:             The monitor device
+    :return:
+    """
     return
