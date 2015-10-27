@@ -50,6 +50,13 @@
             # by 3. (i.e. in = 1, mon = 2, out = 3)
             monitored   = True
 
+            # This is the list of monitoring applications that are needed.
+            # In this list, we can add and remove applications to allow for
+            # dynamic functionality to be triggered.
+            # Defaults include typical messaging metrics,
+            # Size, Ids, timestamps
+            monitoring  = ['SIZE', 'IDS', 'TIMESTAMP']
+
             # The server address, in this case the application is localized
             # within only one node. We could extend the functionality to
             # support remote messaging. [Default = localhost]

@@ -28,13 +28,14 @@ Imports
 """
 
 import zmq
+from multiprocessing \
+    import Process
 
 """
 =============================================
 Constants
 =============================================
 """
-
 
 # Program Attributes
 __author__          =   "gammaRay"
@@ -46,3 +47,21 @@ __date__            =   "9/28/2015"
 Source
 =============================================
 """
+
+class ZeroSubscriber(Process):
+    """
+    This is the object definition that defines the subscribing
+    agent. The purpose of this class is to subscribe to topics
+    of interest and to read the messages send.
+
+    The top level object will read from this interface as it is
+    the link point to all other tasks ran via plugins.
+    """
+
+    def __int__(self):
+
+        return
+
+    def run(self):
+
+        return

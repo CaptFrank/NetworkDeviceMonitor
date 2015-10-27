@@ -22,12 +22,18 @@ Imports
 =============================================
 """
 
+import sys
+import zmq
+import time
+
+from multiprocessing \
+    import Process
+
 """
 =============================================
 Constants
 =============================================
 """
-
 
 # Program Attributes
 __author__          =   "gammaRay"
@@ -39,3 +45,20 @@ __date__            =   "9/28/2015"
 Source
 =============================================
 """
+
+class ZeroPublisher(object):
+    """
+    This is the class object that represents the publisher
+    object that will take the message and send it to the
+    publish queue.
+    """
+
+    # This is the name of the publisher
+    __name          = None
+
+    # This is the configs for the publisher
+    __configs       = None
+
+    def __init__(self, name, configs):
+
+        return

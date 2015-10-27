@@ -88,6 +88,14 @@ class ZeroMonitor(Process):
         "OUT"   : asbytes("OUT")
     }
 
+    # Applications that monitor
+    __apps              = []
+
+    # Alive?
+    __alive             = True
+
+    # Temporary storage for metrics
+
     def __init__(self, name, configs):
         """
         This is the main constructor for the class.
@@ -99,8 +107,8 @@ class ZeroMonitor(Process):
         """
 
         # Set internal configs
-        self.__configs = configs
         self.__name = name
+        self.__configs = configs
         self.__logger = logging.getLogger('ZeroMonitor - ' + name)
         Process.__init__(self)
         return
@@ -150,7 +158,7 @@ class ZeroMonitor(Process):
         self.__monitor.setsockopt_out(zmq.HWM, 1)
         return
 
-    def start(self):
+    def run(self):
         """
         Starts the monitoring thread.
 
@@ -160,5 +168,53 @@ class ZeroMonitor(Process):
         # Start the monitor
         self.__monitor.start()
 
+        # We store the data to a REDIS database.
         # TODO
+
+        # From the registered monitoring applications,
+        # we execute each one in a round robin fashion.
+        while self.__alive:
+            for app in self.__apps:
+                app(self)
         return
+
+    def stop(self):
+        """
+        Stops the monitoring device
+
+        :return:
+        """
+
+        # Stops the threads
+        # Kill the device monitor thread
+        self.__monitor.join()
+
+        # Kill the monitor threads
+        self.__alive = False
+        return
+
+    def __register_storage(self, storage):
+        """
+        Registers the storage handle to the object.
+
+        :param storage:         The storage handle
+        :return:
+        """
+
+"""
+=============================================
+Monitoring applications
+=============================================
+"""
+
+def __monitor_size(obj):
+
+    return
+
+def __monitor_ids(obj):
+
+    return
+
+def __monitor_timestamps(obj):
+
+    return

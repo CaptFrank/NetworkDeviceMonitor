@@ -4,6 +4,8 @@
     <list default="true" id="40305192-6c91-4cc8-9f68-6ee740308138" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Configs/App/Test.net" afterPath="$PROJECT_DIR$/Configs/App/Test.net" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroMonitor.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroMonitor.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NetworkDeviceMonitor.iws" />
@@ -47,8 +49,10 @@
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="28" column="3" selection-start-line="28" selection-start-column="3" selection-end-line="28" selection-end-column="3" />
-                  <folding />
+                  <caret line="51" column="44" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
+                  <folding>
+                    <element signature="e#427#437#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -57,8 +61,10 @@
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
-                  <folding />
+                  <caret line="66" column="14" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+                  <folding>
+                    <element signature="e#738#748#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -66,8 +72,8 @@
           <file leaf-file-name="ZeroMonitor.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroMonitor.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5641026">
-                  <caret line="143" column="13" selection-start-line="143" selection-start-column="13" selection-end-line="143" selection-end-column="13" />
+                <state vertical-scroll-proportion="-0.28815368">
+                  <caret line="154" column="32" selection-start-line="154" selection-start-column="32" selection-end-line="154" selection-end-column="32" />
                   <folding>
                     <element signature="e#521#531#0" expanded="true" />
                   </folding>
@@ -82,8 +88,8 @@
           <file leaf-file-name="Test.net" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.43143812">
-                  <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.32870865">
+                  <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
                   <folding />
                 </state>
               </provider>
@@ -148,14 +154,14 @@
         <option value="$PROJECT_DIR$/NetworkMonitor/config.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Resource.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Publisher.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Subscriber.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/RabbitPublisher.py" />
         <option value="$PROJECT_DIR$/Configs/Plugins/test.py" />
         <option value="$PROJECT_DIR$/Configs/Plugins/test.plugin" />
         <option value="$PROJECT_DIR$/Configs/App/Test.net" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroMonitor.py" />
       </list>
     </option>
@@ -167,10 +173,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -261,6 +267,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Probe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="NetworkMonitor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Interface" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -284,24 +308,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Internal" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NetworkMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NetworkMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="NetworkMonitor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -607,14 +613,20 @@
       <option name="project" value="LOCAL" />
       <updated>1445892059848</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Started looking at the structure of the entities">
+      <created>1445892845421</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1445892845421</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25922024" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25922024" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -671,7 +683,7 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="33" />
+      <option name="time" value="34" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -698,7 +710,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="3" selection-start-line="0" selection-start-column="3" selection-end-line="0" selection-end-column="3" />
-          <folding />
+          <folding>
+            <element signature="e#427#437#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -706,7 +720,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
-          <folding />
+          <folding>
+            <element signature="e#738#748#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1018,22 +1034,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="62" selection-end-line="6" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="3" selection-start-line="28" selection-start-column="3" selection-end-line="28" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Anaconda3/Lib/site-packages/zmq/devices/monitoredqueuedevice.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -1044,16 +1044,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Configs/App/Test.net">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43143812">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.32870865">
+          <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroPublisher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="51" column="44" selection-start-line="51" selection-start-column="44" selection-end-line="51" selection-end-column="44" />
+          <folding>
+            <element signature="e#427#437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroSubscriber.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="14" selection-start-line="66" selection-start-column="14" selection-end-line="66" selection-end-column="14" />
+          <folding>
+            <element signature="e#738#748#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/ZeroMonitor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5641026">
-          <caret line="143" column="13" selection-start-line="143" selection-start-column="13" selection-end-line="143" selection-end-column="13" />
+        <state vertical-scroll-proportion="-0.28815368">
+          <caret line="154" column="32" selection-start-line="154" selection-start-column="32" selection-end-line="154" selection-end-column="32" />
           <folding>
             <element signature="e#521#531#0" expanded="true" />
           </folding>
