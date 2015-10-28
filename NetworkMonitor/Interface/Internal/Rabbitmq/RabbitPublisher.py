@@ -22,7 +22,6 @@ Imports
 =============================================
 """
 
-
 import pika
 import json
 import multiprocessing
@@ -66,6 +65,9 @@ class NodePublisher(Process):
     It uses delivery confirmations and illustrates one way to keep track of
     messages that have been sent and if they've been confirmed by RabbitMQ.
 
+    - Exchange is the plugin name
+    - Routing key is the application
+
     http://pika.readthedocs.org/en/latest/examples/asynchronous_publisher_example.html
     """
 
@@ -74,7 +76,8 @@ class NodePublisher(Process):
     Constants
     """
 
-    EXCHANGE_TYPE       = 'data'
+    # Exchange engine type.
+    EXCHANGE_TYPE       = 'topic'
 
     """
     ===============================
@@ -150,10 +153,18 @@ class NodePublisher(Process):
 
         self.__name             = plugin
         self.__app              = app
-        self._logger            = logging.getLogger('NodePublisher - ' + self._queue_type)
+        self._logger            = logging.getLogger(
+            'NodePublisher - %s.%s'
+            %(
+                self.__name,
+                self.__app
+            )
+        )
 
         # Super the class
-        multiprocessing.Process.__init__(self)
+        multiprocessing.Process.__init__(
+            self
+        )
         return
 
     def connect(self):
@@ -350,9 +361,7 @@ class NodePublisher(Process):
             'Exchange declared'
         )
         self.setup_queue(
-            self.__name
-            + "."
-            + self.__app
+            self.get_queue_name()
         )
         return
 
@@ -388,21 +397,17 @@ class NodePublisher(Process):
             'Binding %s to %s with %s',
             self.__name,
             (
-                self.__name
-                + "."
-                + self.__app
+                self.get_queue_name()
             ),
-            self.__name
+            self.__app
         )
         self._channel.queue_bind(
             self.on_bindok,
             (
-                self.__name
-                + "."
-                + self.__app
+                self.get_queue_name()
             ),
             self.__name,
-            self.__name
+            self._app
         )
         return
 
@@ -508,7 +513,8 @@ class NodePublisher(Process):
         return
 
     def publish_message(self):
-        """If the class is not stopping, publish a message to RabbitMQ,
+        """
+        If the class is not stopping, publish a message to RabbitMQ,
         appending a list of deliveries with the message number that was sent.
         This list will be used to check for delivery confirmations in the
         on_delivery_confirmations method.
@@ -518,26 +524,23 @@ class NodePublisher(Process):
         of how the process is flowing by slowing down and speeding up the
         delivery intervals by changing the PUBLISH_INTERVAL constant in the
         class.
-
         """
         if self._stopping:
             return
 
-
         if not self._queue.empty():
-
             message = self._queue.get()
 
             # Get a message to publish
             properties = pika.BasicProperties(
-                app_id=self.__name + '-publisher',
+                app_id=self.__app + '-publisher',
                 content_type='application/json',
                 headers=message
             )
 
             self._channel.basic_publish(
                 self.__name,
-                self.__name,
+                self.__app,
                 json.dumps(
                     message,
                     ensure_ascii=False
@@ -638,3 +641,15 @@ class NodePublisher(Process):
             message
         )
         return
+
+    def get_queue_name(self):
+        """
+        Gets the queue for use
+
+        :return:
+        """
+
+        return "{name}.{app}".format(
+            self.__name,
+            self.__app
+        )

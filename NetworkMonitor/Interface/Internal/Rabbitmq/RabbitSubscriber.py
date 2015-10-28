@@ -75,8 +75,9 @@ class NodeConsumer(Process):
     ===============================
     Constants
     """
-    EXCHANGE = 'message'
-    EXCHANGE_TYPE = 'topic'
+
+    # Exchange engine type.
+    EXCHANGE_TYPE       = 'topic'
 
     """
     ===============================
@@ -95,6 +96,12 @@ class NodeConsumer(Process):
     # The logging engine
     _logger             = None
 
+    # The plugin
+    __name              = None
+
+    # The apps that are needed to run
+    __apps              = []
+
     # =============================
     # Attributes
 
@@ -107,19 +114,17 @@ class NodeConsumer(Process):
     # The closing flag
     _closing            = None
 
-    # Queue type to bind to
-    _queue_types         = None
-
     # Consumer tag
     _consumer_tag       = None
 
-    def __init__(self, amqp_url, queues):
+    def __init__(self, amqp_url, plugin, apps):
         """
         Create a new instance of the consumer class, passing in the AMQP
         URL used to connect to RabbitMQ.
 
         :param str amqp_url:    The AMQP url to connect with
-        :param queues:          The queues to bind to (i.e. dictionary of names for each plugin.)
+        :param plugin:          The plugin name to bind to
+        :param apps:            The apps
         """
 
         self._connection        = None
@@ -127,20 +132,9 @@ class NodeConsumer(Process):
         self._closing           = False
         self._consumer_tag      = None
         self._url               = amqp_url
-        self._queue_types       = queues
-        """
-        This queue attribute may be structured as follows:
+        self.__name             = plugin
+        self.__apps             = apps
 
-            queues = {
-
-                [Queue Name] : {
-
-                    'priority'  : value,
-                    ...
-                    }
-                }
-
-        """
         self._logger            = logging.getLogger('NodeConsumer')
 
         # Super the class
@@ -275,7 +269,7 @@ class NodeConsumer(Process):
         self._channel = channel
         self.add_on_channel_close_callback()
         self.setup_exchange(
-            self.EXCHANGE
+            self.__name
         )
         return
 
@@ -347,7 +341,7 @@ class NodeConsumer(Process):
             'Exchange declared'
         )
         self.setup_queue(
-            self._queue_types
+            self.get_queue_name()
         )
         return
 
@@ -380,20 +374,19 @@ class NodeConsumer(Process):
         :param pika.frame.Method method_frame: The Queue.DeclareOk frame
         """
 
-        self._logger.info(
-            'Binding %s to %s with %s',
-            self.EXCHANGE,
-            self._queue_types,
-            self._queue_types
-        )
+        for app in self.__apps:
 
-        # Bind to multiple queues defined in the plugin
-        for queue in self._queue_types.keys():
+            self._logger.info(
+                'Binding %s to %s with %s',
+                self.get_queue_name(),
+                self.__name,
+                app
+            )
             self._channel.queue_bind(
                 self.on_bindok,
-                queue,
-                self.EXCHANGE,
-                queue
+                self.get_queue_name(),
+                self.__name,
+                app
             )
         return
 
@@ -429,7 +422,7 @@ class NodeConsumer(Process):
         self.add_on_cancel_callback()
         self._consumer_tag = self._channel.basic_consume(
             self.on_message,
-            self._queue_types
+            self.get_queue_name()
         )
         return
 
@@ -607,3 +600,14 @@ class NodeConsumer(Process):
         password = kwargs['password']
         kwargs['password'] = base64.b64decode(password)
         return SUB_AMQP_URL.format(**kwargs)
+
+    def get_queue_name(self):
+        """
+        Gets the queue for use
+
+        :return:
+        """
+
+        return "{name}.*".format(
+            self.__name,
+        )
