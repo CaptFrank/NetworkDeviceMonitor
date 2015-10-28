@@ -43,7 +43,7 @@
         # communication interface with to the resutls queues
         # We can leave this as the default of edit them to fit
         # our needs and network architecture.
-        [[[COM]]]
+        [[[COMS]]]
 
             # This is the flag that represents if the queue is monitored
             # or not. If the channel is monitored, the port number will be offset
