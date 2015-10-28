@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40305192-6c91-4cc8-9f68-6ee740308138" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/NetworkMonitor.iml" afterPath="$PROJECT_DIR$/.idea/NetworkMonitor.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitPublisher.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitPublisher.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitSubscriber.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitSubscriber.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NetworkDeviceMonitor.iws" />
@@ -36,10 +33,11 @@
           <file leaf-file-name="RabbitSubscriber.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitSubscriber.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.65440357">
-                  <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.7168339">
+                  <caret line="484" column="24" selection-start-line="484" selection-start-column="24" selection-end-line="484" selection-end-column="24" />
                   <folding>
                     <element signature="e#735#746#0" expanded="true" />
+                    <element signature="e#2818#3548#0" expanded="false" />
                     <element signature="e#3581#4106#0" expanded="false" />
                     <element signature="e#4169#4620#0" expanded="false" />
                     <element signature="e#4678#5039#0" expanded="false" />
@@ -52,20 +50,20 @@
                     <element signature="e#8815#9353#0" expanded="false" />
                     <element signature="e#9414#9759#0" expanded="false" />
                     <element signature="e#9808#10276#0" expanded="false" />
+                    <element signature="e#10334#11148#0" expanded="false" />
                     <element signature="e#11197#11622#0" expanded="false" />
                     <element signature="e#11663#12446#0" expanded="false" />
                     <element signature="e#12494#12904#0" expanded="false" />
                     <element signature="e#12965#13357#0" expanded="false" />
-                    <element signature="e#13442#14378#0" expanded="false" />
-                    <element signature="e#14437#14837#0" expanded="false" />
-                    <element signature="e#14877#15276#0" expanded="false" />
-                    <element signature="e#15327#15850#0" expanded="false" />
-                    <element signature="e#15889#16127#0" expanded="false" />
-                    <element signature="e#16156#16417#0" expanded="false" />
-                    <element signature="e#16447#17284#0" expanded="false" />
-                    <element signature="e#17326#17514#0" expanded="false" />
-                    <element signature="e#17570#17877#0" expanded="false" />
-                    <element signature="e#17917#18051#0" expanded="false" />
+                    <element signature="e#14463#14863#0" expanded="false" />
+                    <element signature="e#14903#15302#0" expanded="false" />
+                    <element signature="e#15353#15876#0" expanded="false" />
+                    <element signature="e#15915#16153#0" expanded="false" />
+                    <element signature="e#16182#16443#0" expanded="false" />
+                    <element signature="e#16473#17310#0" expanded="false" />
+                    <element signature="e#17352#17540#0" expanded="false" />
+                    <element signature="e#17596#17903#0" expanded="false" />
+                    <element signature="e#17943#18077#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -88,8 +86,8 @@
           <file leaf-file-name="RabbitPublisher.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitPublisher.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.67781496">
-                  <caret line="644" column="0" selection-start-line="644" selection-start-column="0" selection-end-line="654" selection-end-column="9" />
+                <state vertical-scroll-proportion="1.0379041">
+                  <caret line="644" column="29" selection-start-line="644" selection-start-column="29" selection-end-line="644" selection-end-column="29" />
                   <folding>
                     <element signature="e#2969#4092#0" expanded="false" />
                     <element signature="e#4125#4770#0" expanded="false" />
@@ -116,6 +114,7 @@
                     <element signature="e#18204#18421#0" expanded="false" />
                     <element signature="e#18477#18828#0" expanded="false" />
                     <element signature="e#18870#19056#0" expanded="false" />
+                    <element signature="e#19096#19257#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -708,15 +707,22 @@
       <option name="project" value="LOCAL" />
       <updated>1445980806260</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Started looking at the structure of the entities">
+      <created>1446062398178</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1446062398178</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11433087" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.11433087" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -727,7 +733,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296131" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1132,8 +1137,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitPublisher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67781496">
-          <caret line="644" column="0" selection-start-line="644" selection-start-column="0" selection-end-line="654" selection-end-column="9" />
+        <state vertical-scroll-proportion="1.0379041">
+          <caret line="644" column="29" selection-start-line="644" selection-start-column="29" selection-end-line="644" selection-end-column="29" />
           <folding>
             <element signature="e#2969#4092#0" expanded="false" />
             <element signature="e#4125#4770#0" expanded="false" />
@@ -1160,16 +1165,18 @@
             <element signature="e#18204#18421#0" expanded="false" />
             <element signature="e#18477#18828#0" expanded="false" />
             <element signature="e#18870#19056#0" expanded="false" />
+            <element signature="e#19096#19257#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitSubscriber.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65440357">
-          <caret line="136" column="0" selection-start-line="136" selection-start-column="0" selection-end-line="136" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7168339">
+          <caret line="484" column="24" selection-start-line="484" selection-start-column="24" selection-end-line="484" selection-end-column="24" />
           <folding>
             <element signature="e#735#746#0" expanded="true" />
+            <element signature="e#2818#3548#0" expanded="false" />
             <element signature="e#3581#4106#0" expanded="false" />
             <element signature="e#4169#4620#0" expanded="false" />
             <element signature="e#4678#5039#0" expanded="false" />
@@ -1182,20 +1189,20 @@
             <element signature="e#8815#9353#0" expanded="false" />
             <element signature="e#9414#9759#0" expanded="false" />
             <element signature="e#9808#10276#0" expanded="false" />
+            <element signature="e#10334#11148#0" expanded="false" />
             <element signature="e#11197#11622#0" expanded="false" />
             <element signature="e#11663#12446#0" expanded="false" />
             <element signature="e#12494#12904#0" expanded="false" />
             <element signature="e#12965#13357#0" expanded="false" />
-            <element signature="e#13442#14378#0" expanded="false" />
-            <element signature="e#14437#14837#0" expanded="false" />
-            <element signature="e#14877#15276#0" expanded="false" />
-            <element signature="e#15327#15850#0" expanded="false" />
-            <element signature="e#15889#16127#0" expanded="false" />
-            <element signature="e#16156#16417#0" expanded="false" />
-            <element signature="e#16447#17284#0" expanded="false" />
-            <element signature="e#17326#17514#0" expanded="false" />
-            <element signature="e#17570#17877#0" expanded="false" />
-            <element signature="e#17917#18051#0" expanded="false" />
+            <element signature="e#14463#14863#0" expanded="false" />
+            <element signature="e#14903#15302#0" expanded="false" />
+            <element signature="e#15353#15876#0" expanded="false" />
+            <element signature="e#15915#16153#0" expanded="false" />
+            <element signature="e#16182#16443#0" expanded="false" />
+            <element signature="e#16473#17310#0" expanded="false" />
+            <element signature="e#17352#17540#0" expanded="false" />
+            <element signature="e#17596#17903#0" expanded="false" />
+            <element signature="e#17943#18077#0" expanded="false" />
           </folding>
         </state>
       </provider>

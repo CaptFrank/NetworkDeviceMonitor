@@ -481,6 +481,8 @@ class NodeConsumer(Process):
         self.acknowledge_message(
             basic_deliver.delivery_tag
         )
+
+        # TODO: Logstash
         return
 
     def acknowledge_message(self, delivery_tag):
