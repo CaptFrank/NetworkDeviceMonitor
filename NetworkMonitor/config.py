@@ -59,3 +59,4 @@ PLUGIN_WORKSPACE    = './Configs/Plugins/'
 CONFIG_WORKSPACE    = './Configs/'
 
 CONNECTION_TIMEOUT  = 5
+PUBLISH_INTERVAL    = 1

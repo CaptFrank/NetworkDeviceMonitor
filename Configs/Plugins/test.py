@@ -86,7 +86,7 @@ class RabbitTestPlugin(Plugin, IPlugin):
         self._configs = info
 
         # Setup the publisher for the task
-        # Setup the amqp url
+        # Setup the amqp url here we put the user name and password
         #TODO self._publisher =
 
         # Start the publisher
@@ -126,7 +126,7 @@ class RabbitTestPlugin(Plugin, IPlugin):
         :return:
         """
 
-        import time
+        import datetime
         message = {
                 'info' : "Testing !!!"
             }
