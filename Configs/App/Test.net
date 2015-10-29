@@ -37,26 +37,6 @@
             # if the server port is changed. [Default = 5672]
             port        = 5672
 
-            # This is the number of tries the client plublisher will attempt
-            # at connecting to the server before quitting. This value can be
-            # changed to address different situations. [Default = 3]
-            attempts    = 3
-
-            # This is the heartbeat interval configuration. It dictates to the
-            # server that we only want a heartbeat every x seconds. We can change
-            # this value as needed. [Default = 3600]
-            heartbeat   = 3600
-
-            # This is the username that is going to access the server. We can change this
-            # as needed. In fact it is highly encouraged to change the username.
-            # [Default = test]
-            user        = test
-
-            # This is the password associated to the username defined above.
-            # In order to make these configuration files safer, we encode the password
-            # with a base64 encoder. [Default = unencoded password 'test']
-            password    = 'dGVzdA==' # test
-
 
     # This is the applications section.
     # We define each application and configurations in this dict.
@@ -78,6 +58,7 @@
             # our needs and network architecture.
             [[[[COMS]]]]
 
+
                 # This is the list of monitoring applications that are needed.
                 # In this list, we can add and remove applications to allow for
                 # dynamic functionality to be triggered.
@@ -85,33 +66,38 @@
                 # Size, Ids, timestamps
                 monitoring  = SIZE, IDS, TIMESTAMP
 
-                # The server address, in this case the application is localized
-                # within only one node. We could extend the functionality to
-                # support remote messaging. [Default = localhost]
-                server      = localhost
+                # This is the location of temporary storage for the messages as they
+                # are passed through the system.
+                storage     = '~/storage/test.db'
 
-                # This is the server application port definition. In this
-                # case we use the default port number, although this can be changed
-                # if the server port is changed. [Default = 5672]
-                port        = 5672
+                # This is the ssl certificate needed to do an encrypted session.
+                # We can generate these using the following commands:
+                # >> openssl genrsa 1024 > host.key
+                # >> chmod 400 host.key
+                # >> openssl req -new -x509 -nodes -sha1 -days 365 -key host.key > host.cert
+                ssl         = '../key.pem', '../key.cert'
 
-                # This is the number of tries the client plublisher will attempt
-                # at connecting to the server before quitting. This value can be
-                # changed to address different situations. [Default = 3]
-                attempts    = 3
+                [[[[[PUBLISH]]]]]
 
-                # This is the heartbeat interval configuration. It dictates to the
-                # server that we only want a heartbeat every x seconds. We can change
-                # this value as needed. [Default = 3600]
-                heartbeat   = 3600
+                    # The server address, in this case the application is localized
+                    # within only one node. We could extend the functionality to
+                    # support remote messaging. [Default = localhost]
+                    server      = localhost
 
-                # This is the username that is going to access the server. We can change this
-                # as needed. In fact it is highly encouraged to change the username.
-                # [Default = test]
-                user        = test
+                    # This is the server application port definition. In this
+                    # case we use the default port number, although this can be changed
+                    # if the server port is changed. [Default = 5672]
+                    port        = 5672
 
-                # This is the password associated to the username defined above.
-                # In order to make these configuration files safer, we encode the password
-                # with a base64 encoder. [Default = unencoded password 'test']
-                password    = 'dGVzdA==' # test
+                [[[[[SUBSCRIBE]]]]]
+
+                    # The server address, in this case the application is localized
+                    # within only one node. We could extend the functionality to
+                    # support remote messaging. [Default = localhost]
+                    server      = localhost
+
+                    # This is the listening port for system wide commands.
+                    # We use this port to do a sort of C and C of the node
+                    port        = 5677
+
 

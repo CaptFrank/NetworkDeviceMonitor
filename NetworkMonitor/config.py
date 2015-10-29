@@ -60,3 +60,4 @@ CONFIG_WORKSPACE    = './Configs/'
 
 CONNECTION_TIMEOUT  = 5
 PUBLISH_INTERVAL    = 1
+TTL                 = 600
