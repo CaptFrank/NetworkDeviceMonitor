@@ -62,7 +62,7 @@ LOGGING_CFG = {
     },
     'formatters': {
         'standard': {
-            'format': '%(asctime)s -- %(levelname)s -- %(name) -- %(message)s'
+            'format': '%(asctime)s -- %(levelname)s -- %(message)s'
         },
         'short': {
             'format': '%(levelname)s: %(message)s'

@@ -275,11 +275,10 @@ class Plugin(Process):
         self.__apps[name]['pub'].start()
         return
 
-    def kill_publishers(self, name):
+    def kill_publishers(self):
         """
         Kills the publishers for a plugin.
 
-        :param name:                The app name
         :return:
         """
 

@@ -622,8 +622,12 @@ class NodePublisher(Process):
         import base64
 
         password = kwargs['password']
-        kwargs['password'] = base64.b64decode(
-            password
+        kwargs['password'] = str(
+            base64.b64decode(
+                password
+            ).decode(
+                "utf-8"
+            )
         )
         return PUB_AMQP_URL.format(
             **kwargs
@@ -649,7 +653,6 @@ class NodePublisher(Process):
         :return:
         """
 
-        return "{name}.{app}".format(
+        return "{name}.*".format(
             name = self.__name,
-            app = self.__app
         )

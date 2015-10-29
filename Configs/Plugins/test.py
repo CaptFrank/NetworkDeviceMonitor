@@ -108,9 +108,6 @@ class RabbitTestPlugin(Plugin, IPlugin):
         self._logger.info(
             "Setup the TEST plugin."
         )
-
-        # Setup the subscriber
-
         return
 
     def _kill(self):
@@ -122,9 +119,7 @@ class RabbitTestPlugin(Plugin, IPlugin):
         self._logger.info(
             "Disconnecting publishers..."
         )
-        self.kill_publishers(
-            self.__name
-        )
+        self.kill_publishers()
         return
 
     @staticmethod

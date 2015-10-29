@@ -26,7 +26,7 @@ import os
 import logging
 
 from configobj import ConfigObj
-from Singleton import Singleton
+from .Singleton import Singleton
 
 """
 =============================================
