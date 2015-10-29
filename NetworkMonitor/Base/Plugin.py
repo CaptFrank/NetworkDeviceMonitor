@@ -23,13 +23,17 @@ Imports
 =============================================
 """
 
-import uuid
 import logging
 
 from NetworkMonitor.Base.Resource \
     import ManagedResource
 from abc import ABCMeta, abstractmethod
 from multiprocessing import Process, Queue
+
+from NetworkMonitor.Interface.Internal.Rabbitmq.RabbitPublisher \
+    import NodePublisher
+from NetworkMonitor.Interface.Internal.Rabbitmq.RabbitSubscriber \
+    import NodeConsumer
 
 """
 =============================================
@@ -60,10 +64,6 @@ class Plugin(Process):
     # Making this class and abstract class to extend.
     __metaclass__       = ABCMeta
 
-    # This is the publishing engine that is used to log the data
-    # to the main application process.
-    _publisher          = None
-
     # This is the process configs that are needed to setup and
     # run the task individually.
     _configs            = None
@@ -80,16 +80,24 @@ class Plugin(Process):
     # This is the running flag.
     _running            = True
 
-    # The application queue
-    _queue              = None
+    # Apps in a plugin
+    # Looks like:
+    # {
+    #   name : {
+    #               pub         : <publisher>,
+    #               sub         : <subscriber>,
+    #               resource    : <managed resource>,
+    #               queue       : <application queue>,
+    #   }
+    # }
+    __apps              = {
 
-    # The managed resource that will be published
-    _resource           = None
+    }
 
-    # App names
-    _apps               = {}
+    # The main subscriber...
+    __subscriber        = None
 
-    def __init__(self, name, tag):
+    def __init__(self, name):
         """
         This is the base constructor method that receives
 
@@ -103,15 +111,6 @@ class Plugin(Process):
             name
         )
 
-        # Setup the queue
-        self._queue = Queue()
-
-        # Setup the resource needed to publish the data
-        self._resource = ManagedResource(
-            name = name,
-            tag = tag
-        )
-
         # Override the super class
         Process.__init__(
             self,
@@ -119,12 +118,34 @@ class Plugin(Process):
         )
         return
 
-    @abstractmethod
+
     def setup(self, info):
         """
         This is the setup method for the process, called before it
         is ran.
 
+        :return:
+        """
+
+        # Setup the subscriber instance
+        self.__subscriber = NodeConsumer(
+            NodeConsumer.format_url(
+                info['SUBSCRIBER']
+            ),
+            self._name,
+            self.__apps.keys()
+        )
+
+        # Wrapper
+        self._setup(info)
+        return
+
+    @abstractmethod
+    def _setup(self, info):
+        """
+        Wrapped method for plugins.
+
+        :param info:
         :return:
         """
         raise NotImplemented
@@ -135,11 +156,16 @@ class Plugin(Process):
         :return:
         """
 
+        # Connect the subscriber.
+        self._logger.info("Connecting the subscriber...")
+        self.__subscriber.start()
+
         # We deffer the running task to the _run method.
         self._logger.info(
             "Entering the run loop for plugin: %s"
             %self._name
         )
+
         while self._running:
             self._run()
         self._logger.info(
@@ -148,14 +174,17 @@ class Plugin(Process):
         )
         return
 
-    @abstractmethod
+
     def _run(self):
         """
         The default run method for the process.
 
         :return:
         """
-        raise NotImplemented
+
+        for app in self.__apps.values():
+            app['entry'](app)
+        return
 
     def kill(self):
         """
@@ -173,8 +202,10 @@ class Plugin(Process):
         # The disconnection method
         self._kill()
 
-        self._queue.close()
-        self._queue.join_thread()
+        # Kill all queues
+        for app in self.__apps.values():
+           app['queue'].close()
+           app['queue'].join_thread()
         return
 
     @abstractmethod
@@ -197,14 +228,62 @@ class Plugin(Process):
         """
         return "{name}.{app}".format(name=name, app=app)
 
-    def _register_app(self, app, queue):
+    def register(self, name, entry, configs):
         """
-        Registers a new app in the plugin.
 
-        :param app:                 The app name
-        :param queue:               The queue name
+        :param name:                The name of the app
+        :param entry:               The entry point of the app
+        :param configs:             The configs for the app
         :return:
         """
 
-        self._apps['app'] = queue
+        temp = {}
+
+        # Create the application queue
+        temp['queue'] = Queue()
+
+        # Create a publisher
+        temp['pub'] = NodePublisher(
+            NodePublisher.format_url(
+                configs['COMS']
+            ),
+            temp['queue'],
+            name,
+            configs['name']
+        )
+
+        # Create the managed resource
+        temp['resource'] = ManagedResource(
+            name = name,
+            tag = configs['name']
+        )
+
+        # Register the entry point of the app
+        temp['entry'] = entry
+
+        self.__apps[configs['name']] = temp
         return
+
+    def start_app_coms(self, name):
+        """
+        Starts the publisher...
+
+        :param name:                The app name
+        :return:
+        """
+
+        self.__apps[name]['pub'].start()
+        return
+
+    def kill_publishers(self, name):
+        """
+        Kills the publishers for a plugin.
+
+        :param name:                The app name
+        :return:
+        """
+
+        for app in self.__apps.values():
+            app['pub'].stop()
+        return
+

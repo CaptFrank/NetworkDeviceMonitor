@@ -374,7 +374,7 @@ class NodeConsumer(Process):
         :param pika.frame.Method method_frame: The Queue.DeclareOk frame
         """
 
-        for app in self.__apps:
+        for app in self.__apps.keys():
 
             self._logger.info(
                 'Binding %s to %s with %s',
@@ -611,5 +611,5 @@ class NodeConsumer(Process):
         """
 
         return "{name}.*".format(
-            self.__name,
+            name = self.__name,
         )

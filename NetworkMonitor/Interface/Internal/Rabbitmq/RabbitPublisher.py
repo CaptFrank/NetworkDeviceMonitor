@@ -407,7 +407,7 @@ class NodePublisher(Process):
                 self.get_queue_name()
             ),
             self.__name,
-            self._app
+            self.__app
         )
         return
 
@@ -650,6 +650,6 @@ class NodePublisher(Process):
         """
 
         return "{name}.{app}".format(
-            self.__name,
-            self.__app
+            name = self.__name,
+            app = self.__app
         )

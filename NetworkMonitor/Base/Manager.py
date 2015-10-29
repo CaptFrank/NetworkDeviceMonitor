@@ -123,6 +123,20 @@ class Manager(PluginManager):
         self._load_plugins()
         return
 
+    def run(self, plugin=None):
+        """
+        Default run method.
+
+        :param plugin:          The runall method is called if None
+        :return:
+        """
+
+        if plugin is None:
+            self.run_all()
+        else:
+            self.run_plugin(plugin)
+        return
+
     def run_plugin(self, name):
         """
         This only runs one plugin that is passed to the
@@ -311,7 +325,7 @@ class Manager(PluginManager):
 
             # Print relevant information about the plugin.
             self._logger.info(
-                "===========================\n"
+                "\n===========================\n"
                 + adjust(
                     "Name: ",
                     plugin.name

@@ -62,7 +62,7 @@ LOGGING_CFG = {
     },
     'formatters': {
         'standard': {
-            'format': '%(asctime)s -- %(levelname)s -- %(message)s'
+            'format': '%(asctime)s -- %(levelname)s -- %(name) -- %(message)s'
         },
         'short': {
             'format': '%(levelname)s: %(message)s'
@@ -82,7 +82,7 @@ LOGGING_CFG = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'free'
+            'formatter': 'standard'
         }
     },
     'loggers': {
@@ -125,5 +125,6 @@ def logger():
     temp_path = tempfile_name()
     _logger = logging.getLogger()
     LOGGING_CFG['handlers']['file']['filename'] = temp_path
+    print("[+] Logging in file: %s" %temp_path)
     dictConfig(LOGGING_CFG)
     return _logger

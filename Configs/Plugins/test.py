@@ -28,9 +28,6 @@ from yapsy.IPlugin import IPlugin
 
 from NetworkMonitor.Base.Plugin \
     import Plugin
-from NetworkMonitor.Interface.Internal.RabbitPublisher \
-    import RabbitmqPublisher
-
 
 """
 =============================================
@@ -61,7 +58,7 @@ class RabbitTestPlugin(Plugin, IPlugin):
     __name          = 'TEST'
 
     # The plugin category
-    __tag           = 'TEST'
+    __app           = 'TEST'
 
     def __init__(self):
         """
@@ -71,10 +68,13 @@ class RabbitTestPlugin(Plugin, IPlugin):
         :return:
         """
 
-        Plugin.__init__(self, self.__name, self.__tag)
+        Plugin.__init__(
+            self,
+            self.__name
+        )
         return
 
-    def setup(self, info):
+    def _setup(self, info):
         """
         This is an empty method that is meant to show that
         the setup procedure is done properly.
@@ -87,24 +87,30 @@ class RabbitTestPlugin(Plugin, IPlugin):
 
         # Setup the publisher for the task
         # Setup the amqp url here we put the user name and password
-        #TODO self._publisher =
 
-        # Start the publisher
-        self._publisher.start()
-        self._logger.info("Setup the TEST plugin.")
-        return
+        for app in self._configs['APPS'].values():
 
-    def _run(self):
-        """
-        This is the run method. It basically prints the following
-        string: "Testing !!!" in both the message queue and also in the
-        console to track.
+            # Register the plugin
+            self.register(
+                self.__name,
+                self.__testing,
+                app
+            )
 
-        :return:
-        """
+            # Start the publisher
+            self.start_app_coms(
+                app['name']
+            )
+            self._logger.info(
+                "Started application: %s"
+                %app['name']
+            )
+        self._logger.info(
+            "Setup the TEST plugin."
+        )
 
-        # Call the testing method.
-        self.__testing()
+        # Setup the subscriber
+
         return
 
     def _kill(self):
@@ -113,11 +119,16 @@ class RabbitTestPlugin(Plugin, IPlugin):
         :return:
         """
 
-        self._logger.info("Disconnecting publisher...")
-        self._publisher.stop()
+        self._logger.info(
+            "Disconnecting publishers..."
+        )
+        self.kill_publishers(
+            self.__name
+        )
         return
 
-    def __testing(self):
+    @staticmethod
+    def __testing(info):
         """
         This is the run method. It basically prints the following
         string: "{'info' : "Testing !!!"}" in both the message queue and also in the
@@ -126,18 +137,23 @@ class RabbitTestPlugin(Plugin, IPlugin):
         :return:
         """
 
-        import datetime
+        import time
+
         message = {
                 'info' : "Testing !!!"
             }
 
-        self._resource.setObj(message)
-        self._logger.info(
-            self._resource.getObj()
+        info['resource'].setObj(
+            message
         )
 
         # Publish the entire resource to track...
-        self._queue.put(self._resource.__dict__)
-        time.sleep(2)
+        info['queue'].put(
+            info['resource'].__dict__
+        )
+        time.sleep(
+            2
+        )
         return
+
 
