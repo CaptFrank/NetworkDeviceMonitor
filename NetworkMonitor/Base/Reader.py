@@ -102,6 +102,14 @@ class Reader(Singleton):
         # Set the root directory to walk
         root = workspace
 
+        self._logger.info(
+            """
+            ===========================
+                   -- READER --
+            ===========================
+            """
+        )
+
         # Go through the folders and look for the configs
         for dir, subdirs, files in os.walk(root):
             self._logger.info("Reading configs in: %s" %dir)
@@ -127,6 +135,14 @@ class Reader(Singleton):
                         # Add the config to the internals
                         self._configs[dirname].append(args)
                         self._logger.info("\t\t Added config: %s" %file)
+
+        self._logger.info(
+            """
+            ===========================
+                   -- READER --
+            ===========================
+            """
+        )
         return
 
     def read(self, file):
