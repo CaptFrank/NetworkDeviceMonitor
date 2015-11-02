@@ -118,7 +118,6 @@ class Plugin(Process):
         )
         return
 
-
     def setup(self, info):
         """
         This is the setup method for the process, called before it
@@ -157,23 +156,22 @@ class Plugin(Process):
         """
 
         # Connect the subscriber.
-        self._logger.info("Connecting the subscriber...")
+        self._logger.info("[+] Connecting the subscriber...")
         self.__subscriber.start()
 
         # We deffer the running task to the _run method.
         self._logger.info(
-            "Entering the run loop for plugin: %s"
+            "[+] Entering the run loop for plugin: %s"
             %self._name
         )
 
         while self._running:
             self._run()
         self._logger.info(
-            "Killed the run loop for plugin: %s"
+            "[-] Killed the run loop for plugin: %s"
             %self._name
         )
         return
-
 
     def _run(self):
         """
@@ -195,7 +193,7 @@ class Plugin(Process):
         """
         self._running = False
         self._logger.info(
-            "Killing the plugin: %s"
+            "[-] Killing the plugin: %s"
             %self._name
         )
 

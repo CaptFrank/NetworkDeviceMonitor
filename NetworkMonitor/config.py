@@ -60,4 +60,5 @@ CONFIG_WORKSPACE    = './Configs/'
 
 CONNECTION_TIMEOUT  = 5
 PUBLISH_INTERVAL    = 1
+REPORT_MAX_SIZE     = 10
 TTL                 = 600

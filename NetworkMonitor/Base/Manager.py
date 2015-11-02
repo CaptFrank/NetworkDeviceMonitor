@@ -151,12 +151,12 @@ class Manager(PluginManager):
             if name == plugin.name:
 
                 # We setup and run the plugin
-                self._logger.info("Running plugin: %s" %name)
+                self._logger.info("[+] Running plugin: %s" %name)
                 self._run_plugin(plugin)
                 return
 
         # Couldn't find the plugin with that name
-        self._logger.info("Plugin: %s not found." %name)
+        self._logger.info("[-] Plugin: %s not found." %name)
         return
 
     def run_all(self):
@@ -185,12 +185,12 @@ class Manager(PluginManager):
             if name == plugin.name:
 
                 # We setup and run the plugin
-                self._logger.info("Killing plugin: %s" %name)
+                self._logger.info("[-] Killing plugin: %s" %name)
                 self._kill_plugin(plugin)
                 return
 
         # Couldn't find the plugin with that name
-        self._logger.info("Plugin: %s not found." %name)
+        self._logger.info("[-] Plugin: %s not found." %name)
         return
 
     def kill_all(self):
@@ -217,13 +217,13 @@ class Manager(PluginManager):
         # Activate the plugin
         plugin.plugin_object.activate()
         self._logger.info(
-            "Activating plugin: %s"
+            "[+] Activating plugin: %s"
             %plugin.name
         )
 
         # Setup the plugin
         self._logger.info(
-            "Setting up plugin: %s"
+            "[+] Setting up plugin: %s"
             %plugin.name
         )
         plugin.plugin_object.setup(
@@ -234,7 +234,7 @@ class Manager(PluginManager):
 
         # Run the plugin
         self._logger.info(
-            "Running plugin: %s"
+            "[+] Running plugin: %s"
             %plugin.name
         )
 
@@ -253,7 +253,7 @@ class Manager(PluginManager):
         # Deactivate the plugin
         plugin.plugin_object.deactivate()
         self._logger.info(
-            "Deactivating plugin: %s"
+            "[-] Deactivating plugin: %s"
             %plugin.name
         )
 
@@ -261,7 +261,7 @@ class Manager(PluginManager):
         self._running[plugin.name].kill()
         self._running[plugin.name].join()
         self._logger.info(
-            "Killed plugin: %s"
+            "[-] Killed plugin: %s"
             %plugin.name
         )
 
@@ -285,7 +285,7 @@ class Manager(PluginManager):
 
         # We load the configs
         self._logger.info(
-            "Loading the plugin workspace [%s]"
+            "[+] Loading the plugin workspace [%s]"
             %self._workspace
         )
         self._manager.load(
@@ -294,7 +294,7 @@ class Manager(PluginManager):
 
         # We check to see which ones are plugin configs.
         self._logger.info(
-            "Filtering plugins configurations."
+            "[+] Filtering plugins configurations."
         )
         self._configs = self._filter_plugin_configs()
         return
@@ -387,7 +387,7 @@ class Manager(PluginManager):
                             plugin['location'] = PLUGIN_DEFAULT_LOC
 
                         self._logger.info(
-                            "Found configurations for plugin: %s "
+                            "[+] Found configurations for plugin: %s "
                             %plugin['name'] +
                             "Location: %s"
                             %plugin['location']
@@ -430,7 +430,7 @@ class Manager(PluginManager):
             if name == plugin['name']:
                 return plugin
         self._logger.info(
-            "Could not find configs for plugin: %s"
+            "[-] Could not find configs for plugin: %s"
             %name
         )
         return

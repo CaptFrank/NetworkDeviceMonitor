@@ -151,7 +151,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Connecting to %s',
+            '[+] Connecting to %s',
             self._url
         )
         return pika.SelectConnection(
@@ -172,7 +172,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Connection opened'
+            '[+] Connection opened'
         )
         self.add_on_connection_close_callback()
         self.open_channel()
@@ -185,7 +185,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Adding connection close callback'
+            '[+] Adding connection close callback'
         )
         self._connection.add_on_close_callback(
             self.on_connection_closed
@@ -210,7 +210,7 @@ class NodeConsumer(Process):
             self._connection.ioloop.stop()
         else:
             self._logger.warning(
-                'Connection closed, reopening in 5 seconds: (%s) %s',
+                '[-] Connection closed, reopening in 5 seconds: (%s) %s',
                 reply_code,
                 reply_text
             )
@@ -246,7 +246,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Creating a new channel'
+            '[+] Creating a new channel'
         )
         self._connection.channel(
             on_open_callback=self.on_channel_open
@@ -264,7 +264,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Channel opened'
+            '[+] Channel opened'
         )
         self._channel = channel
         self.add_on_channel_close_callback()
@@ -280,7 +280,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Adding channel close callback'
+            '[+] Adding channel close callback'
         )
         self._channel.add_on_close_callback(
             self.on_channel_closed
@@ -301,7 +301,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.warning(
-            'Channel %i was closed: (%s) %s',
+            '[-] Channel %i was closed: (%s) %s',
             channel,
             reply_code,
             reply_text
@@ -319,7 +319,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Declaring exchange %s',
+            '[+] Declaring exchange %s',
             exchange_name
         )
         self._channel.exchange_declare(
@@ -338,7 +338,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Exchange declared'
+            '[+] Exchange declared'
         )
         self.setup_queue(
             self.get_queue_name()
@@ -354,7 +354,7 @@ class NodeConsumer(Process):
 
         """
         self._logger.info(
-            'Declaring queue %s',
+            '[+] Declaring queue %s',
             queue_name
         )
         self._channel.queue_declare(
@@ -377,7 +377,7 @@ class NodeConsumer(Process):
         for app in self.__apps.keys():
 
             self._logger.info(
-                'Binding %s to %s with %s',
+                '[+] Binding %s to %s with %s',
                 self.get_queue_name(),
                 self.__name,
                 app
@@ -400,7 +400,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Queue bound'
+            '[+] Queue bound'
         )
         self.start_consuming()
         return
@@ -417,7 +417,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Issuing consumer related RPC commands'
+            '[+] Issuing consumer related RPC commands'
         )
         self.add_on_cancel_callback()
         self._consumer_tag = self._channel.basic_consume(
@@ -434,7 +434,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Adding consumer cancellation callback'
+            '[+] Adding consumer cancellation callback'
         )
         self._channel.add_on_cancel_callback(
             self.on_consumer_cancelled
@@ -450,7 +450,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Consumer was cancelled remotely, shutting down: %r',
+            '[-] Consumer was cancelled remotely, shutting down: %r',
             method_frame
         )
         if self._channel:
@@ -473,7 +473,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Received message # %s from %s: %s',
+            '[+] Received message # %s from %s: %s',
             basic_deliver.delivery_tag,
             properties.app_id,
             body
@@ -494,7 +494,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Acknowledging message %s',
+            '[+] Acknowledging message %s',
             delivery_tag
         )
         self._channel.basic_ack(
@@ -510,7 +510,7 @@ class NodeConsumer(Process):
 
         if self._channel:
             self._logger.info(
-                'Sending a Basic.Cancel RPC command to RabbitMQ'
+                '[-] Sending a Basic.Cancel RPC command to RabbitMQ'
             )
             self._channel.basic_cancel(
                 self.on_cancelok,
@@ -529,7 +529,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'RabbitMQ acknowledged the cancellation of the consumer'
+            '[+] RabbitMQ acknowledged the cancellation of the consumer'
         )
         self.close_channel()
         return
@@ -541,7 +541,7 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Closing the channel'
+            '[-] Closing the channel'
         )
         self._channel.close()
         return
@@ -569,13 +569,13 @@ class NodeConsumer(Process):
         """
 
         self._logger.info(
-            'Stopping'
+            '[-] Stopping'
         )
         self._closing = True
         self.stop_consuming()
         self._connection.ioloop.start()
         self._logger.info(
-            'Stopped'
+            '[-] Stopped'
         )
         return
 
@@ -584,7 +584,7 @@ class NodeConsumer(Process):
         This method closes the connection to RabbitMQ.
         """
         self._logger.info(
-            'Closing connection'
+            '[-] Closing connection'
         )
         self._connection.close()
         return
@@ -600,7 +600,13 @@ class NodeConsumer(Process):
         import base64
 
         password = kwargs['password']
-        kwargs['password'] = base64.b64decode(password)
+        kwargs['password'] = str(
+            base64.b64decode(
+                password
+            ).decode(
+                "utf-8"
+            )
+        )
         return SUB_AMQP_URL.format(**kwargs)
 
     def get_queue_name(self):

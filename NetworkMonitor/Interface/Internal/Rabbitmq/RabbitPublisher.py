@@ -178,7 +178,7 @@ class NodePublisher(Process):
         :rtype: pika.SelectConnection
         """
 
-        self._logger.info('Connecting to %s', self._url)
+        self._logger.info('[+] Connecting to %s', self._url)
         return pika.SelectConnection(
             pika.URLParameters(
                 self._url
@@ -196,7 +196,7 @@ class NodePublisher(Process):
         :type unused_connection:        pika.SelectConnection
         """
         self._logger.info(
-            'Connection opened'
+            '[+] Connection opened'
         )
         self.add_on_connection_close_callback()
         self.open_channel()
@@ -209,7 +209,7 @@ class NodePublisher(Process):
         """
 
         self._logger.info(
-            'Adding connection close callback'
+            '[+] Adding connection close callback'
         )
         self._connection.add_on_close_callback(
             self.on_connection_closed
@@ -233,7 +233,7 @@ class NodePublisher(Process):
             self._connection.ioloop.stop()
         else:
             self._logger.warning(
-                'Connection closed, reopening in 5 seconds: (%s) %s',
+                '[-] Connection closed, reopening in 5 seconds: (%s) %s',
                 reply_code,
                 reply_text
             )
@@ -274,7 +274,7 @@ class NodePublisher(Process):
         """
 
         self._logger.info(
-            'Creating a new channel'
+            '[+] Creating a new channel'
         )
         self._connection.channel(
             on_open_callback=self.on_channel_open
@@ -290,7 +290,9 @@ class NodePublisher(Process):
 
         :param pika.channel.Channel channel: The channel object
         """
-        self._logger.info('Channel opened')
+        self._logger.info(
+            '[+] Channel opened'
+        )
         self._channel = channel
         self.add_on_channel_close_callback()
         self.setup_exchange(
@@ -303,7 +305,9 @@ class NodePublisher(Process):
         This method tells pika to call the on_channel_closed method if
         RabbitMQ unexpectedly closes the channel.
         """
-        self._logger.info('Adding channel close callback')
+        self._logger.info(
+            '[+] Adding channel close callback'
+        )
         self._channel.add_on_close_callback(
             self.on_channel_closed
         )
@@ -323,7 +327,7 @@ class NodePublisher(Process):
 
         """
         self._logger.warning(
-            'Channel was closed: (%s) %s',
+            '[+] Channel was closed: (%s) %s',
             reply_code,
             reply_text
         )
@@ -340,7 +344,7 @@ class NodePublisher(Process):
         :param str|unicode exchange_name: The name of the exchange to declare
         """
         self._logger.info(
-            'Declaring exchange %s',
+            '[+] Declaring exchange %s',
             exchange_name
         )
         self._channel.exchange_declare(
@@ -358,7 +362,7 @@ class NodePublisher(Process):
         :param pika.Frame.Method unused_frame: Exchange.DeclareOk response frame
         """
         self._logger.info(
-            'Exchange declared'
+            '[+] Exchange declared'
         )
         self.setup_queue(
             self.get_queue_name()
@@ -374,7 +378,7 @@ class NodePublisher(Process):
         :param str|unicode queue_name: The name of the queue to declare.
         """
         self._logger.info(
-            'Declaring queue %s',
+            '[+] Declaring queue %s',
             queue_name
         )
         self._channel.queue_declare(
@@ -394,7 +398,7 @@ class NodePublisher(Process):
 
         """
         self._logger.info(
-            'Binding %s to %s with %s',
+            '[+] Binding %s to %s with %s',
             self.__name,
             (
                 self.get_queue_name()
@@ -418,7 +422,7 @@ class NodePublisher(Process):
         time to start publishing.
         """
         self._logger.info(
-            'Queue bound'
+            '[+] Queue bound'
         )
         self.start_publishing()
         return
@@ -429,7 +433,7 @@ class NodePublisher(Process):
         first message to be sent to RabbitMQ
         """
         self._logger.info(
-            'Issuing consumer related RPC commands'
+            '[+] Issuing consumer related RPC commands'
         )
         self.enable_delivery_confirmations()
         self.schedule_next_message()
@@ -447,7 +451,7 @@ class NodePublisher(Process):
         is confirming or rejecting.
         """
         self._logger.info(
-            'Issuing Confirm.Select RPC command'
+            '[+] Issuing Confirm.Select RPC command'
         )
         self._channel.confirm_delivery(
             self.on_delivery_confirmation
@@ -469,7 +473,7 @@ class NodePublisher(Process):
         """
         confirmation_type = method_frame.method.NAME.split('.')[1].lower()
         self._logger.info(
-            'Received %s for delivery tag: %i',
+            '[+] Received %s for delivery tag: %i',
             confirmation_type,
             method_frame.method.delivery_tag
         )
@@ -503,7 +507,7 @@ class NodePublisher(Process):
         if self._stopping:
             return
         self._logger.info(
-            'Scheduling next message for %0.1f seconds',
+            '[+] Scheduling next message for %0.1f seconds',
             PUBLISH_INTERVAL
         )
         self._connection.add_timeout(
@@ -552,7 +556,7 @@ class NodePublisher(Process):
                 self._message_number
             )
             self._logger.info(
-                'Published message # %i',
+                '[+] Published message # %i',
                 self._message_number
             )
         self.schedule_next_message()
@@ -564,7 +568,7 @@ class NodePublisher(Process):
         the Channel.Close RPC command.
         """
         self._logger.info(
-            'Closing the channel'
+            '[-] Closing the channel'
         )
         if self._channel:
             self._channel.close()
@@ -589,14 +593,14 @@ class NodePublisher(Process):
         """
 
         self._logger.info(
-            'Stopping'
+            '[-] Stopping'
         )
         self._stopping = True
         self.close_channel()
         self.close_connection()
         self._connection.ioloop.start()
         self._logger.info(
-            'Stopped'
+            '[-] Stopped'
         )
         return
 
@@ -605,7 +609,7 @@ class NodePublisher(Process):
         This method closes the connection to RabbitMQ.
         """
         self._logger.info(
-            'Closing connection'
+            '[-] Closing connection'
         )
         self._closing = True
         self._connection.close()

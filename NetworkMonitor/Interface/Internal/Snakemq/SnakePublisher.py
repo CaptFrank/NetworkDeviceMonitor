@@ -147,7 +147,7 @@ class SnakePublisher(Process):
         """
 
         self._logger.info(
-            "Creating the messenger interface for %s:%s"
+            "[+] Creating the messenger interface for %s:%s"
             %(
                 self.__name,
                 self.__app
@@ -179,7 +179,7 @@ class SnakePublisher(Process):
 
             # Add a listener... This is done for remote operation.
             self._logger.info(
-                "Adding a listener for system wide events on port: %i"
+                "[+] Adding a listener for system wide events on port: %i"
                 %configs['SUBSCRIBE']['listen']
             )
 
@@ -200,7 +200,7 @@ class SnakePublisher(Process):
             )
 
             self._logger.info(
-                "Adding a connector to %s:%i"
+                "[+] Adding a connector to %s:%i"
                 %(
                     configs['PUBLISH']['server'],
                     configs['PUBLISH']['port']
@@ -216,7 +216,9 @@ class SnakePublisher(Process):
             )
 
         except IOError:
-            self._logger.error("IOError... Stopping Publisher engine...")
+            self._logger.error(
+                "[-] IOError... Stopping Publisher engine..."
+            )
         return
 
     def run(self):
@@ -235,12 +237,12 @@ class SnakePublisher(Process):
                 # Get an object and publish it to the server
                 obj = self.__queue.get()
                 self._logger.info(
-                    "Got a new object to send: %s"
+                    "[+] Got a new object to send: %s"
                     %obj
                 )
                 self.__send_message(obj)
                 self._logger.info(
-                    "Sent message #%i"
+                    "[+] Sent message #%i"
                     %self.__id
                 )
 
@@ -286,7 +288,7 @@ class SnakePublisher(Process):
             }
         )
         self._logger.info(
-            "Added a new message to the queue..."
+            "[+] Added a new message to the queue..."
         )
         return
 
@@ -432,7 +434,7 @@ class SnakePublisher(Process):
              )
         )
         self._logger.error(
-            "Killing the publish engine..."
+            "[-] Killing the publish engine..."
         )
         self.kill()
         return
@@ -458,7 +460,7 @@ class SnakePublisher(Process):
         )
 
         self._logger.info(
-            "Sending pickled message: %s"
+            "[+] Sending pickled message: %s"
             %str(obj)
         )
         return

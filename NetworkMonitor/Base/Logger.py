@@ -128,3 +128,4 @@ def logger():
     print("[+] Logging in file: %s" %temp_path)
     dictConfig(LOGGING_CFG)
     return _logger
+
