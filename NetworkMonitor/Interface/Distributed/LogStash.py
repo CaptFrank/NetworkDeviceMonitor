@@ -27,7 +27,6 @@ import logging
 
 from logstash.handler_amqp \
     import AMQPLogstashHandler
-
 from NetworkMonitor.config \
     import REPORT_MAX_SIZE
 from multiprocessing \
@@ -223,7 +222,7 @@ class LogStashForwarder(Process):
         )
         return
 
-    def _send(self, package, args):
+    def _send(self, package, *args):
         """
         Sends the pacakge to the logstash sever.
 
@@ -235,10 +234,14 @@ class LogStashForwarder(Process):
         # Format the data
         # TODO format
 
+        self.__logger.info(
+            "Sending a package to the logstash server."
+        )
+
         # Send the data
         self.__logstash.info(
             package,
-            *args
+            args
         )
         return
 
