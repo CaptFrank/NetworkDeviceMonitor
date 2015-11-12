@@ -160,13 +160,16 @@ class Probe(threading.Thread):
         """
         raise NotImplemented
 
-    @abc.abstractmethod
     def update(self):
         """
         Updates the fields in the object.
         :return:
         """
-        raise NotImplemented
+        # Update the data queue
+        self._queue.put(
+            self.get_data()
+        )
+        return
 
     # Properties
 

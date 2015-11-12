@@ -254,19 +254,6 @@ class CPUProbe(Probe):
         )
         return
 
-    def update(self):
-        """
-        Updates the fields in the object.
-
-        :return:
-        """
-
-        # Update the data queue
-        self._queue.put(
-            self.get_data()
-        )
-        return
-
     # Utility methods
     @staticmethod
     def __read_cpu(path):
