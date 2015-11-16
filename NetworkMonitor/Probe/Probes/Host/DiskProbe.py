@@ -430,6 +430,7 @@ class DiskProbe(object):
         :return:
         """
 
+        # Initialize the appropriate class type
         if type in self.__types.keys():
             self.__class__ = self.__types[type]
             self.__init__(queue)

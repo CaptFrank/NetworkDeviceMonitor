@@ -238,6 +238,8 @@ class LogStashForwarder(Process):
             "Sending a package to the logstash server."
         )
 
+        # TODO compress string
+
         # Send the data
         self.__logstash.info(
             package,
