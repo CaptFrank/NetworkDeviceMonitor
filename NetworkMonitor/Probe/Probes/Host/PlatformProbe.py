@@ -25,7 +25,7 @@ Imports
 import gc
 import platform
 from NetworkMonitor.Probe.Probe \
-    import Probe
+    import Probe, PLACEHOLDER
 
 """
 =============================================
@@ -67,7 +67,7 @@ class PlatformProbe(Probe):
 
     # Groups
     groups      = [
-        "platfrom",
+        "platform",
         "reconnaissance"
     ]
 
@@ -134,13 +134,13 @@ class PlatformProbe(Probe):
                 "definition"    : self.set_definition(),
                 "data"          : {
                     {
-                        "system"        : "",
-                        "node"          : "",
-                        "release"       : "",
-                        "version"       : "",
-                        "machine"       : "",
-                        "processor"     : "",
-                        "architecture"  : "",
+                        "system"        : PLACEHOLDER,
+                        "node"          : PLACEHOLDER,
+                        "release"       : PLACEHOLDER,
+                        "version"       : PLACEHOLDER,
+                        "machine"       : PLACEHOLDER,
+                        "processor"     : PLACEHOLDER,
+                        "architecture"  : PLACEHOLDER,
                     }
                 }
             }

@@ -26,7 +26,7 @@ import gc
 import time
 import psutil
 from NetworkMonitor.Probe.Probe \
-    import Probe
+    import Probe, PLACEHOLDER
 
 """
 =============================================
@@ -141,25 +141,25 @@ class CPUProbe(Probe):
                 "definition"    : self.set_definition(),
                 "data"          : {
                     "users"     : {
-                        "user"      : "",
-                        "system"    : "",
-                        "idle"      : "",
-                        "nice"      : "",
-                        "iowait"    : "",
-                        "irq"       : "",
-                        "softirq"   : "",
-                        "steal"     : "",
-                        "guest"     : "",
-                        "guest_nice": "",
+                        "user"      : PLACEHOLDER,
+                        "system"    : PLACEHOLDER,
+                        "idle"      : PLACEHOLDER,
+                        "nice"      : PLACEHOLDER,
+                        "iowait"    : PLACEHOLDER,
+                        "irq"       : PLACEHOLDER,
+                        "softirq"   : PLACEHOLDER,
+                        "steal"     : PLACEHOLDER,
+                        "guest"     : PLACEHOLDER,
+                        "guest_nice": PLACEHOLDER,
                     },
                     "usage"     : {
-                        "percentage": "",
-                        "interval"  : "",
-                        "load"      : ""
+                        "percentage": PLACEHOLDER,
+                        "interval"  : PLACEHOLDER,
+                        "load"      : PLACEHOLDER
                     },
                     "cpu"       : {
-                        "count"     : "",
-                        "logical"   : ""
+                        "count"     : PLACEHOLDER,
+                        "logical"   : PLACEHOLDER
                     }
                 }
             }
@@ -277,7 +277,7 @@ class CPUProbe(Probe):
                 "name": "Load Average 1min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": "",
+                "customunit": PLACEHOLDER,
                 "value": float(
                     data[0]
                 )
@@ -286,7 +286,7 @@ class CPUProbe(Probe):
                 "name": "Load Average 5min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": "",
+                "customunit": PLACEHOLDER,
                 "value": float(
                     data[1]
                 )
@@ -295,7 +295,7 @@ class CPUProbe(Probe):
                 "name": "Load Average 10min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": "",
+                "customunit": PLACEHOLDER,
                 "value": float(
                     data[2]
                 )

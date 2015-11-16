@@ -29,7 +29,7 @@ Imports
 import gc
 import psutil
 from NetworkMonitor.Probe.Probe \
-    import Probe
+    import Probe, PLACEHOLDER
 
 """
 =============================================
@@ -139,10 +139,10 @@ class StaticDiskProbe(Probe):
                             "partitions"    : [],
                             "usage"         : {
                                 "path"      : "/",
-                                "total"     : "",
-                                "used"      : "",
-                                "free"      : "",
-                                "percent"   : ""
+                                "total"     : PLACEHOLDER,
+                                "used"      : PLACEHOLDER,
+                                "free"      : PLACEHOLDER,
+                                "percent"   : PLACEHOLDER
                             },
                         }
                     }
@@ -318,18 +318,18 @@ class DynamicDiskProbe(Probe):
                         {
                             "usage"         : {
                                 "path"          : "/",
-                                "total"         : "",
-                                "used"          : "",
-                                "free"          : "",
-                                "percent"       : ""
+                                "total"         : PLACEHOLDER,
+                                "used"          : PLACEHOLDER,
+                                "free"          : PLACEHOLDER,
+                                "percent"       : PLACEHOLDER
                             },
                             "io"            : {
-                                "reads_count"   : "",
-                                "writes_count"  : "",
-                                "read_bytes"    : "",
-                                "write_bytes"   : "",
-                                "read_time"     : "",
-                                "write_time"    : ""
+                                "reads_count"   : PLACEHOLDER,
+                                "writes_count"  : PLACEHOLDER,
+                                "read_bytes"    : PLACEHOLDER,
+                                "write_bytes"   : PLACEHOLDER,
+                                "read_time"     : PLACEHOLDER,
+                                "write_time"    : PLACEHOLDER
                             }
                         }
                     }

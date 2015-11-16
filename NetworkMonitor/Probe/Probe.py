@@ -41,6 +41,8 @@ __author__  =   "gammaRay"
 __version__ =   "1.0"
 __date__    =   "9/28/2015"
 
+PLACEHOLDER = ""
+
 """
 =============================================
 Source
@@ -273,4 +275,29 @@ class Probe(threading.Thread):
     __template_prop = property(
         fget=get_template,
         fset=set_template
+    )
+
+    def set_continuous(self, continuous):
+        """
+        This method registers the continuous flag
+        to the probe.
+
+        :param continuous:        The continuous fla
+        :return:
+        """
+
+        self.__continuous = continuous
+        return
+
+    def get_continuous(self):
+        """
+        Returns the continuous
+
+        :return:
+        """
+        return self.__continuous
+
+    __continuous_prop = property(
+        fget=get_continuous,
+        fset=set_continuous
     )
