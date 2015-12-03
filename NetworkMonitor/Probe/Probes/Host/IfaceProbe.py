@@ -1,15 +1,18 @@
 """
 
-    :name:
+    :IfaceProbe:
     ==========
 
-    :description:
+    :
+    This is the interfaces probe. It schedules threads to monitor
+    both the counts and the static interface stats.
+    :
 
-    :copyright: (c) 10/23/2015 by fpapinea.
+    :copyright: (c) 10/23/2015 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
-    Author:         fpapinea
-    Version:        :version: #TODO
+    Author:         gammaRay
+    Version:        :1.0:
     Date:           10/23/2015
 """
 
@@ -19,6 +22,11 @@ Imports
 =============================================
 """
 
+import gc
+import psutil
+from NetworkMonitor.Probe.Probe \
+    import Probe, PLACEHOLDER
+
 """
 =============================================
 Constants
@@ -26,18 +34,146 @@ Constants
 """
 
 # Program Attributes
-__author__ = 'fpapinea'
-__version__ = ""  #TODO
-__date__ = "10/23/2015"
-
-"""
-=============================================
-Variables
-=============================================
-"""
+__author__  =   "gammaRay"
+__version__ =   "1.0"
+__date__    =   "9/28/2015"
 
 """
 =============================================
 Source
 =============================================
 """
+
+class StaticIfaceProbe(Probe):
+    """
+    This is the user probe that scans what interface are on
+    a specific system.
+
+    extends: Probe
+    """
+
+    # The class name
+    name        = "IfaceProbe"
+
+    # The probe type
+    type        = "Iface"
+
+    # Description
+    description = \
+    "Gets the interfaces on the probe that is running."
+
+    # Fields for filtering
+    fields      = []
+
+    # Groups
+    groups      = [
+        "iface",
+        "reconnaissance"
+    ]
+
+    # Definition
+    definition  = {}
+
+    # Template
+    template    = {}
+
+    # Data
+    data        = {}
+
+    # Continuous flag
+    continuous  = False
+
+    def __init__(self, queue):
+        """
+        We call the constructor for the class.
+
+        :return:
+        """
+
+        # Setup the class object
+        Probe.__init__(
+            self,
+            self.name,
+            queue,
+            self.continuous
+        )
+        self.logger.info(
+            "Created a new Probe of type: %s" %self.type
+        )
+        gc.enable()
+        return
+
+    def setup(self):
+        """
+        Setup the probe.
+
+        :return:
+        """
+
+        # Register all handles
+        self.set_data(
+            self.data
+        )
+        self.register_type(
+            self.type
+        )
+        self.set_definition(
+            {
+                "type"          : self.get_type(),
+                "name"          : self.name,
+                "description"   : self.description,
+                "default"       : "yes",
+                "help"          : self.description,
+                "tag"           : self.name,
+                "fields"        : [],
+                "groups"        : [],
+            }
+        )
+        self.set_template(
+            {
+                "definition"    : self.set_definition(),
+                "data"          : {
+                    "ifaddrs"   : PLACEHOLDER,
+                    "ifstats"   : PLACEHOLDER
+                }
+            }
+        )
+        self.logger.info(
+            "Setup complete for probe: %s"
+            %self.name
+        )
+        return
+
+    def _run(self):
+            """
+            Runs the data collection.
+
+            :return:
+            """
+
+            self.logger.info(
+                "Running the data collection."
+            )
+
+            # Tuple to dict
+            def tuple_to_dict(tuple):
+                with tuple as data:
+                    results = dict(
+                        zip(
+                            data._fields,
+                            list(
+                                data
+                            )
+                        )
+                    )
+                    return results
+
+            # Get Addreses
+            address = [
+
+            ]
+
+            # Get stats
+
+
+            return
