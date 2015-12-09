@@ -30,6 +30,8 @@ import gc
 import psutil
 from NetworkMonitor.Probe.Probe \
     import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.MutableProbe \
+    import MutableProbe
 
 """
 =============================================
@@ -133,7 +135,7 @@ class StaticDiskProbe(Probe):
             )
             self.set_template(
                 {
-                    "definition"    : self.set_definition(),
+                    "definition"    : self.get_definition(),
                     "data"          : {
                         {
                             "partitions"    : [],
@@ -408,7 +410,7 @@ class DynamicDiskProbe(Probe):
             gc.collect()
             return
 
-class DiskProbe(object):
+class DiskProbe(MutableProbe):
     """
     This the disk probe container that contains both the
     static probe and the dynamic probing agents.
@@ -423,15 +425,16 @@ class DiskProbe(object):
     def __init__(self, type, queue):
         """
         This is the constructor that will set the self
-        objec to the appropriate object type.
+        object to the appropriate object type.
 
         :param type:        Probe type
         :param queue:       Application queue
         :return:
         """
 
-        # Initialize the appropriate class type
-        if type in self.__types.keys():
-            self.__class__ = self.__types[type]
-            self.__init__(queue)
+        # Override the class
+        MutableProbe.__init__(self, self.__types)
+
+        # Run the object
+        self.run(type, queue)
         return

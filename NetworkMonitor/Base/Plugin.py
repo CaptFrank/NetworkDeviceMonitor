@@ -29,7 +29,6 @@ from NetworkMonitor.Base.Resource \
     import ManagedResource
 from abc import ABCMeta, abstractmethod
 from multiprocessing import Process, Queue
-
 from NetworkMonitor.Interface.Internal.Rabbitmq.RabbitPublisher \
     import NodePublisher
 from NetworkMonitor.Interface.Internal.Rabbitmq.RabbitSubscriber \
@@ -259,7 +258,9 @@ class Plugin(Process):
         # Register the entry point of the app
         temp['entry'] = entry
 
-        self.__apps[configs['name']] = temp
+        self.__apps[
+            configs['name']
+        ] = temp
         return
 
     def start_app_coms(self, name):
