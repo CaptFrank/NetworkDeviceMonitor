@@ -4,7 +4,7 @@
     ==========
 
     :
-    This is the poller worker process that will
+    This is the worker process that will
     continuously scan the network for new devices and
     include the results in an indexed database (Mongodb).
 
@@ -25,7 +25,6 @@
 Imports
 =============================================
 """
-import gc
 import abc
 import logging
 import threading

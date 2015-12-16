@@ -28,8 +28,8 @@ Imports
 
 import gc
 import psutil
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.HostProbe \
+    import HostProbe, PLACEHOLDER
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 
@@ -49,7 +49,7 @@ __date__    =   "9/28/2015"
 Source
 =============================================
 """
-class StaticDiskProbe(Probe):
+class StaticDiskProbe(HostProbe):
         """
         This is the static disk data probe.
         This probe will get certain data pieces such as disk usage,
@@ -95,7 +95,7 @@ class StaticDiskProbe(Probe):
             """
 
             # Setup the base object
-            Probe.__init__(
+            HostProbe.__init__(
                 self,
                 self.name,
                 queue,
@@ -226,7 +226,7 @@ class StaticDiskProbe(Probe):
             gc.collect()
             return
 
-class DynamicDiskProbe(Probe):
+class DynamicDiskProbe(HostProbe):
         """
         This is the dynamic disk data probe.
         This probe will get certain data pieces such as disk usage,
@@ -273,7 +273,7 @@ class DynamicDiskProbe(Probe):
             """
 
             # Setup the base object
-            Probe.__init__(
+            HostProbe.__init__(
                 self,
                 self.name,
                 queue,

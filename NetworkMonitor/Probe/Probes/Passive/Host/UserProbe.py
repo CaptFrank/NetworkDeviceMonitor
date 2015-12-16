@@ -1,12 +1,12 @@
 """
 
-    :MemoryProbe:
+    :UserProbe:
     ==========
 
     :
-    This is the memory monitoring probe.
-    This probe reports on a recurring basis
-    the memory usage of a host.
+    This is the user probe that gets all
+    users on a system. We use this probe to gain
+    a comprehensive view of who is on the system.
     :
 
     :copyright: (c) 10/23/2015 by gammaRay.
@@ -25,8 +25,8 @@ Imports
 
 import gc
 import psutil
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.HostProbe \
+    import HostProbe, PLACEHOLDER
 
 """
 =============================================
@@ -45,31 +45,30 @@ Source
 =============================================
 """
 
-class MemoryProbe(Probe):
+class UserProbe(HostProbe):
     """
-    This is the memory probing monitor. It
-    gets the memory usage of a host that runs this probe.
+    This is the user probe that scans what users are on
+    a specific system.
 
     extends: Probe
     """
 
     # The class name
-    name        = "MemoryProbe"
+    name        = "UserProbe"
 
     # The probe type
-    type        = "Memory"
+    type        = "Users"
 
     # Description
     description = \
-    "Gets the memory usage of where the probe is running."
+    "Gets the users on the probe that is running."
 
     # Fields for filtering
     fields      = []
 
     # Groups
     groups      = [
-        "memory",
-        "performance",
+        "users",
         "reconnaissance"
     ]
 
@@ -83,7 +82,7 @@ class MemoryProbe(Probe):
     data        = {}
 
     # Continuous flag
-    continuous  = True
+    continuous  = False
 
     def __init__(self, queue):
         """
@@ -93,7 +92,7 @@ class MemoryProbe(Probe):
         """
 
         # Setup the class object
-        Probe.__init__(
+        HostProbe.__init__(
             self,
             self.name,
             queue,
@@ -135,27 +134,8 @@ class MemoryProbe(Probe):
             {
                 "definition"    : self.set_definition(),
                 "data"          : {
-                    {
-                        "virtual"   : {
-                            "total"     : PLACEHOLDER,
-                            "available" : PLACEHOLDER,
-                            "percent"   : PLACEHOLDER,
-                            "used"      : PLACEHOLDER,
-                            "free"      : PLACEHOLDER,
-                            "active"    : PLACEHOLDER,
-                            "inactive"  : PLACEHOLDER,
-                            "buffers"   : PLACEHOLDER,
-                            "cached"    : PLACEHOLDER,
-                        },
-                        "swap"      : {
-                            "total"     : PLACEHOLDER,
-                            "used"      : PLACEHOLDER,
-                            "free"      : PLACEHOLDER,
-                            "percent"   : PLACEHOLDER,
-                            "sin"       : PLACEHOLDER,
-                            "sout"      : PLACEHOLDER
-                        }
-                    }
+                    "users"     : PLACEHOLDER,
+                    "boot"      : PLACEHOLDER
                 }
             }
         )
@@ -189,26 +169,26 @@ class MemoryProbe(Probe):
                     )
                     return results
 
-            # Get mem usage
-            vmem = tuple_to_dict(
-                psutil.virtual_memory()
-            )
+            # Get partitions
+            users = [
+                tuple_to_dict(
+                    item
+                ) for item in psutil.users()
+            ]
 
-            swap = tuple_to_dict(
-                psutil.swap_memory()
-            )
+            boot_time = psutil.boot_time()
 
             template = self.get_template()
             data = template['data']
             data.update(
                 {
-                    "virtual"    : vmem
+                    "users"    : users
                 }
             )
             data = template['data']
             data.update(
                 {
-                    "swap"       : swap
+                    "boot"     : boot_time
                 }
             )
 
@@ -227,7 +207,7 @@ class MemoryProbe(Probe):
             # Delete the temp objects
             del template,   \
                 data,       \
-                vmem,       \
-                swap
+                users,      \
+                boot_time
             gc.collect()
             return

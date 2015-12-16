@@ -24,8 +24,8 @@ Imports
 
 import gc
 import psutil
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.HostProbe \
+    import HostProbe, PLACEHOLDER
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 
@@ -46,7 +46,7 @@ Source
 =============================================
 """
 
-class StaticIfaceProbe(Probe):
+class StaticIfaceProbe(HostProbe):
     """
     This is the user probe that scans what interface are on
     a specific system.
@@ -93,7 +93,7 @@ class StaticIfaceProbe(Probe):
         """
 
         # Setup the class object
-        Probe.__init__(
+        HostProbe.__init__(
             self,
             self.name,
             queue,
@@ -192,7 +192,7 @@ class StaticIfaceProbe(Probe):
             gc.collect()
             return
 
-class DynamicIfaceProbe(Probe):
+class DynamicIfaceProbe(HostProbe):
     """
     This is the user probe that scans what interface are on
     a specific system.
@@ -239,7 +239,7 @@ class DynamicIfaceProbe(Probe):
         """
 
         # Setup the class object
-        Probe.__init__(
+        HostProbe.__init__(
             self,
             self.name,
             queue,

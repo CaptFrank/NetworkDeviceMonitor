@@ -24,8 +24,8 @@ Imports
 
 import gc
 import platform
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.HostProbe \
+    import HostProbe, PLACEHOLDER
 
 """
 =============================================
@@ -44,7 +44,7 @@ Source
 =============================================
 """
 
-class PlatformProbe(Probe):
+class PlatformProbe(HostProbe):
     """
     This is the platform probe that gets the
     platform that is used to run this probe.
@@ -91,7 +91,7 @@ class PlatformProbe(Probe):
         """
 
         # Setup the class object
-        Probe.__init__(
+        HostProbe.__init__(
             self,
             self.name,
             queue,

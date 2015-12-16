@@ -25,8 +25,8 @@ Imports
 import gc
 import time
 import psutil
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.HostProbe \
+    import HostProbe, PLACEHOLDER
 
 """
 =============================================
@@ -45,7 +45,7 @@ Source
 =============================================
 """
 
-class CPUProbe(Probe):
+class CPUProbe(HostProbe):
     """
     This is the CPU load, utilisation probe object.
     We use this object as a reoccurring object that
@@ -98,7 +98,7 @@ class CPUProbe(Probe):
         """
 
         # Setup the class object
-        Probe.__init__(
+        HostProbe.__init__(
             self,
             self.name,
             queue,

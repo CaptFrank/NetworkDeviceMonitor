@@ -5,11 +5,11 @@
 
     :description:
 
-    :copyright: (c) 10/23/2015 by fpapinea.
+    :copyright: (c) 10/23/2015 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
-    Author:         fpapinea
-    Version:        :version: #TODO
+    Author:         gammaRay
+    Version:        :1.0:
     Date:           10/23/2015
 """
 
