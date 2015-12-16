@@ -174,10 +174,11 @@ class PlatformProbe(Probe):
 
         template = self.get_template()
         data = template['data']
-        data = data.update(
+        data.update(
             results
         )
-        data = data.update(
+        data = template['data']
+        data.update(
            {
                "architecture" : platform.architecture()
            }

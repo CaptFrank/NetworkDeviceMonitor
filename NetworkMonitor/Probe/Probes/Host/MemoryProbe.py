@@ -200,12 +200,13 @@ class MemoryProbe(Probe):
 
             template = self.get_template()
             data = template['data']
-            data = data.update(
+            data.update(
                 {
                     "virtual"    : vmem
                 }
             )
-            data = data.update(
+            data = template['data']
+            data.update(
                 {
                     "swap"       : swap
                 }

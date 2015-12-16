@@ -137,16 +137,14 @@ class StaticDiskProbe(Probe):
                 {
                     "definition"    : self.get_definition(),
                     "data"          : {
-                        {
-                            "partitions"    : [],
-                            "usage"         : {
-                                "path"      : "/",
-                                "total"     : PLACEHOLDER,
-                                "used"      : PLACEHOLDER,
-                                "free"      : PLACEHOLDER,
-                                "percent"   : PLACEHOLDER
-                            },
-                        }
+                        "partitions"    : [],
+                        "usage"         : {
+                            "path"      : "/",
+                            "total"     : PLACEHOLDER,
+                            "used"      : PLACEHOLDER,
+                            "free"      : PLACEHOLDER,
+                            "percent"   : PLACEHOLDER,
+                        },
                     }
                 }
             )
@@ -169,16 +167,15 @@ class StaticDiskProbe(Probe):
 
             # Tuple to dict
             def tuple_to_dict(tuple):
-                with tuple as data:
-                    results = dict(
-                        zip(
-                            data._fields,
-                            list(
-                                data
-                            )
+                results = dict(
+                    zip(
+                        tuple._fields,
+                        list(
+                            tuple
                         )
                     )
-                    return results
+                )
+                return results
 
             # Get partitions
             partitions = [
@@ -197,12 +194,13 @@ class StaticDiskProbe(Probe):
 
             template = self.get_template()
             data = template['data']
-            data = data.update(
+            data.update(
                 {
                     "partitions"    : partitions
                 }
             )
-            data = data.update(
+            data = template['data']
+            data.update(
                 {
                     "usage"         : usage
                 }
@@ -356,16 +354,15 @@ class DynamicDiskProbe(Probe):
 
             # Tuple to dict
             def tuple_to_dict(tuple):
-                with tuple as data:
-                    results = dict(
-                        zip(
-                            data._fields,
-                            list(
-                                data
-                            )
+                results = dict(
+                    zip(
+                        tuple._fields,
+                        list(
+                            tuple
                         )
                     )
-                    return results
+                )
+                return results
 
             usage = tuple_to_dict(
                 psutil.disk_usage(
@@ -379,12 +376,13 @@ class DynamicDiskProbe(Probe):
 
             template = self.get_template()
             data = template['data']
-            data = data.update(
+            data.update(
                 {
                     "io"            : io
                 }
             )
-            data = data.update(
+            data = template['data']
+            data.update(
                 {
                     "usage"         : usage
                 }

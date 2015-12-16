@@ -222,9 +222,11 @@ class CPUProbe(Probe):
         data['users'] = data['users'].update(
             users
         )
+        data = template['data']
         data['cpu'].update(
             counts
         )
+        data = template['data']
         data['usage'].update(
             usage
         )

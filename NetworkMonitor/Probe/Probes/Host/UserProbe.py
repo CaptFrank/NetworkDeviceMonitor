@@ -180,12 +180,13 @@ class UserProbe(Probe):
 
             template = self.get_template()
             data = template['data']
-            data = data.update(
+            data.update(
                 {
                     "users"    : users
                 }
             )
-            data = data.update(
+            data = template['data']
+            data.update(
                 {
                     "boot"     : boot_time
                 }

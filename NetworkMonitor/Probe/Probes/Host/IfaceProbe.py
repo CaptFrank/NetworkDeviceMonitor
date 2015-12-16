@@ -169,6 +169,7 @@ class StaticIfaceProbe(Probe):
             data['ifaddrs'] = data['ifaddrs'].update(
                 address
             )
+            data = template['data']
             data['ifstats'].update(
                 stats
             )
@@ -318,9 +319,11 @@ class DynamicIfaceProbe(Probe):
             data['counter'] = data['ifaddrs'].update(
                 counters
             )
+            data = template['data']
             data['cnxs'].update(
                 connections
             )
+            data = template['data']
             data['netstats'].update(
                 stats
             )
