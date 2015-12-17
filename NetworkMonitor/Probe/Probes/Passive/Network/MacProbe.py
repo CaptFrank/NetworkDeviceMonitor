@@ -24,6 +24,10 @@ Imports
 =============================================
 """
 
+import gc
+from NetworkMonitor.Probe.NetworkProbe \
+    import NetworkProbe
+
 """
 =============================================
 Constants
@@ -37,12 +41,15 @@ __date__    =   "9/28/2015"
 
 """
 =============================================
-Variables
-=============================================
-"""
-
-"""
-=============================================
 Source
 =============================================
 """
+class MacProbe(NetworkProbe):
+    """
+    This is the MAC probe that will be used to poll
+    the network interface and sniff out the MAC addresse.
+    Then is reports them in the data record sent to the
+    message engine.
+
+    extends: NetworkProbe
+    """
