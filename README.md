@@ -11,4 +11,5 @@ Some of the features that are included include:
 - Real time device monitoring
 - Real time device control
 - Real time device analysis
+- Testing CI
 
