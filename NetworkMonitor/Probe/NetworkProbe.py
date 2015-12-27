@@ -72,7 +72,15 @@ class NetworkProbe(MutableProbe):
         "passive"  : PassiveNetworkProbe
     }
 
-    def __init__(self, type, queue):
+    # Probe table
+    __probe_table   = {
+        # Probe type -- Probe Function
+    }
+
+    # Iface that is used to sniff
+    __iface         = None
+
+    def __init__(self, type, iface, queue):
         """
         This is the constructor that will set the self
         object to the appropriate object type.
@@ -85,6 +93,40 @@ class NetworkProbe(MutableProbe):
         # Override the class
         MutableProbe.__init__(self, self.__types)
 
+        # Set the iface
+        self.__iface = iface
+
         # Run the object
         self.run(type, queue)
+        return
+
+    def _run(self, probe_table):
+        """
+        This is the general running mechanism.
+
+        :param probe_table: The probing execution tables.
+        :return:
+        """
+
+        # TODO Scapy -- integration -- sniff
+        sniff()
+        return
+
+    def _register(self, type, func):
+        """
+        This registers a function based on the type of monitor that
+        is needed.
+
+        :param type:        The type of monitor needed
+        :param func:        The function callback to call when an event it triggered.
+        :return:
+        """
+
+        # Update the probe table
+        self.__probe_table.update(
+            {
+                # Type name, Type callback function
+                type, func
+            }
+        )
         return
