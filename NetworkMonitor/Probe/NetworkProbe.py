@@ -10,7 +10,6 @@
     to act upon the accurately match packet type.
     :
 
-
     :copyright: (c) 10/23/2015 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
@@ -24,13 +23,10 @@
 Imports
 =============================================
 """
-
+from scapy.all import *
+from abc import abstractmethod
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
-from NetworkMonitor.Probe.Probes.Active.ActiveNetworkProbe \
-    import ActiveNetworkProbe
-from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
-    import PassiveNetworkProbe
 
 """
 =============================================
@@ -61,15 +57,9 @@ class NetworkProbe(MutableProbe):
 
     extends: MutableProbe
     """
-    """
-    This the disk probe container that contains both the
-    static probe and the dynamic probing agents.
-    """
 
     # Check the probe types
     __types         = {
-        "active"   : ActiveNetworkProbe,
-        "passive"  : PassiveNetworkProbe
     }
 
     # Probe table
@@ -100,7 +90,18 @@ class NetworkProbe(MutableProbe):
         self.run(type, queue)
         return
 
-    def _run(self, probe_table):
+    @abstractmethod
+    def execute(self, packet):
+        """
+        This is the execution method for tha passive
+        probes.
+
+        :param packet:
+        :return:
+        """
+        raise NotImplemented
+
+    def _run(self):
         """
         This is the general running mechanism.
 
@@ -108,25 +109,61 @@ class NetworkProbe(MutableProbe):
         :return:
         """
 
-        # TODO Scapy -- integration -- sniff
-        sniff()
+        sniff(
+            iface = self.__iface,
+            prn = self.__process
+        )
         return
 
-    def _register(self, type, func):
+    def _register_type(self, type, obj):
+        """
+        This registers the probe type
+
+        :param type:        The type of monitor needed -- The layer triggered on it.
+        :param obj:         The object callback to call when an event it triggered.
+        :return:
+        """
+        self.__types.update(
+
+            # This registers the probe type
+            {
+                type, obj
+            }
+        )
+        return
+
+    def _register_probe(self, type, obj):
         """
         This registers a function based on the type of monitor that
         is needed.
 
-        :param type:        The type of monitor needed
-        :param func:        The function callback to call when an event it triggered.
+        :param type:        The type of monitor needed -- The layer triggered on it.
+        :param obj:         The object callback to call when an event it triggered.
         :return:
         """
 
         # Update the probe table
         self.__probe_table.update(
             {
-                # Type name, Type callback function
-                type, func
+                # Type name, Type callback object
+                type, obj
             }
         )
+        return
+
+    def __process(self, packet):
+        """
+        This is the processing method that is used to process the
+        packets in order to filter and create reports internally.
+
+        :packet:            The packet that was sniffed
+        :return:
+        """
+
+        # Cycle through the probe table
+        for probe in self.__probe_table.keys():
+
+            # Screen the probes....
+            if packet.haslayer(probe):
+                self.__probe_table[probe].execute(packet)
         return

@@ -1,16 +1,19 @@
 """
 
-    :name:
+    :PassiveNetworkProbe:
     ==========
 
-    :description:
+    :
+    This is the passive networking probe.
+    We use this to probe the traffic in a passive methodology.
+    :
 
-    :copyright: (c) 12/16/2015 by fpapinea.
+    :copyright: (c) 10/23/2015 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
-    Author:         fpapinea
-    Version:        :version: #TODO
-    Date:           12/16/2015
+    Author:         gammaRay
+    Version:        :1.0:
+    Date:           10/23/2015
 """
 
 """
@@ -19,9 +22,10 @@ Imports
 =============================================
 """
 
-import gc
 from NetworkMonitor.Probe.Probe \
     import Probe, PLACEHOLDER
+from NetworkMonitor.Probe.NetworkProbe \
+    import NetworkProbe
 
 """
 =============================================
@@ -40,8 +44,32 @@ Source
 =============================================
 """
 
-class PassiveNetworkProbe(Probe):
+class PassiveNetworkProbe(NetworkProbe):
+    """
+    This is the derivative of the network probe and allows
+    the network probe to be setup, ran and returned.
 
-    def __init__(self):
+    This serves as an abstract class.
 
+    extends: Network Probe
+    """
+
+    def __init__(self, type, iface, queue):
+        """
+        This is the constructor that will set the self
+        object to the appropriate object type.
+
+        :param type:        Probe type
+        :param queue:       Application queue
+        :return:
+        """
+
+        # Override the class
+        NetworkProbe.__init__(self, type, iface, queue)
+
+        # Register the type
+        self._register_type(
+            "passive",
+            self
+        )
         return
