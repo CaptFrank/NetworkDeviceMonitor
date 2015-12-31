@@ -22,8 +22,6 @@ Imports
 =============================================
 """
 
-from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
 from NetworkMonitor.Probe.NetworkProbe \
     import NetworkProbe
 
@@ -65,11 +63,10 @@ class PassiveNetworkProbe(NetworkProbe):
         """
 
         # Override the class
-        NetworkProbe.__init__(self, type, iface, queue)
+        NetworkProbe.__init__(self, "passive", iface, queue)
 
-        # Register the type
-        self._register_type(
-            "passive",
-            self
+        # Register the probe type
+        self._register_probe(
+            type, self
         )
         return

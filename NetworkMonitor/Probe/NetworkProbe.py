@@ -23,6 +23,7 @@
 Imports
 =============================================
 """
+
 from scapy.all import *
 from abc import abstractmethod
 from NetworkMonitor.Probe.MutableProbe \
@@ -55,7 +56,7 @@ class NetworkProbe(MutableProbe):
     It is mutable to be made into an active or passive
     probing agent.
 
-    extends: MutableProbe
+    extends: MutableProbe, Threads
     """
 
     # Check the probe types
@@ -75,7 +76,7 @@ class NetworkProbe(MutableProbe):
         This is the constructor that will set the self
         object to the appropriate object type.
 
-        :param type:        Probe type
+        :param type:        Probe type Active / Passive
         :param queue:       Application queue
         :return:
         """
@@ -101,6 +102,17 @@ class NetworkProbe(MutableProbe):
         """
         raise NotImplemented
 
+    @abstractmethod
+    def report(self, data):
+        """
+        This is the default reporting mechanism for the network
+        probes.
+
+        :param data:
+        :return:
+        """
+        raise NotImplemented
+
     def _run(self):
         """
         This is the general running mechanism.
@@ -112,23 +124,6 @@ class NetworkProbe(MutableProbe):
         sniff(
             iface = self.__iface,
             prn = self.__process
-        )
-        return
-
-    def _register_type(self, type, obj):
-        """
-        This registers the probe type
-
-        :param type:        The type of monitor needed -- The layer triggered on it.
-        :param obj:         The object callback to call when an event it triggered.
-        :return:
-        """
-        self.__types.update(
-
-            # This registers the probe type
-            {
-                type, obj
-            }
         )
         return
 
@@ -146,7 +141,10 @@ class NetworkProbe(MutableProbe):
         self.__probe_table.update(
             {
                 # Type name, Type callback object
-                type, obj
+                type : {
+                    'layer' : obj.layer,
+                    'object': obj
+                }
             }
         )
         return
@@ -163,7 +161,13 @@ class NetworkProbe(MutableProbe):
         # Cycle through the probe table
         for probe in self.__probe_table.keys():
 
+            # Get the layer
+            layer = self.__probe_table[probe]['layer']
+            object = self.__probe_table[probe]['object']
+
             # Screen the probes....
-            if packet.haslayer(probe):
-                self.__probe_table[probe].execute(packet)
+            if packet.haslayer(layer):
+                object.execute(
+                    packet
+                )
         return
