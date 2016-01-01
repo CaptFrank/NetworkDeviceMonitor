@@ -102,9 +102,22 @@ class IpProbe(PassiveNetworkProbe):
         return
 
     def __correlate_ip(self, packet):
+        """
+        This is the correlation algorithm that will look at the databases and
+        check either the registry or the black list.
+
+        :param packet:
+        :return:
+        """
 
         return
 
     def __register_db(self, db):
+        """
+        This is the registration engine that will register the ips from sniffed
+        packets.
 
+        :param db:
+        :return:
+        """
         return
