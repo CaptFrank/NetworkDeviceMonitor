@@ -37,7 +37,8 @@ Constants
 """ The supported configs extensions """
 SUPPORTED_EXT   = [
     '.ext',
-    '.net'
+    '.net',
+    '.setup'
 ]
 
 """

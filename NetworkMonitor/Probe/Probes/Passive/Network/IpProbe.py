@@ -24,6 +24,11 @@ Imports
 =============================================
 """
 
+from netaddr import *
+from NetworkMonitor.Base.Reader import \
+    Reader
+from NetworkMonitor.Storage.ProbeDb import \
+    ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
     import PassiveNetworkProbe
 
@@ -57,21 +62,43 @@ class IpProbe(PassiveNetworkProbe):
     extends: PassiveNetworkProbe
     """
 
+    # ====================
+    # Public
+    # ====================
+
     # Probe type
-    type      = 'IpProbe'
+    type            = 'IpProbe'
 
     # Layer filter
-    layer     = 'IP'
+    layer           = 'IP'
 
-    def __init__(self, iface, queue):
+    # ====================
+    # Private
+    # ====================
+
+    # Config Reader
+    __reader        = None
+
+    # Database
+    __database      = None
+
+    # Metrics
+    __packets_read   = 0
+
+
+    def __init__(self, iface, queue, file=None):
         """
         This is the default constructor for the class.
         We supply the iface and the queue.
 
         :param iface:       The iface that needs to be monitored
         :param queue:       The application queue
+        :param file:        A file that contains the known ips
         :return:
         """
+
+        # Setup the probe db.
+        self.__setup_db(file)
 
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
@@ -86,9 +113,13 @@ class IpProbe(PassiveNetworkProbe):
         """
         Execute the filter / probe.
 
-        :param packet:
+        :param packet:      The packet that has been read
         :return:
         """
+
+        # Update the metrics
+        self.__packets_read += 1
+
         return
 
     def report(self, data):
@@ -101,6 +132,34 @@ class IpProbe(PassiveNetworkProbe):
         """
         return
 
+    def __setup_db(self, file):
+        """
+        Setup the probe specific database.
+
+        :param file:        The config file
+        :return:
+        """
+        # Create a database
+        self.__database = ProbeDb()
+
+        # Read the file and the known ips
+        if file is not None:
+
+            # We have a valid list read the configs
+            self.__reader = Reader()
+            configs = self.__reader.read(
+                file
+            )
+
+            # Convert to dict
+            configs_dict = dict(configs)
+
+            # Create a db with the known ips
+            self.__database.setup_db(
+                configs_dict['IP']
+            )
+        return
+
     def __correlate_ip(self, packet):
         """
         This is the correlation algorithm that will look at the databases and
@@ -110,14 +169,4 @@ class IpProbe(PassiveNetworkProbe):
         :return:
         """
 
-        return
-
-    def __register_db(self, db):
-        """
-        This is the registration engine that will register the ips from sniffed
-        packets.
-
-        :param db:
-        :return:
-        """
         return

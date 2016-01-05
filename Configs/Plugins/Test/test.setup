@@ -1,0 +1,13 @@
+# This is an example file that will setup the test
+# plugin within this framework. All sections of the following
+# config pertain to an application that is run inside the plugin.
+
+# We need to configure the IP probe within the test plugin.
+[IP]
+
+    # All we need to provide is the known IPs to have the
+    # alert system work.
+
+    known   = [
+                10.0.1.2,
+              ]

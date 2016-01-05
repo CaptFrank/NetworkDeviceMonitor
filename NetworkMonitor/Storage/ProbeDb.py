@@ -25,9 +25,9 @@ Imports
 """
 
 from tinydb import \
-    TinyDB, where
+    TinyDB
 from tinydb.storages import \
-    MemoryStorage,JSONStorage
+    MemoryStorage
 
 """
 =============================================
@@ -59,13 +59,7 @@ class ProbeDb(TinyDB):
     extends: TinyDB
     """
 
-    # Plugin association
-    __plugin_name   = None
-
-    # Probe association
-    __probe_name    = None
-
-    def __init__(self, plugin_name, probe_name):
+    def __init__(self):
         """
         This is the constructor for the class.
 
@@ -75,10 +69,53 @@ class ProbeDb(TinyDB):
         """
 
         # Override the base class
-        TinyDB.__init__(self, storage=MemoryStorage)
+        TinyDB.__init__(
+            self,
+            storage=MemoryStorage
+        )
+        return
 
-        # Set the names to this object.
-        self.__plugin_name = plugin_name
-        self.__probe_name = probe_name
+    def setup_db(self, data):
+        """
+        Sets up the database with either no data
+        or with passed data.
 
+        The data needs to be formatted in a dict form.
+        i.e.
+            data = {
+                    "table 1" : {
+                        "data 1" : data,
+                        "data 2" : data
+                        },
+                    "table 2" : {
+                        "data 1" : data,
+                        "data 2" : data
+                        }
+                    }
 
+        :param data:            The data needed to start the database
+        :return:
+        """
+
+        # If there is no data return
+        if data is None:
+            return
+
+        # Setup the tables and data
+        for name in data.keys():
+            table = self.table(
+                name
+            )
+
+            # Setup data
+            for key, data in zip(
+                    data['table'].keys(),
+                    data['table'].values()
+            ):
+                table.insert(
+                    {
+                        key,
+                        data
+                    }
+                )
+        return

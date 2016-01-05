@@ -20,7 +20,7 @@
     name            = TEST
 
     # This is the location of the plugin.
-    location        = DEFAULT
+    location        = "./Configs/Plugins/Test"
 
     # This is the host node comms definitions.
     # This section will define the interfaces where the subscriber
