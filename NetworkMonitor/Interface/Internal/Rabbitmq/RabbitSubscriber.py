@@ -102,6 +102,9 @@ class NodeConsumer(Process):
     # The apps that are needed to run
     __apps              = []
 
+    # The logstash queue
+    __queue             = None
+
     # =============================
     # Attributes
 

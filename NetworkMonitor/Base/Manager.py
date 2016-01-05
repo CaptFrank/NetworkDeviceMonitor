@@ -273,7 +273,7 @@ class Manager(PluginManager):
         This is the configs loading method for the plugin manager.
 
         :param workspace:       The workspace where the plugins would be
-                                located. Typically [./NetworkDeviceMonitor/App]
+                                located. Typically [./NetworkDeviceMonitor/Configs/App]
         :return:
         """
 
@@ -392,6 +392,7 @@ class Manager(PluginManager):
                             "Location: %s"
                             %plugin['location']
                         )
+
                         plugins.append(
                             plugin
                         )

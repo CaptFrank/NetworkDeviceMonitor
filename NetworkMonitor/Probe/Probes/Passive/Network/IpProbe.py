@@ -132,32 +132,20 @@ class IpProbe(PassiveNetworkProbe):
         """
         return
 
-    def __setup_db(self, file):
+    def __setup_db(self):
         """
         Setup the probe specific database.
-
-        :param file:        The config file
         :return:
         """
         # Create a database
         self.__database = ProbeDb()
 
-        # Read the file and the known ips
-        if file is not None:
+        #
 
-            # We have a valid list read the configs
-            self.__reader = Reader()
-            configs = self.__reader.read(
-                file
-            )
-
-            # Convert to dict
-            configs_dict = dict(configs)
-
-            # Create a db with the known ips
-            self.__database.setup_db(
-                configs_dict['IP']
-            )
+        # Create a db with the known ips
+        self.__database.setup_db(
+            configs_dict['IP']
+        )
         return
 
     def __correlate_ip(self, packet):

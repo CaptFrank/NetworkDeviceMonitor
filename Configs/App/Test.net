@@ -150,5 +150,21 @@
                 # with a base64 encoder. [Default = unencoded password 'test']
                 password    = 'dGVzdA==' # test
 
+        # This is the optional configuration for the plugin.
+        # This plugin uses and instantiates an ip probe. These configs
+        # are to make sure the ip probe itself is setup appropriately.
+        [[[IP]]]
+
+            # All we need to provide is the known IPs to have the
+            # alert system work.
+            known       = 10.0.1.1, 10.0.1.2
+
+            # We tell the probe database engine to persist the cached data.
+            # Turning this flag to True will save all registered IPs and known
+            # IPs.
+            save        = True
+
+
+
 
 

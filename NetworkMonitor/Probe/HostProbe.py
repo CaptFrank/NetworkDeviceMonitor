@@ -40,8 +40,6 @@ __author__  =   "gammaRay"
 __version__ =   "1.0"
 __date__    =   "9/28/2015"
 
-PLACEHOLDER =   ""
-
 """
 =============================================
 Source
@@ -50,7 +48,7 @@ Source
 
 class HostProbe(Probe):
     """
-    This is just a namespace thing... We dont actually define
+    This is just a namespace thing... We don't actually define
     anything in this class.
     """
     pass

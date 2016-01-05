@@ -93,6 +93,9 @@ class Plugin(Process):
 
     }
 
+    # The logstash reference
+    __logstash          = None
+
     # The main subscriber...
     __subscriber        = None
 
@@ -102,6 +105,7 @@ class Plugin(Process):
 
         :param name:            The plugin name
         :param tag:             The plugin category
+        :param logstash:        The logstash process handle
         :return:
         """
 
@@ -227,6 +231,7 @@ class Plugin(Process):
 
     def register(self, name, entry, configs):
         """
+        Register the application within the plugin.
 
         :param name:                The name of the app
         :param entry:               The entry point of the app

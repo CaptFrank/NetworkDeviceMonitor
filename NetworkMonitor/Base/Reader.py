@@ -122,7 +122,6 @@ class Reader(Singleton):
             # Go through the file one after another
             for file in files:
 
-
                 # Check the extension
                 if self.__check_extension(file):
                     self._logger.info("\t Found config: %s" %file)

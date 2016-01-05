@@ -192,12 +192,11 @@ class LogStashForwarder(Process):
         self.__alive = False
         return
 
-    def add(self, message, id):
+    def add(self, message):
         """
         Adds a message to the sender queue.
 
         :param message:             The message payload
-        :param id:                  The tracking id
         :return:
         """
 
