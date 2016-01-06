@@ -26,7 +26,8 @@ Imports
 import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 
 """
 =============================================
@@ -50,7 +51,7 @@ class MemoryProbe(HostProbe):
     This is the memory probing monitor. It
     gets the memory usage of a host that runs this probe.
 
-    extends: Probe
+    extends: HostProbe
     """
 
     # The class name
@@ -127,8 +128,8 @@ class MemoryProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
@@ -137,23 +138,23 @@ class MemoryProbe(HostProbe):
                 "data"          : {
                     {
                         "virtual"   : {
-                            "total"     : PLACEHOLDER,
-                            "available" : PLACEHOLDER,
-                            "percent"   : PLACEHOLDER,
-                            "used"      : PLACEHOLDER,
-                            "free"      : PLACEHOLDER,
-                            "active"    : PLACEHOLDER,
-                            "inactive"  : PLACEHOLDER,
-                            "buffers"   : PLACEHOLDER,
-                            "cached"    : PLACEHOLDER,
+                            "total"     : PLACEHOLDER_STRING,
+                            "available" : PLACEHOLDER_STRING,
+                            "percent"   : PLACEHOLDER_STRING,
+                            "used"      : PLACEHOLDER_STRING,
+                            "free"      : PLACEHOLDER_STRING,
+                            "active"    : PLACEHOLDER_STRING,
+                            "inactive"  : PLACEHOLDER_STRING,
+                            "buffers"   : PLACEHOLDER_STRING,
+                            "cached"    : PLACEHOLDER_STRING,
                         },
                         "swap"      : {
-                            "total"     : PLACEHOLDER,
-                            "used"      : PLACEHOLDER,
-                            "free"      : PLACEHOLDER,
-                            "percent"   : PLACEHOLDER,
-                            "sin"       : PLACEHOLDER,
-                            "sout"      : PLACEHOLDER
+                            "total"     : PLACEHOLDER_STRING,
+                            "used"      : PLACEHOLDER_STRING,
+                            "free"      : PLACEHOLDER_STRING,
+                            "percent"   : PLACEHOLDER_STRING,
+                            "sin"       : PLACEHOLDER_STRING,
+                            "sout"      : PLACEHOLDER_STRING
                         }
                     }
                 }

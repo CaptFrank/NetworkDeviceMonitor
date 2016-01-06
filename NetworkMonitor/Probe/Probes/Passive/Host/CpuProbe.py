@@ -26,7 +26,8 @@ import gc
 import time
 import psutil
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 
 """
 =============================================
@@ -132,8 +133,8 @@ class CPUProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
@@ -141,25 +142,25 @@ class CPUProbe(HostProbe):
                 "definition"    : self.set_definition(),
                 "data"          : {
                     "users"     : {
-                        "user"      : PLACEHOLDER,
-                        "system"    : PLACEHOLDER,
-                        "idle"      : PLACEHOLDER,
-                        "nice"      : PLACEHOLDER,
-                        "iowait"    : PLACEHOLDER,
-                        "irq"       : PLACEHOLDER,
-                        "softirq"   : PLACEHOLDER,
-                        "steal"     : PLACEHOLDER,
-                        "guest"     : PLACEHOLDER,
-                        "guest_nice": PLACEHOLDER,
+                        "user"      : PLACEHOLDER_STRING,
+                        "system"    : PLACEHOLDER_STRING,
+                        "idle"      : PLACEHOLDER_STRING,
+                        "nice"      : PLACEHOLDER_STRING,
+                        "iowait"    : PLACEHOLDER_STRING,
+                        "irq"       : PLACEHOLDER_STRING,
+                        "softirq"   : PLACEHOLDER_STRING,
+                        "steal"     : PLACEHOLDER_STRING,
+                        "guest"     : PLACEHOLDER_STRING,
+                        "guest_nice": PLACEHOLDER_STRING,
                     },
                     "usage"     : {
-                        "percentage": PLACEHOLDER,
-                        "interval"  : PLACEHOLDER,
-                        "load"      : PLACEHOLDER
+                        "percentage": PLACEHOLDER_STRING,
+                        "interval"  : PLACEHOLDER_STRING,
+                        "load"      : PLACEHOLDER_STRING
                     },
                     "cpu"       : {
-                        "count"     : PLACEHOLDER,
-                        "logical"   : PLACEHOLDER
+                        "count"     : PLACEHOLDER_STRING,
+                        "logical"   : PLACEHOLDER_STRING
                     }
                 }
             }
@@ -279,7 +280,7 @@ class CPUProbe(HostProbe):
                 "name": "Load Average 1min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": PLACEHOLDER,
+                "customunit": PLACEHOLDER_STRING,
                 "value": float(
                     data[0]
                 )
@@ -288,7 +289,7 @@ class CPUProbe(HostProbe):
                 "name": "Load Average 5min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": PLACEHOLDER,
+                "customunit": PLACEHOLDER_STRING,
                 "value": float(
                     data[1]
                 )
@@ -297,7 +298,7 @@ class CPUProbe(HostProbe):
                 "name": "Load Average 10min",
                 "mode": "float",
                 "kind": "Custom",
-                "customunit": PLACEHOLDER,
+                "customunit": PLACEHOLDER_STRING,
                 "value": float(
                     data[2]
                 )

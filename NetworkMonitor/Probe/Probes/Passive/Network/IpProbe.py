@@ -139,13 +139,6 @@ class IpProbe(PassiveNetworkProbe):
         """
         # Create a database
         self.__database = ProbeDb()
-
-        #
-
-        # Create a db with the known ips
-        self.__database.setup_db(
-            configs_dict['IP']
-        )
         return
 
     def __correlate_ip(self, packet):

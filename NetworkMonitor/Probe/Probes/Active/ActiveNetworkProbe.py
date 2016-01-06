@@ -21,7 +21,7 @@ Imports
 
 import gc
 from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+    import Probe, PLACEHOLDER_STRING
 
 """
 =============================================

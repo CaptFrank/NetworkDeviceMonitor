@@ -40,7 +40,9 @@ __author__  =   "gammaRay"
 __version__ =   "1.0"
 __date__    =   "9/28/2015"
 
-PLACEHOLDER =   ""
+PLACEHOLDER_STRING =    ""
+PLACEHOLDER_ARRAY  =    []
+PLACEHOLDER_DICT   =    {}
 
 """
 =============================================

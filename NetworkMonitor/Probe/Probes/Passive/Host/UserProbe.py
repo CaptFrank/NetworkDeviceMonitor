@@ -26,7 +26,8 @@ Imports
 import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 
 """
 =============================================
@@ -126,16 +127,16 @@ class UserProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
             {
                 "definition"    : self.set_definition(),
                 "data"          : {
-                    "users"     : PLACEHOLDER,
-                    "boot"      : PLACEHOLDER
+                    "users"     : PLACEHOLDER_STRING,
+                    "boot"      : PLACEHOLDER_STRING
                 }
             }
         )

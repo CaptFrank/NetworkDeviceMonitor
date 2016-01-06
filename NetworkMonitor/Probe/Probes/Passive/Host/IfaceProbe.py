@@ -25,7 +25,8 @@ Imports
 import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 
@@ -127,16 +128,16 @@ class StaticIfaceProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        :PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
             {
                 "definition"    : self.get_definition(),
                 "data"          : {
-                    "ifaddrs"   : PLACEHOLDER,
-                    "ifstats"   : PLACEHOLDER
+                    "ifaddrs"   : PLACEHOLDER_STRING,
+                    "ifstats"   : PLACEHOLDER_STRING
                 }
             }
         )
@@ -281,9 +282,9 @@ class DynamicIfaceProbe(HostProbe):
             {
                 "definition"    : self.set_definition(),
                 "data"          : {
-                    "counter"   : PLACEHOLDER,
-                    "cnxs"      : PLACEHOLDER,
-                    "netstats"  : PLACEHOLDER,
+                    "counter"   : PLACEHOLDER_STRING,
+                    "cnxs"      : PLACEHOLDER_STRING,
+                    "netstats"  : PLACEHOLDER_STRING,
                 }
             }
         )

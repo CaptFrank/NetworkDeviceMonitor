@@ -25,7 +25,8 @@ Imports
 import gc
 import platform
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 
 """
 =============================================
@@ -125,8 +126,8 @@ class PlatformProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
@@ -134,13 +135,13 @@ class PlatformProbe(HostProbe):
                 "definition"    : self.set_definition(),
                 "data"          : {
                     {
-                        "system"        : PLACEHOLDER,
-                        "node"          : PLACEHOLDER,
-                        "release"       : PLACEHOLDER,
-                        "version"       : PLACEHOLDER,
-                        "machine"       : PLACEHOLDER,
-                        "processor"     : PLACEHOLDER,
-                        "architecture"  : PLACEHOLDER,
+                        "system"        : PLACEHOLDER_STRING,
+                        "node"          : PLACEHOLDER_STRING,
+                        "release"       : PLACEHOLDER_STRING,
+                        "version"       : PLACEHOLDER_STRING,
+                        "machine"       : PLACEHOLDER_STRING,
+                        "processor"     : PLACEHOLDER_STRING,
+                        "architecture"  : PLACEHOLDER_STRING,
                     }
                 }
             }

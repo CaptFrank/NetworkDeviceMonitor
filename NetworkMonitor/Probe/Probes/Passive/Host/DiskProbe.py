@@ -29,7 +29,8 @@ Imports
 import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
-    import HostProbe, PLACEHOLDER
+    import HostProbe, PLACEHOLDER_STRING, \
+    PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 
@@ -129,21 +130,21 @@ class StaticDiskProbe(HostProbe):
                     "default"       : "yes",
                     "help"          : self.description,
                     "tag"           : self.name,
-                    "fields"        : [],
-                    "groups"        : [],
+                    "fields"        : PLACEHOLDER_ARRAY,
+                    "groups"        : PLACEHOLDER_ARRAY,
                 }
             )
             self.set_template(
                 {
                     "definition"    : self.get_definition(),
                     "data"          : {
-                        "partitions"    : [],
+                        "partitions"    : PLACEHOLDER_ARRAY,
                         "usage"         : {
                             "path"      : "/",
-                            "total"     : PLACEHOLDER,
-                            "used"      : PLACEHOLDER,
-                            "free"      : PLACEHOLDER,
-                            "percent"   : PLACEHOLDER,
+                            "total"     : PLACEHOLDER_STRING,
+                            "used"      : PLACEHOLDER_STRING,
+                            "free"      : PLACEHOLDER_STRING,
+                            "percent"   : PLACEHOLDER_STRING,
                         },
                     }
                 }
@@ -318,18 +319,18 @@ class DynamicDiskProbe(HostProbe):
                         {
                             "usage"         : {
                                 "path"          : "/",
-                                "total"         : PLACEHOLDER,
-                                "used"          : PLACEHOLDER,
-                                "free"          : PLACEHOLDER,
-                                "percent"       : PLACEHOLDER
+                                "total"         : PLACEHOLDER_STRING,
+                                "used"          : PLACEHOLDER_STRING,
+                                "free"          : PLACEHOLDER_STRING,
+                                "percent"       : PLACEHOLDER_STRING
                             },
                             "io"            : {
-                                "reads_count"   : PLACEHOLDER,
-                                "writes_count"  : PLACEHOLDER,
-                                "read_bytes"    : PLACEHOLDER,
-                                "write_bytes"   : PLACEHOLDER,
-                                "read_time"     : PLACEHOLDER,
-                                "write_time"    : PLACEHOLDER
+                                "reads_count"   : PLACEHOLDER_STRING,
+                                "writes_count"  : PLACEHOLDER_STRING,
+                                "read_bytes"    : PLACEHOLDER_STRING,
+                                "write_bytes"   : PLACEHOLDER_STRING,
+                                "read_time"     : PLACEHOLDER_STRING,
+                                "write_time"    : PLACEHOLDER_STRING
                             }
                         }
                     }

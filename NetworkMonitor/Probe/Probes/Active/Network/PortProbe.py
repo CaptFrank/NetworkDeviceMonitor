@@ -27,7 +27,7 @@ import gc
 import nmap
 import psutil
 from NetworkMonitor.Probe.Probe \
-    import Probe, PLACEHOLDER
+    import Probe, PLACEHOLDER_STRING
 
 """
 =============================================
