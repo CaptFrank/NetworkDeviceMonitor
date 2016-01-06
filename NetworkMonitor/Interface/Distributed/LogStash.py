@@ -22,6 +22,7 @@ Imports
 =============================================
 """
 
+import zlib
 import uuid
 import logging
 
@@ -237,7 +238,8 @@ class LogStashForwarder(Process):
             "Sending a package to the logstash server."
         )
 
-        # TODO compress string
+        # Compress the data
+        package = zlib.compress(package)
 
         # Send the data
         self.__logstash.info(
@@ -254,7 +256,6 @@ class LogStashForwarder(Process):
         :return:
         """
         import base64
-
         return str(
             base64.b64decode(
                 configs['password']

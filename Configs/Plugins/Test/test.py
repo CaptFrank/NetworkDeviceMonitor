@@ -25,7 +25,6 @@ Imports
 """
 
 from yapsy.IPlugin import IPlugin
-
 from NetworkMonitor.Base.Plugin \
     import Plugin
 
