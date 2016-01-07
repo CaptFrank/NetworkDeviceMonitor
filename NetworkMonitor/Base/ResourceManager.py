@@ -22,8 +22,7 @@
 Imports
 =============================================
 """
-from multiprocessing.queues import \
-    JoinableQueue
+from queue import Queue
 from multiprocessing.managers import \
     BaseManager
 from NetworkMonitor.Base.Singleton import \
@@ -46,18 +45,7 @@ Source
 =============================================
 """
 
-class ResourceManager(Singleton, BaseManager):
-    """
-    This is the base manager that is used to queue data from
-    each plugin thread into one entity. From these queues the
-    subscriber thread can then take the data and publish it to
-    our elastic search database.
-
-    extends: BaseManager
-    """
-    pass
-
-class ResourceQueue(JoinableQueue):
+class ResourceQueue(Queue):
     """
     This is the joinable queue definition that is used for the
     publishers. We cal call this queue from the contexts of both
@@ -67,13 +55,92 @@ class ResourceQueue(JoinableQueue):
     """
     pass
 
-def add_queue(manager, name):
+class ResourceManager(BaseManager):
     """
-    This is the function that will add a queue
-    with the name given to the Resource Manager
-    reference.
+    This is the base manager that is used to queue data from
+    each plugin thread into one entity. From these queues the
+    subscriber thread can then take the data and publish it to
+    our elastic search database.
 
-    :param name:        The name of the queue to add
-    :param manager:     The manager to add the queue to
+    extends: BaseManager
+    """
+
+    # Active queues that are in play
+    __active_queues         = {}
+
+    def add_queue(self, name):
+        """
+        This is the function that will add a queue
+        with the name given to the Resource Manager
+        reference.
+
+        :param name:        The name of the queue to add
+        :return:
+        """
+
+        self.__active_queues[name] = ResourceQueue()
+        return
+
+    def get_queue(self, name):
+        """
+        This is the method that will get a queue that has already
+        been registered to the resource manager.
+
+        :param name:        The name of the queue to add
+        :return:
+        """
+
+        if name not in self.__active_queues.keys():
+            return None
+        return self.__active_queues[name]
+
+def get_client_manager():
+    """
+    This gets the resource manager entity and registers the
+    get_queue method.
+
     :return:
     """
+
+    # Register the queue method
+    ResourceManager.register(
+        'get_queue',
+        callable=ResourceManager.get_queue
+    )
+
+    # Get the server manager
+    manager = ResourceManager(
+        address = (
+            "",
+            50000
+        ),
+        authkey = 'NetworkMonitor'
+    )
+    client = manager.connect()
+    return client
+
+def get_server_manager():
+    """
+    This method sets up the setup manager process.
+
+    :return:
+    """
+
+    # Register the queue method
+    ResourceManager.register(
+        'get_queue',
+        callable=ResourceManager.get_queue
+    )
+
+    # Get the server manager
+    manager = ResourceManager(
+        address = (
+            "",
+            50000
+        ),
+        authkey = 'NetworkMonitor'
+    )
+    server = manager.get_server()
+    return server, manager
+
+

@@ -120,6 +120,9 @@ class NodeConsumer(Process):
     # Consumer tag
     _consumer_tag       = None
 
+    # Manager
+    _manager            = None
+
     def __init__(self, amqp_url, plugin, apps):
         """
         Create a new instance of the consumer class, passing in the AMQP
@@ -485,7 +488,15 @@ class NodeConsumer(Process):
             basic_deliver.delivery_tag
         )
 
-        # TODO: Logstash
+        # Get the managed queue and add the entry in it
+        queue = self.__apps['client'].get_queue(
+            self.__name
+        )
+
+        # Put the data in the queue
+        queue.put(
+            body
+        )
         return
 
     def acknowledge_message(self, delivery_tag):

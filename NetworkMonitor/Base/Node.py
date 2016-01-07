@@ -70,7 +70,17 @@ class Node(object):
         if __name__ == '__main__':
         main()
         """
-        # register multiprocessing queue
+        # register multiprocessing queue -- maine resource queues.
+
+        # Register the resource client
+        temp['client'] = get_client_manager()
+
+        # Setup the resource manager
+        self.__resources, \
+        self.__manager = get_server_manager()
+
+        # Add the necessary plugin queue to the resource manager
+        self.__manager.add_queue(self._name)
 
 
         return

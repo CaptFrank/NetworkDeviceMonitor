@@ -24,6 +24,7 @@ Imports
 """
 
 import logging
+from threading import Thread
 
 from NetworkMonitor.Base.Resource \
     import ManagedResource
@@ -99,6 +100,15 @@ class Plugin(Process):
     # The main subscriber...
     __subscriber        = None
 
+    # The main resource manager
+    __resources         = None
+
+    # Manager thread
+    __resources_thread  = None
+
+    # Manager object
+    __manager           = None
+
     def __init__(self, name):
         """
         This is the base constructor method that receives
@@ -157,6 +167,12 @@ class Plugin(Process):
         This is the default process running method.
         :return:
         """
+
+        # Start the resource manager
+        self.__resources_thread = Thread(
+            target = self.__resources.serve_forever
+        )
+        self.__resources_thread.start()
 
         # Connect the subscriber.
         self._logger.info("[+] Connecting the subscriber...")
@@ -263,6 +279,7 @@ class Plugin(Process):
         # Register the entry point of the app
         temp['entry'] = entry
 
+        # Add the app in the app db
         self.__apps[
             configs['name']
         ] = temp
