@@ -223,6 +223,10 @@ class Plugin(Process):
         for app in self.__apps.values():
            app['queue'].close()
            app['queue'].join_thread()
+
+        # kill the resource thread
+        self.__resources_thread._stop()
+        self.__resources_thread.join()
         return
 
     @abstractmethod
