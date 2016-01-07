@@ -25,8 +25,6 @@ Imports
 from queue import Queue
 from multiprocessing.managers import \
     BaseManager
-from NetworkMonitor.Base.Singleton import \
-    Singleton
 
 """
 =============================================
