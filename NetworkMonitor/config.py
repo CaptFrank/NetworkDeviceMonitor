@@ -29,9 +29,9 @@ Constants
 
 
 # Program Attributes
-__author__          =   "gammaRay"
-__version__         =   "1.0"
-__date__            =   "9/28/2015"
+__author__              =   "gammaRay"
+__version__             =   "1.0"
+__date__                =   "9/28/2015"
 
 
 """
@@ -46,19 +46,23 @@ Source
 =============================================
 """
 
-LOGGER_LEVEL        = logging.INFO
-LOG_FILE_DIR        = '/var/log/NetworkMonitor/'
-LOG_FILE_NAME       = '/var/log/NetworkMonitor/mon-%s.log'
+LOGGER_LEVEL            = logging.INFO,
+LOG_FILE_DIR            = '/var/log/NetworkMonitor/'
+LOG_FILE_NAME           = '/var/log/NetworkMonitor/mon-%s.log'
 
-DEFAULT_SIZE        = 1024
+DEFAULT_SIZE            = 1024
 
 
 # Default location for plugins. This can be changed to suit the
 # users preferred plugins directory
-PLUGIN_WORKSPACE    = './Configs/Plugins/'
-CONFIG_WORKSPACE    = './Configs/'
+PLUGIN_WORKSPACE        = './Configs/Plugins/'
+CONFIG_WORKSPACE        = './Configs/'
 
-CONNECTION_TIMEOUT  = 5
-PUBLISH_INTERVAL    = 1
-REPORT_MAX_SIZE     = 10
-TTL                 = 600
+CONNECTION_TIMEOUT      = 5
+PUBLISH_INTERVAL        = 1
+REPORT_MAX_SIZE         = 10
+TTL                     = 600
+
+RESOURCE_MANAGER_ADDR   = ''
+RESOURCE_MANAGER_PORT   = 56000
+RESOURCE_MANAGER_AUTH   = 'NetworkMonitor'

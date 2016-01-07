@@ -22,9 +22,12 @@
 Imports
 =============================================
 """
+
 from queue import Queue
 from multiprocessing.managers import \
     BaseManager
+
+from NetworkMonitor.config import *
 
 """
 =============================================
@@ -109,10 +112,10 @@ def get_client_manager():
     # Get the server manager
     manager = ResourceManager(
         address = (
-            "",
-            50000
+            RESOURCE_MANAGER_ADDR,
+            RESOURCE_MANAGER_PORT
         ),
-        authkey = 'NetworkMonitor'
+        authkey = RESOURCE_MANAGER_AUTH
     )
     client = manager.connect()
     return client
@@ -133,10 +136,10 @@ def get_server_manager():
     # Get the server manager
     manager = ResourceManager(
         address = (
-            "",
-            50000
+            RESOURCE_MANAGER_ADDR,
+            RESOURCE_MANAGER_PORT
         ),
-        authkey = 'NetworkMonitor'
+        authkey = RESOURCE_MANAGER_AUTH
     )
     server = manager.get_server()
     return server, manager

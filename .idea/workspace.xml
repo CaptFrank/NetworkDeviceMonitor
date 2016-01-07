@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59175a5a-938f-4959-b651-3720d6972fc0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py" afterPath="$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/NetworkMonitor/config.py" afterPath="$PROJECT_DIR$/NetworkMonitor/config.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="NetworkMonitor.iws" />
@@ -22,7 +24,7 @@
     <favorites_list name="NetworkMonitor" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.51211804">
+    <splitter split-orientation="horizontal" split-proportion="0.49937344">
       <split-first>
         <leaf>
           <file leaf-file-name="Node.py" pinned="false" current-in-tab="false">
@@ -35,14 +37,22 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Plugin.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Plugin.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.6633222">
-                  <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-                  <folding>
-                    <element signature="e#505#519#0" expanded="true" />
-                  </folding>
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="config.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.31772575">
+                  <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -51,11 +61,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="LogStash.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="LogStash.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Distributed/LogStash.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="228" column="21" selection-start-line="228" selection-start-column="21" selection-end-line="228" selection-end-column="21" />
+                <state vertical-scroll-proportion="2.8996656">
+                  <caret line="204" column="21" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="21" />
                   <folding>
                     <element signature="e#447#458#0" expanded="true" />
                   </folding>
@@ -63,13 +73,13 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ResourceManager.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="ResourceManager.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.37458193">
-                  <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
                   <folding>
-                    <element signature="e#486#509#0" expanded="true" />
+                    <element signature="e#487#510#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -94,7 +104,6 @@
       <list>
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Snakemq/SnakePublisher.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitPublisher.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/config.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Storage/LogStash.py" />
         <option value="X:/example.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Probe/Probes/Host/ProcessProbe.py" />
@@ -141,8 +150,9 @@
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Distributed/LogStash.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Interface/Internal/Rabbitmq/RabbitSubscriber.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Node.py" />
-        <option value="$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py" />
         <option value="$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py" />
+        <option value="$PROJECT_DIR$/NetworkMonitor/config.py" />
       </list>
     </option>
   </component>
@@ -631,7 +641,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452197168369</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Added Probe local database&#10;">
+      <created>1452197190873</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1452197190873</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -647,7 +663,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15911485" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15911485" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972974" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
@@ -723,13 +739,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Workers/Server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Probe/Probes/Passive/Host/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1516165">
@@ -965,13 +974,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8483835">
-          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Probe/Probes/Passive/Network/IpProbe.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.47380155">
@@ -1050,7 +1052,7 @@
         <state vertical-scroll-proportion="0.3979933">
           <caret line="483" column="30" selection-start-line="483" selection-start-column="30" selection-end-line="483" selection-end-column="30" />
           <folding>
-            <element signature="e#735#746#0" expanded="true" />
+            <element signature="e#735#746#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1071,16 +1073,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Distributed/LogStash.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="228" column="21" selection-start-line="228" selection-start-column="21" selection-end-line="228" selection-end-column="21" />
-          <folding>
-            <element signature="e#447#458#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Node.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1091,20 +1083,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/Plugin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6633222">
-          <caret line="35" column="23" selection-start-line="35" selection-start-column="23" selection-end-line="35" selection-end-column="23" />
-          <folding>
-            <element signature="e#505#519#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NetworkMonitor/Base/ResourceManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37458193">
-          <caret line="117" column="17" selection-start-line="117" selection-start-column="17" selection-end-line="117" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
           <folding>
-            <element signature="e#486#509#0" expanded="true" />
+            <element signature="e#487#510#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31772575">
+          <caret line="38" column="9" selection-start-line="38" selection-start-column="9" selection-end-line="38" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Anaconda3/Lib/uuid.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.006689">
+          <caret line="103" column="8" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NetworkMonitor/Interface/Distributed/LogStash.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.8996656">
+          <caret line="204" column="21" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="21" />
+          <folding>
+            <element signature="e#447#458#0" expanded="true" />
           </folding>
         </state>
       </provider>
