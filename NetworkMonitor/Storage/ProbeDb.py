@@ -118,4 +118,6 @@ class ProbeDb(TinyDB):
                         data
                     }
                 )
+            # Commit the data to the table
+            table.commit()
         return

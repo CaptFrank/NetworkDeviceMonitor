@@ -26,6 +26,9 @@ Imports
 import logging
 from threading import Thread
 
+from NetworkMonitor.Base.ResourceManager \
+    import get_server_manager, get_client_manager
+
 from NetworkMonitor.Base.Resource \
     import ManagedResource
 from abc import ABCMeta, abstractmethod
@@ -139,7 +142,14 @@ class Plugin(Process):
         :return:
         """
 
+        # Setup the resource server and the manager instance
+
+        self._logger.info("[+] Setting up the resource manager.")
+        self.__resources, self.__manager \
+            = get_server_manager()
+
         # Setup the subscriber instance
+        self._logger.info("[+] Starting the subscriber.")
         self.__subscriber = NodeConsumer(
             NodeConsumer.format_url(
                 info['SUBSCRIBER']
@@ -173,6 +183,7 @@ class Plugin(Process):
             target = self.__resources.serve_forever
         )
         self.__resources_thread.start()
+        self._logger.info("[+] Starting the resource manager thread.")
 
         # Connect the subscriber.
         self._logger.info("[+] Connecting the subscriber...")
@@ -220,12 +231,13 @@ class Plugin(Process):
         self._kill()
 
         # Kill all queues
+        self._logger.info("[-] Killing all resource queues.")
         for app in self.__apps.values():
            app['queue'].close()
            app['queue'].join_thread()
 
         # kill the resource thread
-        self.__resources_thread._stop()
+        self._logger("[-] Killing the resource manager thread.")
         self.__resources_thread.join()
         return
 
@@ -259,7 +271,7 @@ class Plugin(Process):
         :return:
         """
 
-        temp = {}
+        temp = dict()
 
         # Create the application queue
         temp['queue'] = Queue()
@@ -283,10 +295,24 @@ class Plugin(Process):
         # Register the entry point of the app
         temp['entry'] = entry
 
+        # We need to register the new queue for this probe
+        self.__manager.add_queue(
+            configs['name']
+        )
+
+        # Register the resource client handle
+        temp['client'] = get_client_manager()
+
         # Add the app in the app db
         self.__apps[
             configs['name']
         ] = temp
+
+        self._logger.info(
+            "[+] Added a new probe: {name}".format(
+                name = configs['name']
+            )
+        )
         return
 
     def start_app_coms(self, name):
@@ -298,6 +324,11 @@ class Plugin(Process):
         """
 
         self.__apps[name]['pub'].start()
+        self._logger.info(
+            "[+] Starting the probe: {name} coms".format(
+                name = name
+            )
+        )
         return
 
     def kill_publishers(self):
@@ -307,6 +338,7 @@ class Plugin(Process):
         :return:
         """
 
+        self._logger.info("[-] Killing all publishing coms.")
         for app in self.__apps.values():
             app['pub'].stop()
         return

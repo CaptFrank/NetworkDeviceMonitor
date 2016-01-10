@@ -52,7 +52,7 @@ class PassiveNetworkProbe(NetworkProbe):
     extends: Network Probe
     """
 
-    def __init__(self, type, iface, queue):
+    def __init__(self, type, queue, **kwargs):
         """
         This is the constructor that will set the self
         object to the appropriate object type.
@@ -63,7 +63,7 @@ class PassiveNetworkProbe(NetworkProbe):
         """
 
         # Override the class
-        NetworkProbe.__init__(self, "passive", iface, queue)
+        NetworkProbe.__init__(self, "passive", kwargs['iface'], queue)
 
         # Register the probe type
         self._register_probe(

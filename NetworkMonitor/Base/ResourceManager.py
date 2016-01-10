@@ -23,7 +23,8 @@ Imports
 =============================================
 """
 
-from queue import Queue
+import Queue
+import logging
 from multiprocessing.managers import \
     BaseManager
 
@@ -69,6 +70,9 @@ class ResourceManager(BaseManager):
     # Active queues that are in play
     __active_queues         = {}
 
+    # The logger
+    __logger                = logging.getLogger("ResourceManager")
+
     def add_queue(self, name):
         """
         This is the function that will add a queue
@@ -80,6 +84,7 @@ class ResourceManager(BaseManager):
         """
 
         self.__active_queues[name] = ResourceQueue()
+        self.__logger.info("[+] Added a new queue: %s" %name)
         return
 
     def get_queue(self, name):

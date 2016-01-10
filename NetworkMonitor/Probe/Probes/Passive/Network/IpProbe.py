@@ -24,11 +24,9 @@ Imports
 =============================================
 """
 
-from netaddr import *
-from NetworkMonitor.Base.Reader import \
-    Reader
-from NetworkMonitor.Storage.ProbeDb import \
-    ProbeDb
+#from netaddr import *
+#from NetworkMonitor.Storage.ProbeDb import \
+#    ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
     import PassiveNetworkProbe
 
@@ -86,7 +84,7 @@ class IpProbe(PassiveNetworkProbe):
     __packets_read   = 0
 
 
-    def __init__(self, iface, queue, file=None):
+    def __init__(self, iface, queue):
         """
         This is the default constructor for the class.
         We supply the iface and the queue.
@@ -97,16 +95,19 @@ class IpProbe(PassiveNetworkProbe):
         :return:
         """
 
-        # Setup the probe db.
-        self.__setup_db(file)
-
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
             self,
             self.type,
-            iface,
-            queue
+            queue,
+            **{
+                'iface' : iface
+            }
         )
+        return
+
+    def setup(self):
+
         return
 
     def execute(self, packet):

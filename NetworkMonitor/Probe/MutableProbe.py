@@ -19,6 +19,14 @@
 
 """
 =============================================
+Imports
+=============================================
+"""
+
+import logging
+
+"""
+=============================================
 Constants
 =============================================
 """
@@ -48,7 +56,10 @@ class MutableProbe(object):
         "none"      : None
     }
 
-    def __init__(self, types):
+    # The logger object
+    logger        = None
+
+    def __init__(self, types, **kwargs):
         """
         This is the default constructor for the class container.
         We use this constructor to register the possible class types.
@@ -61,9 +72,14 @@ class MutableProbe(object):
         self.__types.update(
             types
         )
+
+        self.logger = logging.getLogger(
+            "MutableProbe"
+        )
+
         return
 
-    def run(self, type, queue):
+    def run(self, type, queue, **kwargs):
         """
         This method returns the appropriate class type that
         is needed based on the type passed.
@@ -83,4 +99,4 @@ class MutableProbe(object):
             self.__class__ = self.__types['none']
 
         # Return the mutated class object.
-        return self.__init__(queue)
+        return self.__init__(queue, **kwargs)

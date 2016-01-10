@@ -82,10 +82,10 @@ class Probe(threading.Thread):
     __alive         = True
 
     # The logger object
-    logger        = None
+    logger          = None
 
     # The data queue
-    _queue       = None
+    _queue          = None
 
     def __init__(self, name, queue, continuous):
         """
@@ -210,6 +210,7 @@ class Probe(threading.Thread):
         """
 
         self.__definition = definition
+        self.logger.info("[+] Definition set")
         return
 
     def get_definition(self):
@@ -235,6 +236,7 @@ class Probe(threading.Thread):
         """
 
         self.__data = data
+        self.logger.info("[+] Data set")
         return
 
     def get_data(self):
@@ -263,6 +265,7 @@ class Probe(threading.Thread):
         """
 
         self.__template = template
+        self.logger.info("[+] Template set")
         return
 
     def get_template(self):
@@ -288,6 +291,7 @@ class Probe(threading.Thread):
         """
 
         self.__continuous = continuous
+        self.logger.info("[+] Continuous set")
         return
 
     def get_continuous(self):

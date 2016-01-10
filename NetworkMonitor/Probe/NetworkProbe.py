@@ -24,8 +24,13 @@ Imports
 =============================================
 """
 
-from scapy.all import *
+#from scapy.all import *
 from abc import abstractmethod
+
+from NetworkMonitor.Base.Singleton \
+    import Singleton
+from NetworkMonitor.Probe.Probe \
+    import Probe
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 
@@ -46,7 +51,7 @@ Source
 =============================================
 """
 
-class NetworkProbe(MutableProbe):
+class NetworkProbe(MutableProbe, Probe):
     """
     This is the base network probing class object.
     It contains the appropriate attributes of a network
@@ -56,7 +61,7 @@ class NetworkProbe(MutableProbe):
     It is mutable to be made into an active or passive
     probing agent.
 
-    extends: MutableProbe, Threads
+    extends: MutableProbe, Probe
     """
 
     # Check the probe types
@@ -71,6 +76,9 @@ class NetworkProbe(MutableProbe):
     # Iface that is used to sniff
     __iface         = None
 
+    # The logger
+    _logger         = None
+
     def __init__(self, type, iface, queue):
         """
         This is the constructor that will set the self
@@ -82,13 +90,19 @@ class NetworkProbe(MutableProbe):
         """
 
         # Override the class
+        Probe.__init__(self, type, queue, False)
         MutableProbe.__init__(self, self.__types)
 
         # Set the iface
         self.__iface = iface
 
         # Run the object
-        self.run(type, queue)
+        self.run(
+            type, queue,
+            **{
+                'iface' : iface
+            }
+        )
         return
 
     @abstractmethod
@@ -147,6 +161,11 @@ class NetworkProbe(MutableProbe):
                 }
             }
         )
+        self.__types.update(
+            {
+                type : self
+            }
+        )
         return
 
     def __process(self, packet):
@@ -167,6 +186,8 @@ class NetworkProbe(MutableProbe):
 
             # Screen the probes....
             if packet.haslayer(layer):
+
+                # Execute the probe
                 object.execute(
                     packet
                 )
