@@ -208,7 +208,9 @@ class StaticDiskProbe(HostProbe):
             )
 
             template['data'].update(
-                data
+                {
+                    'data' : data,
+                }
             )
 
             # Update the data
@@ -308,8 +310,8 @@ class DynamicDiskProbe(HostProbe):
                     "default"       : "yes",
                     "help"          : self.description,
                     "tag"           : self.name,
-                    "fields"        : [],
-                    "groups"        : [],
+                    "fields"        : PLACEHOLDER_ARRAY,
+                    "groups"        : PLACEHOLDER_ARRAY,
                 }
             )
             self.set_template(
@@ -390,7 +392,9 @@ class DynamicDiskProbe(HostProbe):
             )
 
             template['data'].update(
-                data
+                {
+                    'data' : data
+                }
             )
 
             # Update the data

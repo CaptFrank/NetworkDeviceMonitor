@@ -24,11 +24,13 @@ Imports
 =============================================
 """
 
+import gc
 #from netaddr import *
-#from NetworkMonitor.Storage.ProbeDb import \
-#    ProbeDb
+from NetworkMonitor.Storage.ProbeDb import \
+    ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
-    import PassiveNetworkProbe
+    import PassiveNetworkProbe, PLACEHOLDER_DICT, \
+    PLACEHOLDER_STRING, PLACEHOLDER_ARRAY
 
 """
 =============================================
@@ -60,12 +62,35 @@ class IpProbe(PassiveNetworkProbe):
     extends: PassiveNetworkProbe
     """
 
-    # ====================
-    # Public
-    # ====================
+    # The class name
+    name        = "IpProbe"
 
-    # Probe type
-    type            = 'IpProbe'
+    # The probe type
+    type        = "IP"
+
+    # Description
+    description = \
+    "This is the probe that will monitor the ip addresses " \
+    "on the network and will correlate them to a db."
+
+    # Fields for filtering
+    fields      = []
+
+    # Groups
+    groups      = [
+        "ip",
+        "network",
+        "reconnaissance"
+    ]
+
+    # Definition
+    definition  = {}
+
+    # Template
+    template    = {}
+
+    # Data
+    data        = {}
 
     # Layer filter
     layer           = 'IP'
@@ -74,26 +99,28 @@ class IpProbe(PassiveNetworkProbe):
     # Private
     # ====================
 
-    # Config Reader
-    __reader        = None
-
     # Database
     __database      = None
 
     # Metrics
-    __packets_read   = 0
+    __packets_read  = 0
 
+    # App configs
+    __configs       = None
 
-    def __init__(self, iface, queue):
+    def __init__(self, queue, configs):
         """
         This is the default constructor for the class.
         We supply the iface and the queue.
 
-        :param iface:       The iface that needs to be monitored
+        :param type:        The type of probe
         :param queue:       The application queue
-        :param file:        A file that contains the known ips
+        :param configs:     The app configs (i.e. known, iface, save)
         :return:
         """
+
+        # Get the configs
+        self.__configs = configs
 
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
@@ -101,13 +128,57 @@ class IpProbe(PassiveNetworkProbe):
             self.type,
             queue,
             **{
-                'iface' : iface
+                'iface' : configs['iface']
             }
         )
+
+        self.logger.info(
+            "Created a new Probe of type: %s" %self.type
+        )
+        gc.enable()
         return
 
     def setup(self):
+        """
+        This is the setup method for the probe. It is called
+        to setup the context of the probe itself. In this case
+        the probe needs to
+        :return:
+        """
 
+        # Register all handles
+        self.set_data(
+            self.data
+        )
+        self.register_type(
+            self.type
+        )
+        self.set_definition(
+            {
+                "type"          : self.get_type(),
+                "name"          : self.name,
+                "description"   : self.description,
+                "default"       : "yes",
+                "help"          : self.description,
+                "tag"           : self.name,
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
+            }
+        )
+        self.set_template(
+            {
+                "definition"    : self.get_definition(),
+                "data"          : PLACEHOLDER_DICT
+            }
+        )
+
+        # Set a new handle
+        self.__setup_db()
+
+        self.logger.info(
+            "Setup complete for probe: %s"
+            %self.name
+        )
         return
 
     def execute(self, packet):
@@ -139,7 +210,25 @@ class IpProbe(PassiveNetworkProbe):
         :return:
         """
         # Create a database
-        self.__database = ProbeDb()
+        self.__database = ProbeDb(
+            self.get_db_name(
+                self.__configs
+            )
+        )
+
+        # Setup the known database
+        if self.__configs['behaviour'] == 'MONITOR':
+
+            # Create a new db table
+            table = {
+                'known'     : self.__configs['known']
+            }
+
+            # We need to check the already registered ips
+            self.__database.setup_db(
+                table
+            )
+
         return
 
     def __correlate_ip(self, packet):

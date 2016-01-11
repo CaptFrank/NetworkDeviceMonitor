@@ -35,6 +35,9 @@ import multiprocessing
 from multiprocessing \
     import Process
 
+from NetworkMonitor.Interface.Distributed.LogStash \
+    import get_logstash_message
+
 """
 =============================================
 Constants
@@ -495,7 +498,9 @@ class NodeConsumer(Process):
 
         # Put the data in the queue
         queue.put(
-            body
+            get_logstash_message(
+                body
+            )
         )
         return
 

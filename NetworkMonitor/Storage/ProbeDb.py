@@ -59,19 +59,18 @@ class ProbeDb(TinyDB):
     extends: TinyDB
     """
 
-    def __init__(self):
+    def __init__(self, name):
         """
         This is the constructor for the class.
 
-        :param plugin_name:     The plugin name that needs this db.
-        :param probe_name:      The probe name that needs this db.
+        :param name:     The probe name that needs this db.
         :return:
         """
 
         # Override the base class
         TinyDB.__init__(
             self,
-            storage=MemoryStorage
+            name + "-db.json"
         )
         return
 
@@ -90,7 +89,8 @@ class ProbeDb(TinyDB):
                     "table 2" : {
                         "data 1" : data,
                         "data 2" : data
-                        }
+                        },
+                    "saved" : <saving>
                     }
 
         :param data:            The data needed to start the database
@@ -107,17 +107,29 @@ class ProbeDb(TinyDB):
                 name
             )
 
-            # Setup data
-            for key, data in zip(
-                    data['table'].keys(),
-                    data['table'].values()
-            ):
+            # If the data is dict
+            if type(data[name]) is dict():
+
+                # Setup data
+                for key, data in zip(
+                        data[name].keys(),
+                        data[name].values()
+                ):
+                    table.insert(
+                        {
+                            key     :   data
+                        }
+                    )
+
+            # If the data is a list
+            elif type(data[name]) is []:
                 table.insert(
                     {
-                        key,
-                        data
+                        name    :   data[name]
                     }
                 )
-            # Commit the data to the table
-            table.commit()
+
+            if data['save']:
+                # Commit the data to the table
+                table.commit()
         return

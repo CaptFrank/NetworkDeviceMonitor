@@ -139,7 +139,7 @@ class CPUProbe(HostProbe):
         )
         self.set_template(
             {
-                "definition"    : self.set_definition(),
+                "definition"    : self.get_definition(),
                 "data"          : {
                     "users"     : {
                         "user"      : PLACEHOLDER_STRING,
@@ -183,15 +183,14 @@ class CPUProbe(HostProbe):
         )
 
         # Gets the data from the psutil
-        with psutil.cpu_times() as data:
-            users = dict(
-                zip(
-                    data._fields,
-                    list(
-                        data
-                    )
+        users = dict(
+            zip(
+               psutil.cpu_times()._fields,
+                list(
+                    psutil.cpu_times()
                 )
             )
+        )
 
         # Try to get the avrg load
         try:
@@ -220,19 +219,27 @@ class CPUProbe(HostProbe):
         # Set the data
         template = self.get_template()
         data = template['data']
-        data['users'] = data['users'].update(
-            users
+        data['users'].update(
+            {
+                'users' : users,
+            }
         )
         data = template['data']
         data['cpu'].update(
-            counts
+            {
+                'cpu' : counts,
+            }
         )
         data = template['data']
         data['usage'].update(
-            usage
+            {
+                'usage': usage,
+            }
         )
         template['data'].update(
-            data
+            {
+                'data' : data
+            }
         )
 
         # Update the data

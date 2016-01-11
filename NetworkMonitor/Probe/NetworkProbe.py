@@ -26,11 +26,9 @@ Imports
 
 #from scapy.all import *
 from abc import abstractmethod
-
-from NetworkMonitor.Base.Singleton \
-    import Singleton
 from NetworkMonitor.Probe.Probe \
-    import Probe
+    import Probe, PLACEHOLDER_ARRAY, \
+    PLACEHOLDER_DICT, PLACEHOLDER_STRING
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
 

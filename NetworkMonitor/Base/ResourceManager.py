@@ -23,8 +23,8 @@ Imports
 =============================================
 """
 
-import Queue
 import logging
+from queue import Queue
 from multiprocessing.managers import \
     BaseManager
 

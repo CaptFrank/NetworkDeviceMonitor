@@ -82,6 +82,8 @@ class Node(object):
         # Add the necessary plugin queue to the resource manager
         self.__manager.add_queue(self._name)
 
+        # Start the Logstash Engine
+
 
         return
 

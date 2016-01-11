@@ -23,7 +23,8 @@ Imports
 """
 
 from NetworkMonitor.Probe.NetworkProbe \
-    import NetworkProbe
+    import NetworkProbe, PLACEHOLDER_ARRAY, \
+    PLACEHOLDER_DICT, PLACEHOLDER_STRING
 
 """
 =============================================
@@ -63,7 +64,7 @@ class PassiveNetworkProbe(NetworkProbe):
         """
 
         # Override the class
-        NetworkProbe.__init__(self, "passive", kwargs['iface'], queue)
+        NetworkProbe.__init__(self, type, kwargs['iface'], queue)
 
         # Register the probe type
         self._register_probe(

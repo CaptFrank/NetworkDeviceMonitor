@@ -163,15 +163,14 @@ class PlatformProbe(HostProbe):
             "Running the data collection."
         )
 
-        with platform.uname() as data:
-            results = dict(
-                zip(
-                    data._fields,
-                    list(
-                        data
-                    )
+        results = dict(
+            zip(
+                platform.uname()._fields,
+                list(
+                    platform.uname()
                 )
             )
+        )
 
         template = self.get_template()
         data = template['data']
@@ -185,7 +184,9 @@ class PlatformProbe(HostProbe):
            }
         )
         template['data'].update(
-            data
+            {
+                'data' : data
+            }
         )
 
         # Update the data

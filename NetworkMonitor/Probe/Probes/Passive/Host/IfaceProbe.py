@@ -167,15 +167,21 @@ class StaticIfaceProbe(HostProbe):
             # Set the data
             template = self.get_template()
             data = template['data']
-            data['ifaddrs'] = data['ifaddrs'].update(
-                address
+            data['ifaddrs'].update(
+                {
+                    'ifaddrs' : address,
+                }
             )
             data = template['data']
             data['ifstats'].update(
-                stats
+                {
+                    'ifstats' : stats,
+                }
             )
             template['data'].update(
-                data
+                {
+                    'data' : data
+                }
             )
 
             # Update the data
@@ -274,8 +280,8 @@ class DynamicIfaceProbe(HostProbe):
                 "default"       : "yes",
                 "help"          : self.description,
                 "tag"           : self.name,
-                "fields"        : [],
-                "groups"        : [],
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
             }
         )
         self.set_template(
@@ -317,19 +323,27 @@ class DynamicIfaceProbe(HostProbe):
             # Set the data
             template = self.get_template()
             data = template['data']
-            data['counter'] = data['ifaddrs'].update(
-                counters
+            data['counter'].update(
+                {
+                    'counters' : counters,
+                }
             )
             data = template['data']
             data['cnxs'].update(
-                connections
+                {
+                    'cnxs' : connections,
+                }
             )
             data = template['data']
             data['netstats'].update(
-                stats
+                {
+                    'netstats' : stats,
+                }
             )
             template['data'].update(
-                data
+                {
+                    'data' : data,
+                }
             )
 
             # Update the data

@@ -99,10 +99,10 @@
 
         # This section represents the applications within a plugin.
         # We can define each application with one of these sections.
-        [[[TEST]]]
+        [[[COMS]]]
 
             # This is the application name
-            name        = DEFAULT
+            name        = COMS
 
             # This is the application type
             type        = MONITOR
@@ -127,7 +127,8 @@
 
                 # This is the server application port definition. In this
                 # case we use the default port number, although this can be changed
-                # if the server port is changed. [Default = 5672]
+                # if the server port is changed. This represents the base port.
+                # [Default = 5672]
                 port        = 5672
 
                 # This is the number of tries the client publisher will attempt
@@ -155,6 +156,21 @@
         # are to make sure the ip probe itself is setup appropriately.
         [[[IP]]]
 
+            # This is the application name
+            name        = IpMonitor
+
+            # This is the application type
+            type        = MONITOR
+
+            # The interface to monitor on
+            iface       = eth0
+
+            # The behaviour of the probe
+            # Either this probe can be a monitor or an observer [MONITOR/OBSERVER]
+            # Where the monitor looks for disallowed ips, and the
+            # observer reports registered ips. [Default = MONITOR]
+            behaviour   = MONITOR
+
             # All we need to provide is the known IPs to have the
             # alert system work.
             known       = 10.0.1.1, 10.0.1.2
@@ -163,6 +179,9 @@
             # Turning this flag to True will save all registered IPs and known
             # IPs.
             save        = True
+
+            # The location of the probe dbs.
+            location        = "./Configs/DB/"
 
 
 

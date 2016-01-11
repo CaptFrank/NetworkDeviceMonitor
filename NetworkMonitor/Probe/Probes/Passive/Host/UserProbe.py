@@ -159,16 +159,15 @@ class UserProbe(HostProbe):
 
             # Tuple to dict
             def tuple_to_dict(tuple):
-                with tuple as data:
-                    results = dict(
-                        zip(
-                            data._fields,
-                            list(
-                                data
-                            )
+                results = dict(
+                    zip(
+                        tuple._fields,
+                        list(
+                            tuple
                         )
                     )
-                    return results
+                )
+                return results
 
             # Get partitions
             users = [
@@ -194,7 +193,9 @@ class UserProbe(HostProbe):
             )
 
             template['data'].update(
-                data
+                {
+                    'data' : data,
+                }
             )
 
             # Update the data

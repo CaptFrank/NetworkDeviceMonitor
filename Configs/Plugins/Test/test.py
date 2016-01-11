@@ -82,6 +82,7 @@ class RabbitTestPlugin(Plugin, IPlugin):
         :return:
         """
 
+        # Set internal access to the configs
         self._configs = info
 
         # Setup the publisher for the task
@@ -89,21 +90,26 @@ class RabbitTestPlugin(Plugin, IPlugin):
 
         for app in self._configs['APPS'].values():
 
-            # Register the plugin
-            self.register(
-                self.__name,
-                self.__testing,
-                app
-            )
+            # We nees to setup the apps in the plugin.
+            # Only if the configs are not coms configs
+            if app['name'] is not "COMS":
 
-            # Start the publisher
-            self.start_app_coms(
-                app['name']
-            )
-            self._logger.info(
-                "Started application: %s"
-                %app['name']
-            )
+                # Register the app
+                self.register(
+                    self.__name,
+                    self.__testing,
+                    app
+                )
+
+                # Start the publisher
+                self.start_app_coms(
+                    app['name']
+                )
+                self._logger.info(
+                    "Started application: %s"
+                    %app['name']
+                )
+
         self._logger.info(
             "Setup the TEST plugin."
         )

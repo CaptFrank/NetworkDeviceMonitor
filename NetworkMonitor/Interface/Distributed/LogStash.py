@@ -35,6 +35,9 @@ from multiprocessing \
 from logstash_formatter \
     import LogstashFormatterV1
 
+from NetworkMonitor.Base.ResourceManager \
+    import get_client_manager
+
 """
 =============================================
 Constants
@@ -94,8 +97,10 @@ class LogStashForwarder(Process):
         # Set the name
         self.__name = name
 
-        # Set the queue
-        self.__queue = Queue()
+        # Set the queue from the resource manager
+        self.__queue = get_client_manager().get_queue(
+            name
+        )
 
         # Set the logger
         self.__logger  = logging.getLogger(
@@ -193,38 +198,9 @@ class LogStashForwarder(Process):
         self.__alive = False
         return
 
-    def add(self, message):
-        """
-        Adds a message to the sender queue.
-
-        :param message:             The message payload
-        :return:
-        """
-
-        # Temp id
-        id = uuid.uuid4()
-        payload = {
-            "id"        :   str(
-                id
-            ),
-            "payload"   :   message
-        }
-
-        self.__queue.put(
-            payload
-        )
-
-        self.__logger.info(
-            "Added an entity to the queue: %s"
-            %str(
-                payload
-            )
-        )
-        return
-
     def _send(self, package, *args):
         """
-        Sends the pacakge to the logstash sever.
+        Sends the package to the logstash sever.
 
         :param package:             The data to send
         :param args:                The arg list to send
@@ -263,3 +239,21 @@ class LogStashForwarder(Process):
                 "utf-8"
             )
         )
+
+def get_logstash_message(message):
+        """
+        Adds a message to the sender queue.
+
+        :param message:             The message payload
+        :return:
+        """
+
+        # Temp id
+        id = uuid.uuid4()
+        payload = {
+            "id"        :   str(
+                id
+            ),
+            "payload"   :   message
+        }
+        return payload

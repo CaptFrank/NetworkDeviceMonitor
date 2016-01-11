@@ -25,6 +25,8 @@
 Imports
 =============================================
 """
+
+import gc
 import abc
 import logging
 import threading
@@ -306,3 +308,14 @@ class Probe(threading.Thread):
         fget=get_continuous,
         fset=set_continuous
     )
+
+    @staticmethod
+    def get_db_name(configs):
+        """
+        Gets the location of the database.
+
+        :param configs:         The probe name
+        :return:
+        """
+
+        return configs['location'] + configs['name']

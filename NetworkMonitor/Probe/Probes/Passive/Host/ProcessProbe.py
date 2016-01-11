@@ -149,33 +149,7 @@ class ProcessProbe(HostProbe):
         self.set_template(
             {
                 "definition"    : self.set_definition(),
-                "data"          : {
-                    "name"          : PLACEHOLDER_STRING,
-                    "exec"          : PLACEHOLDER_STRING,
-                    "cwd"           : PLACEHOLDER_STRING,
-                    "cmdline"       : PLACEHOLDER_STRING,
-                    "status"        : PLACEHOLDER_STRING,
-                    "username"      : PLACEHOLDER_STRING,
-                    "created"       : PLACEHOLDER_STRING,
-                    "terminal"      : PLACEHOLDER_STRING,
-                    "uids"          : PLACEHOLDER_DICT,
-                    "gids"          : PLACEHOLDER_DICT,
-                    "cputimes"      : PLACEHOLDER_DICT,
-                    "cpupercent"    : PLACEHOLDER_STRING,
-                    "cpuaffinity"   : PLACEHOLDER_ARRAY,
-                    "memusage"      : PLACEHOLDER_STRING,
-                    "meminfo"       : PLACEHOLDER_DICT,
-                    "memextern"     : PLACEHOLDER_DICT,
-                    "memmap"        : PLACEHOLDER_DICT,
-                    "io"            : PLACEHOLDER_DICT,
-                    "openfiles"     : PLACEHOLDER_ARRAY,
-                    "connections"   : PLACEHOLDER_ARRAY,
-                    "threads"       : PLACEHOLDER_ARRAY,
-                    "ctxswitches"   : PLACEHOLDER_ARRAY,
-                    "nice"          : PLACEHOLDER_STRING,
-                    "ionice"        : PLACEHOLDER_DICT,
-                    "rlimit"        : PLACEHOLDER_STRING
-                }
+                "data"          : PLACEHOLDER_ARRAY,
             }
         )
         self.logger.info(
@@ -212,7 +186,9 @@ class ProcessProbe(HostProbe):
                 database[pid] = data
 
             data.update(
-                database
+                {
+                    'data' : database,
+                }
             )
 
             template['data'].update(

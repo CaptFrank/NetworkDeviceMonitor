@@ -1,16 +1,19 @@
 """
 
-    :name:
+    :__init__.py:
     ==========
 
-    :description:
+    :
+    Contains a maintained database of probe types that are
+    accessible at the plugin level.
+    :
 
-    :copyright: (c) 12/16/2015 by fpapinea.
+    :copyright: (c) 9/28/2015 by gammaRay.
     :license: BSD, see LICENSE for more details.
 
-    Author:         fpapinea
-    Version:        :version: #TODO
-    Date:           12/16/2015
+    Author:         gammaRay
+    Version:        :1.0:
+    Date:           9/28/2015
 """
 
 """
@@ -19,6 +22,12 @@ Imports
 =============================================
 """
 
+from .DHCPProbe import *
+from .DnsProbe import *
+from .HttpProbe import *
+from .IpProbe import *
+from .MacProbe import *
+
 """
 =============================================
 Constants
@@ -26,18 +35,15 @@ Constants
 """
 
 # Program Attributes
-__author__ = 'fpapinea'
-__version__ = ""  #TODO
-__date__ = "12/16/2015"
+__author__  =   "gammaRay"
+__version__ =   "1.0"
+__date__    =   "9/28/2015"
 
-"""
-=============================================
-Variables
-=============================================
-"""
+PASSIVE_NETWORK_PROBES = {
+    'DHCPProbe'     : DHCPProbe,
+    'DnsProbe'      : DnsProbe,
+    'HttpProbe'     : HttpProbe,
+    'IpProbe'       : IpProbe,
+    'MacProbe'      : MacProbe,
 
-"""
-=============================================
-Source
-=============================================
-"""
+}
