@@ -23,8 +23,7 @@ Imports
 =============================================
 """
 
-import logging
-from queue import Queue
+import Queue
 from multiprocessing.managers import \
     BaseManager
 
@@ -47,7 +46,7 @@ Source
 =============================================
 """
 
-class ResourceQueue(Queue):
+class ResourceQueue(Queue.Queue):
     """
     This is the joinable queue definition that is used for the
     publishers. We cal call this queue from the contexts of both

@@ -22,9 +22,7 @@ Imports
 =============================================
 """
 
-import gc
 import os
-import sys
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -117,7 +115,6 @@ class ProcessProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -208,7 +205,6 @@ class ProcessProbe(HostProbe):
                 data,       \
                 pids,       \
                 database
-            gc.collect()
             return
 
     def __getpids(self):

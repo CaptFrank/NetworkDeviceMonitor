@@ -26,7 +26,6 @@ Imports
 =============================================
 """
 
-import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -105,7 +104,6 @@ class StaticDiskProbe(HostProbe):
             self.logger.info(
                 "Created a new Probe of type: %s" %self.type
             )
-            gc.enable()
             return
 
         def setup(self):
@@ -226,7 +224,6 @@ class StaticDiskProbe(HostProbe):
                 data,       \
                 usage,      \
                 partitions
-            gc.collect()
             return
 
 class DynamicDiskProbe(HostProbe):
@@ -285,7 +282,6 @@ class DynamicDiskProbe(HostProbe):
             self.logger.info(
                 "Created a new Probe of type: %s" %self.type
             )
-            gc.enable()
             return
 
         def setup(self):
@@ -410,7 +406,6 @@ class DynamicDiskProbe(HostProbe):
                 data,       \
                 usage,      \
                 io
-            gc.collect()
             return
 
 class DiskProbe(MutableProbe):

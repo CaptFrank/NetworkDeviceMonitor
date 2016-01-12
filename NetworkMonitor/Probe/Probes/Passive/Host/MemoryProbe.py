@@ -23,7 +23,6 @@ Imports
 =============================================
 """
 
-import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -103,7 +102,6 @@ class MemoryProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -231,5 +229,4 @@ class MemoryProbe(HostProbe):
                 data,       \
                 vmem,       \
                 swap
-            gc.collect()
             return

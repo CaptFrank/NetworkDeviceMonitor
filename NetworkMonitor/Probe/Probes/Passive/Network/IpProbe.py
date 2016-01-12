@@ -24,13 +24,12 @@ Imports
 =============================================
 """
 
-import gc
-#from netaddr import *
+from tinydb import Query
+from netaddr import *
 from NetworkMonitor.Storage.ProbeDb import \
     ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
-    import PassiveNetworkProbe, PLACEHOLDER_DICT, \
-    PLACEHOLDER_STRING, PLACEHOLDER_ARRAY
+    import *
 
 """
 =============================================
@@ -135,7 +134,6 @@ class IpProbe(PassiveNetworkProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -174,7 +172,6 @@ class IpProbe(PassiveNetworkProbe):
 
         # Set a new handle
         self.__setup_db()
-
         self.logger.info(
             "Setup complete for probe: %s"
             %self.name
@@ -211,33 +208,152 @@ class IpProbe(PassiveNetworkProbe):
         """
         # Create a database
         self.__database = ProbeDb(
-            self.get_db_name(
-                self.__configs
-            )
+            self.__configs['name']
         )
 
         # Setup the known database
         if self.__configs['behaviour'] == 'MONITOR':
 
             # Create a new db table
-            table = {
-                'known'     : self.__configs['known']
-            }
+            tables = [
+                'KNOWN',
+                'UNKNOWN'
+            ]
 
             # We need to check the already registered ips
             self.__database.setup_db(
-                table
+                tables
             )
 
+            # Get the table
+            table = self.__database.get_table('KNOWN')
+
+            # Add the entries to the internal db
+            for ip in self.__configs['known']:
+
+                # We need to convert it into a supported IP
+                # This IP can be a subnet IP that needs to be put into a list
+                address = self.__get_address(
+                    ip
+                )
+
+                if type(address) is list():
+
+                    for ip in address:
+
+                        # Add the Ips in the known table
+                        table.insert(
+                            {
+                                'type'          : 'IP',
+                                'address'       : ip,
+                            }
+                        )
+
+        else:
+
+            # Create a new table
+            tables = [
+                'IP'
+            ]
+
+            # We need to check the already registered ips
+            self.__database.setup_db(
+                tables
+            )
         return
 
-    def __correlate_ip(self, packet):
+    def __correlate_ip(self, pkt):
         """
         This is the correlation algorithm that will look at the databases and
         check either the registry or the black list.
 
-        :param packet:
+        :param pkt:             The read packet
         :return:
         """
 
+        # Get the ip layer
+        destination     = pkt[IP].dest
+        source          = pkt[IP].src
+
+        # We check the dehaviour
+        if self.__configs['behaviour'] == 'MONITOR':
+
+            # We need to check the validity of the ip
+            # Get the table
+            unknown_table = self.__database.get_table(
+                'UNKNOWN'
+            )
+            src_pkt = unknown_table.search(
+                Query().source == source
+            )
+            dest_pkt = unknown_table.search(
+                Query().destination == destination
+            )
+
+            if dest_pkt is None:
+
+                # We have an unknown destination ip
+                unknown_table.insert(
+                    {
+                        'type'          : 'IP',
+                        'address'       : dest_pkt,
+                    }
+                )
+            elif src_pkt is None:
+
+                # We have an unknown destination ip
+                unknown_table.insert(
+                    {
+                        'type'          : 'IP',
+                        'address'       : src_pkt,
+                    }
+                )
+
+        # Just register the IP for logging
+        else:
+            table = self.__database.get_table(
+                'IP'
+            )
+            table.insert(
+                {
+                    'type'          : 'IP',
+                    'address'       : source,
+                }
+            )
+            table.insert(
+                {
+                    'type'          : 'IP',
+                    'address'       : destination,
+                }
+            )
+
         return
+
+    def __get_address(self, ip):
+        """
+        This is the method that is used to get the ip address
+        or network that is needed in the probing.
+
+        :param ip:              The ip address or the ip network
+        :return:
+        """
+
+        # Container
+        addresses = []
+
+        # Generator
+        generate_ip = lambda address : addresses.append(
+            str(
+                address.ipv4()
+            )
+        )
+
+        # We have a network to generate
+        if '/' in ip:
+            network = list(IPNetwork(ip))
+            return network
+        else:
+            return ip
+
+
+

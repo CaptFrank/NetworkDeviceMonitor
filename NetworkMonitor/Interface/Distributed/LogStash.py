@@ -22,8 +22,8 @@ Imports
 =============================================
 """
 
-import zlib
 import uuid
+import pickle
 import logging
 
 from logstash.handler_amqp \
@@ -215,7 +215,7 @@ class LogStashForwarder(Process):
         )
 
         # Compress the data
-        package = zlib.compress(package)
+        package = pickle.dumps(package)
 
         # Send the data
         self.__logstash.info(

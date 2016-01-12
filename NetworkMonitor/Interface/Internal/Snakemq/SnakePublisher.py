@@ -23,7 +23,6 @@ Imports
 """
 
 import uuid
-import time
 import pickle
 import logging
 import multiprocessing
@@ -282,9 +281,6 @@ class SnakePublisher(Process):
                 'uuid'      :   str(
                     uuid.uuid4()
                 ),
-                'time'      :   time.strftime(
-                    "%s/%m/%y %H:%M:%S"
-                )
             }
         )
         self._logger.info(

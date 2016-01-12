@@ -21,10 +21,8 @@
 Imports
 =============================================
 """
-
-import gc
-import time
 import psutil
+
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
     PLACEHOLDER_ARRAY, PLACEHOLDER_DICT
@@ -108,7 +106,6 @@ class CPUProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -256,12 +253,6 @@ class CPUProbe(HostProbe):
             users,      \
             counts,     \
             usage
-        gc.collect()
-
-        # Sleep the interval
-        time.sleep(
-            self.interval
-        )
         return
 
     # Utility methods

@@ -23,8 +23,7 @@ Imports
 """
 
 from NetworkMonitor.Probe.NetworkProbe \
-    import NetworkProbe, PLACEHOLDER_ARRAY, \
-    PLACEHOLDER_DICT, PLACEHOLDER_STRING
+    import *
 
 """
 =============================================

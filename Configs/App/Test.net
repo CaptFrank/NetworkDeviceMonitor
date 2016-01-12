@@ -162,6 +162,9 @@
             # This is the application type
             type        = MONITOR
 
+            # The monitoring strategy (Internal or External, Both)
+            strategy    = INTERNAL
+
             # The interface to monitor on
             iface       = eth0
 
@@ -174,14 +177,6 @@
             # All we need to provide is the known IPs to have the
             # alert system work.
             known       = 10.0.1.1, 10.0.1.2
-
-            # We tell the probe database engine to persist the cached data.
-            # Turning this flag to True will save all registered IPs and known
-            # IPs.
-            save        = True
-
-            # The location of the probe dbs.
-            location        = "./Configs/DB/"
 
 
 

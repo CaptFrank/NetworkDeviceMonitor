@@ -22,7 +22,6 @@ Imports
 =============================================
 """
 
-import gc
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -103,7 +102,6 @@ class StaticIfaceProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -196,7 +194,6 @@ class StaticIfaceProbe(HostProbe):
                 address,    \
                 stats,      \
                 data
-            gc.collect()
             return
 
 class DynamicIfaceProbe(HostProbe):
@@ -255,7 +252,6 @@ class DynamicIfaceProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -359,7 +355,6 @@ class DynamicIfaceProbe(HostProbe):
                 stats,      \
                 connections,\
                 data
-            gc.collect()
             return
 
 class IfaceProbe(MutableProbe):

@@ -25,7 +25,7 @@ Imports
 """
 
 from tinydb import \
-    TinyDB
+    TinyDB, Query
 from tinydb.storages import \
     MemoryStorage
 
@@ -59,6 +59,9 @@ class ProbeDb(TinyDB):
     extends: TinyDB
     """
 
+    # Table Handles
+    __tables        = {}
+
     def __init__(self, name):
         """
         This is the constructor for the class.
@@ -70,7 +73,7 @@ class ProbeDb(TinyDB):
         # Override the base class
         TinyDB.__init__(
             self,
-            name + "-db.json"
+            storage = MemoryStorage
         )
         return
 
@@ -102,34 +105,26 @@ class ProbeDb(TinyDB):
             return
 
         # Setup the tables and data
-        for name in data.keys():
+        for name in data:
             table = self.table(
                 name
             )
 
-            # If the data is dict
-            if type(data[name]) is dict():
-
-                # Setup data
-                for key, data in zip(
-                        data[name].keys(),
-                        data[name].values()
-                ):
-                    table.insert(
-                        {
-                            key     :   data
-                        }
-                    )
-
-            # If the data is a list
-            elif type(data[name]) is []:
-                table.insert(
-                    {
-                        name    :   data[name]
-                    }
-                )
-
-            if data['save']:
-                # Commit the data to the table
-                table.commit()
+            # Add the table to the internal db
+            self.__tables[name] = table
         return
+
+    def get_table(self, name=None):
+        """
+        Returns a table of given name
+
+        :param name:             The name of the table to get
+        :return:
+        """
+
+        if name is None:
+            return None
+        elif name not in self.__tables.keys():
+            return None
+        else:
+            return self.__tables[name]

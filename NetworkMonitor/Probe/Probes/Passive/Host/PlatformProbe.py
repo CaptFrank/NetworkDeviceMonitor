@@ -22,7 +22,6 @@ Imports
 =============================================
 """
 
-import gc
 import platform
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -101,7 +100,6 @@ class PlatformProbe(HostProbe):
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
-        gc.enable()
         return
 
     def setup(self):
@@ -201,7 +199,6 @@ class PlatformProbe(HostProbe):
         del template,   \
             data,       \
             results
-        gc.collect()
         return
 
 

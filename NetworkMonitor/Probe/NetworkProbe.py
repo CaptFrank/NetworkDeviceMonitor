@@ -24,7 +24,7 @@ Imports
 =============================================
 """
 
-#from scapy.all import *
+from scapy.all import *
 from abc import abstractmethod
 from NetworkMonitor.Probe.Probe \
     import Probe, PLACEHOLDER_ARRAY, \
