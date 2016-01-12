@@ -23,6 +23,7 @@ Imports
 =============================================
 """
 
+import time
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -84,6 +85,9 @@ class MemoryProbe(HostProbe):
 
     # Continuous flag
     continuous  = True
+
+    # Interval
+    interval    = 3
 
     def __init__(self, queue):
         """
@@ -229,4 +233,8 @@ class MemoryProbe(HostProbe):
                 data,       \
                 vmem,       \
                 swap
+
+            time.sleep(
+                self.interval
+            )
             return

@@ -23,6 +23,7 @@ Imports
 """
 
 import os
+import time
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -84,6 +85,9 @@ class ProcessProbe(HostProbe):
 
     # Continuous flag
     continuous  = True
+
+    # Interval
+    interval    = 3
 
     def __init__(self, queue):
         """
@@ -205,6 +209,10 @@ class ProcessProbe(HostProbe):
                 data,       \
                 pids,       \
                 database
+
+            time.sleep(
+                self.interval
+            )
             return
 
     def __getpids(self):

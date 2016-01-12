@@ -31,6 +31,7 @@ from NetworkMonitor.Probe.Probe \
     PLACEHOLDER_DICT, PLACEHOLDER_STRING
 from NetworkMonitor.Probe.MutableProbe \
     import MutableProbe
+from NetworkMonitor.config import *
 
 """
 =============================================
@@ -63,19 +64,25 @@ class NetworkProbe(MutableProbe, Probe):
     """
 
     # Check the probe types
-    __types         = {
+    __types             = {
     }
 
     # Probe table
-    __probe_table   = {
+    __probe_table       = {
         # Probe type -- Probe Function
     }
 
     # Iface that is used to sniff
-    __iface         = None
+    __iface             = None
 
     # The logger
-    _logger         = None
+    _logger             = None
+
+    # The packet count
+    __packet_count      = 0
+
+    # The counter
+    __packet_counter    = 0
 
     def __init__(self, type, iface, queue):
         """
@@ -115,7 +122,7 @@ class NetworkProbe(MutableProbe, Probe):
         raise NotImplemented
 
     @abstractmethod
-    def report(self, data):
+    def report(self):
         """
         This is the default reporting mechanism for the network
         probes.
@@ -175,6 +182,12 @@ class NetworkProbe(MutableProbe, Probe):
         :return:
         """
 
+        # Report bool
+        reported = False
+
+        self.__packet_count     += 1
+        self.__packet_counter   += 1
+
         # Cycle through the probe table
         for probe in self.__probe_table.keys():
 
@@ -189,4 +202,13 @@ class NetworkProbe(MutableProbe, Probe):
                 object.execute(
                     packet
                 )
+
+                # Check the packet count to report...
+                if self.__packet_count >= PACKET_REPORT_MAX:
+                    object.report()
+                    reported = True
+
+        if reported:
+            reported = False
+            self.__packet_counter = 0
         return

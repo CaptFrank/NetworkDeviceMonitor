@@ -21,6 +21,8 @@
 Imports
 =============================================
 """
+
+import time
 import psutil
 
 from NetworkMonitor.Probe.HostProbe \
@@ -253,6 +255,10 @@ class CPUProbe(HostProbe):
             users,      \
             counts,     \
             usage
+
+        time.sleep(
+            self.interval
+        )
         return
 
     # Utility methods

@@ -24,8 +24,10 @@ Imports
 =============================================
 """
 
-from tinydb import Query
+import time
 from netaddr import *
+from tinydb import Query
+
 from NetworkMonitor.Storage.ProbeDb import \
     ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
@@ -106,6 +108,9 @@ class IpProbe(PassiveNetworkProbe):
 
     # App configs
     __configs       = None
+
+    # Time
+    __date          = None
 
     def __init__(self, queue, configs):
         """
@@ -188,10 +193,10 @@ class IpProbe(PassiveNetworkProbe):
 
         # Update the metrics
         self.__packets_read += 1
-
+        self.__correlate_ip(packet)
         return
 
-    def report(self, data):
+    def report(self):
         """
         Generate a report based on either the registered ips or the
         ip correlated to the database.
@@ -199,7 +204,31 @@ class IpProbe(PassiveNetworkProbe):
         :param data:
         :return:
         """
-        return
+
+        if self.__configs['behaviour'] == 'MONITOR':
+
+            # We need to return the Unknown vs. Known tables
+            known = self.__database.get_table('KNOWN')
+            unknown = self.__database.get_table('UNNKNOWN')
+
+            # Get the data
+            known_addresses = known.all()
+            unknown_addresses = unknown.all()
+
+            # Merge the results and return them
+            return {
+                'known'     : known_addresses,
+                'unknown'   : unknown_addresses
+            }
+        else:
+
+            # Return all the ips
+            ip = self.__database.get_table('IP')
+            ip_addresses = ip.all()
+
+            return {
+                'ip'        : ip_addresses
+            }
 
     def __setup_db(self):
         """
@@ -248,7 +277,6 @@ class IpProbe(PassiveNetworkProbe):
                                 'address'       : ip,
                             }
                         )
-
         else:
 
             # Create a new table
@@ -296,6 +324,12 @@ class IpProbe(PassiveNetworkProbe):
                 unknown_table.insert(
                     {
                         'type'          : 'IP',
+                        'seq'           : self.__packets_read,
+                        'time'          : time.asctime(
+                            time.localtime(
+                                time.time()
+                            )
+                        ),
                         'address'       : dest_pkt,
                     }
                 )
@@ -305,6 +339,12 @@ class IpProbe(PassiveNetworkProbe):
                 unknown_table.insert(
                     {
                         'type'          : 'IP',
+                        'seq'           : self.__packets_read,
+                        'time'          : time.asctime(
+                            time.localtime(
+                                time.time()
+                            )
+                        ),
                         'address'       : src_pkt,
                     }
                 )
@@ -317,12 +357,24 @@ class IpProbe(PassiveNetworkProbe):
             table.insert(
                 {
                     'type'          : 'IP',
+                    'seq'           : self.__packets_read,
+                    'time'          : time.asctime(
+                        time.localtime(
+                            time.time()
+                        )
+                    ),
                     'address'       : source,
                 }
             )
             table.insert(
                 {
                     'type'          : 'IP',
+                    'seq'           : self.__packets_read,
+                    'time'          : time.asctime(
+                        time.localtime(
+                            time.time()
+                        )
+                    ),
                     'address'       : destination,
                 }
             )
@@ -351,7 +403,9 @@ class IpProbe(PassiveNetworkProbe):
         # We have a network to generate
         if '/' in ip:
             network = list(IPNetwork(ip))
-            return network
+            for address in network:
+                generate_ip(address)
+            return addresses
         else:
             return ip
 

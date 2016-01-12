@@ -22,6 +22,7 @@ Imports
 =============================================
 """
 
+import time
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -233,7 +234,10 @@ class DynamicIfaceProbe(HostProbe):
     data        = {}
 
     # Continuous flag
-    continuous  = False
+    continuous  = True
+
+    # Interval
+    interval    = 3
 
     def __init__(self, queue):
         """
@@ -355,6 +359,10 @@ class DynamicIfaceProbe(HostProbe):
                 stats,      \
                 connections,\
                 data
+
+            time.sleep(
+                self.interval
+            )
             return
 
 class IfaceProbe(MutableProbe):

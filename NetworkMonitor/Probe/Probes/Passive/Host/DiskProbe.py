@@ -26,6 +26,7 @@ Imports
 =============================================
 """
 
+import time
 import psutil
 from NetworkMonitor.Probe.HostProbe \
     import HostProbe, PLACEHOLDER_STRING, \
@@ -262,7 +263,10 @@ class DynamicDiskProbe(HostProbe):
         data        = {}
 
         # Continuous flag
-        continuous  = False
+        continuous  = True
+
+        # Interval
+        interval    = 3
 
 
         def __init__(self, queue):
@@ -406,6 +410,10 @@ class DynamicDiskProbe(HostProbe):
                 data,       \
                 usage,      \
                 io
+
+            time.sleep(
+                self.interval
+            )
             return
 
 class DiskProbe(MutableProbe):
