@@ -199,6 +199,34 @@
             # alert system work.
             known       =  28-80-23-02-53-55,
 
+        # This is the optional configuration for the plugin.
+        # This plugin uses and instantiates an ip probe. These configs
+        # are to make sure the ip probe itself is setup appropriately.
+        [[[TCP]]]
+
+            # This is the application name
+            name        = TcpMonitor
+
+            # This is the application type
+            type        = MONITOR
+
+            # The interface to monitor on
+            iface       = eth0
+
+            # The behaviour of the probe
+            # Either this probe can be a monitor or an observer [MONITOR/OBSERVER]
+            # Where the monitor looks for disallowed ips, and the
+            # observer reports registered ips. [Default = MONITOR]
+            behaviour   = MONITOR
+
+            # All we need to provide is the known IPs to have the
+            # alert system work.
+            known_ip    =  10.0.1.1, 10.0.1.2
+
+            # All we need to provide is the known ports to have the
+            # alert system work.
+            known_port  =  80, 8080, 8888
+
 
 
 

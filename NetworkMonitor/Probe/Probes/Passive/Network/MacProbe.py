@@ -27,6 +27,7 @@ Imports
 import time
 from netaddr import *
 from tinydb import Query
+from scapy.layers.l2 import *
 
 from NetworkMonitor.Storage.ProbeDb import \
     ProbeDb
@@ -60,37 +61,37 @@ class MacProbe(PassiveNetworkProbe):
     """
 
     # The class name
-    name        = "MacProbe"
+    name            = "MacProbe"
 
     # The probe type
-    type        = "MAC"
+    type            = "MAC"
 
     # Description
-    description = \
+    description     = \
     "This is the probe that will monitor the mac addresses " \
     "on the network and will correlate them to a db."
 
     # Fields for filtering
-    fields      = []
+    fields          = []
 
     # Groups
-    groups      = [
+    groups          = [
         "mac",
         "network",
         "reconnaissance"
     ]
 
     # Definition
-    definition  = {}
+    definition      = {}
 
     # Template
-    template    = {}
+    template        = {}
 
     # Data
-    data        = {}
+    data            = {}
 
     # Layer filter
-    layer           = 'Ethernet'
+    layer           = Ether
 
     # ====================
     # Private
@@ -316,7 +317,7 @@ class MacProbe(PassiveNetworkProbe):
                                 time.time()
                             )
                         ),
-                        'address'       : dest_pkt,
+                        'address'       : destination,
                     }
                 )
             elif src_pkt is None:
@@ -331,7 +332,7 @@ class MacProbe(PassiveNetworkProbe):
                                 time.time()
                             )
                         ),
-                        'address'       : src_pkt,
+                        'address'       : source,
                     }
                 )
 

@@ -1,6 +1,6 @@
 """
 
-    :IPProbe:
+    :IpProbe:
     ==========
 
     :
@@ -27,6 +27,7 @@ Imports
 import time
 from netaddr import *
 from tinydb import Query
+from scapy.layers.inet import *
 
 from NetworkMonitor.Storage.ProbeDb import \
     ProbeDb
@@ -64,37 +65,37 @@ class IpProbe(PassiveNetworkProbe):
     """
 
     # The class name
-    name        = "IpProbe"
+    name            = "IpProbe"
 
     # The probe type
-    type        = "IP"
+    type            = "IP"
 
     # Description
-    description = \
+    description     = \
     "This is the probe that will monitor the ip addresses " \
     "on the network and will correlate them to a db."
 
     # Fields for filtering
-    fields      = []
+    fields          = []
 
     # Groups
-    groups      = [
+    groups          = [
         "ip",
         "network",
         "reconnaissance"
     ]
 
     # Definition
-    definition  = {}
+    definition      = {}
 
     # Template
-    template    = {}
+    template        = {}
 
     # Data
-    data        = {}
+    data            = {}
 
     # Layer filter
-    layer           = 'IP'
+    layer           = IP
 
     # ====================
     # Private
@@ -316,14 +317,17 @@ class IpProbe(PassiveNetworkProbe):
 
             # We need to check the validity of the ip
             # Get the table
-            unknown_table = self.__database.get_table(
-                'UNKNOWN'
+            known_table = self.__database.get_table(
+                'KNOWN'
             )
-            src_pkt = unknown_table.search(
+            src_pkt = known_table.search(
                 Query().address == source
             )
-            dest_pkt = unknown_table.search(
+            dest_pkt = known_table.search(
                 Query().address == destination
+            )
+            unknown_table = self.__database.get_table(
+                'UNKNOWN'
             )
 
             if dest_pkt is None:
@@ -338,7 +342,7 @@ class IpProbe(PassiveNetworkProbe):
                                 time.time()
                             )
                         ),
-                        'address'       : dest_pkt,
+                        'address'       : destination,
                     }
                 )
             elif src_pkt is None:
@@ -353,7 +357,7 @@ class IpProbe(PassiveNetworkProbe):
                                 time.time()
                             )
                         ),
-                        'address'       : src_pkt,
+                        'address'       : source,
                     }
                 )
 
@@ -386,7 +390,6 @@ class IpProbe(PassiveNetworkProbe):
                     'address'       : destination,
                 }
             )
-
         return
 
     def __get_address(self, ip):
@@ -403,9 +406,14 @@ class IpProbe(PassiveNetworkProbe):
 
         # Generator
         generate_ip = lambda address : addresses.append(
-            str(
-                address.ipv4()
-            )
+                {
+                    'v4'    :   str(
+                        address.ipv4()
+                    ),
+                    'v6'    :   str(
+                        address.ipv6()
+                    )
+                }
         )
 
         # We have a network to generate
