@@ -193,7 +193,7 @@ class IpProbe(PassiveNetworkProbe):
 
         # Update the metrics
         self.__packets_read += 1
-        self.__correlate_ip(packet)
+        self.__correlate(packet)
         return
 
     def report(self):
@@ -277,6 +277,14 @@ class IpProbe(PassiveNetworkProbe):
                                 'address'       : ip,
                             }
                         )
+                else:
+                    # Add the Ips in the known table
+                    table.insert(
+                        {
+                            'type'          : 'IP',
+                            'address'       : ip,
+                        }
+                    )
         else:
 
             # Create a new table
@@ -290,7 +298,7 @@ class IpProbe(PassiveNetworkProbe):
             )
         return
 
-    def __correlate_ip(self, pkt):
+    def __correlate(self, pkt):
         """
         This is the correlation algorithm that will look at the databases and
         check either the registry or the black list.
@@ -312,10 +320,10 @@ class IpProbe(PassiveNetworkProbe):
                 'UNKNOWN'
             )
             src_pkt = unknown_table.search(
-                Query().source == source
+                Query().address == source
             )
             dest_pkt = unknown_table.search(
-                Query().destination == destination
+                Query().address == destination
             )
 
             if dest_pkt is None:

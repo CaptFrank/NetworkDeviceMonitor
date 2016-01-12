@@ -22,11 +22,14 @@ Imports
 =============================================
 """
 
-from .DHCPProbe import *
+from .DhcpProbe import *
 from .DnsProbe import *
 from .HttpProbe import *
 from .IpProbe import *
 from .MacProbe import *
+from .TcpProbe import *
+from .ArpProbe import *
+from .IcmpProbe import *
 
 """
 =============================================
@@ -43,7 +46,9 @@ PASSIVE_NETWORK_PROBES = {
     'DHCPProbe'     : DHCPProbe,
     'DnsProbe'      : DnsProbe,
     'HttpProbe'     : HttpProbe,
+    'TcpProbe'      : TcpProbe,
     'IpProbe'       : IpProbe,
     'MacProbe'      : MacProbe,
-
+    'IcmpProbe'     : IcmpProbe,
+    'ArpProbe'      : ArpProbe,
 }
