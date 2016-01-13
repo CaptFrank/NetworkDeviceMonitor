@@ -28,9 +28,10 @@ import time
 from netaddr import *
 from tinydb import Query
 from scapy.layers.inet import *
+from scapy.layers.inet6 import *
 
-from NetworkMonitor.Storage.ProbeDb import \
-    ProbeDb
+from NetworkMonitor.Storage.ProbeDb \
+    import ProbeDb
 from NetworkMonitor.Probe.Probes.Passive.PassiveNetworkProbe \
     import *
 
@@ -75,9 +76,6 @@ class IpProbe(PassiveNetworkProbe):
     "This is the probe that will monitor the ip addresses " \
     "on the network and will correlate them to a db."
 
-    # Fields for filtering
-    fields          = []
-
     # Groups
     groups          = [
         "ip",
@@ -85,27 +83,22 @@ class IpProbe(PassiveNetworkProbe):
         "reconnaissance"
     ]
 
-    # Definition
-    definition      = {}
-
-    # Template
-    template        = {}
-
-    # Data
-    data            = {}
-
     # Layer filter
     layer           = IP
 
     # ====================
-    # Private
+    # Protected
     # ====================
 
-    # Database
-    __database      = None
+    # Local database tables
+    _tables         = [
+        'KNOWN_IP',
+        'UNKNOWN_IP'
+    ]
 
-    # Metrics
-    __packets_read  = 0
+    # ====================
+    # Private
+    # ====================
 
     # App configs
     __configs       = None
@@ -142,95 +135,6 @@ class IpProbe(PassiveNetworkProbe):
         )
         return
 
-    def setup(self):
-        """
-        This is the setup method for the probe. It is called
-        to setup the context of the probe itself. In this case
-        the probe needs to
-        :return:
-        """
-
-        # Register all handles
-        self.set_data(
-            self.data
-        )
-        self.register_type(
-            self.type
-        )
-        self.set_definition(
-            {
-                "type"          : self.get_type(),
-                "name"          : self.name,
-                "description"   : self.description,
-                "default"       : "yes",
-                "help"          : self.description,
-                "tag"           : self.name,
-                "fields"        : PLACEHOLDER_ARRAY,
-                "groups"        : PLACEHOLDER_ARRAY,
-            }
-        )
-        self.set_template(
-            {
-                "definition"    : self.get_definition(),
-                "data"          : PLACEHOLDER_DICT
-            }
-        )
-
-        # Set a new handle
-        self.__setup_db()
-        self.logger.info(
-            "Setup complete for probe: %s"
-            %self.name
-        )
-        return
-
-    def execute(self, packet):
-        """
-        Execute the filter / probe.
-
-        :param packet:      The packet that has been read
-        :return:
-        """
-
-        # Update the metrics
-        self.__packets_read += 1
-        self.__correlate(packet)
-        return
-
-    def report(self):
-        """
-        Generate a report based on either the registered ips or the
-        ip correlated to the database.
-
-        :param data:
-        :return:
-        """
-
-        if self.__configs['behaviour'] == 'MONITOR':
-
-            # We need to return the Unknown vs. Known tables
-            known = self.__database.get_table('KNOWN')
-            unknown = self.__database.get_table('UNNKNOWN')
-
-            # Get the data
-            known_addresses = known.all()
-            unknown_addresses = unknown.all()
-
-            # Merge the results and return them
-            return {
-                'known'     : known_addresses,
-                'unknown'   : unknown_addresses
-            }
-        else:
-
-            # Return all the ips
-            ip = self.__database.get_table('IP')
-            ip_addresses = ip.all()
-
-            return {
-                'ip'        : ip_addresses
-            }
-
     def __setup_db(self):
         """
         Setup the probe specific database.
@@ -242,21 +146,15 @@ class IpProbe(PassiveNetworkProbe):
         )
 
         # Setup the known database
-        if self.__configs['behaviour'] == 'MONITOR':
-
-            # Create a new db table
-            tables = [
-                'KNOWN',
-                'UNKNOWN'
-            ]
+        if self.behaviour == PROBE_MONITORING:
 
             # We need to check the already registered ips
-            self.__database.setup_db(
-                tables
+            self._database.setup_db(
+                self._tables
             )
 
             # Get the table
-            table = self.__database.get_table('KNOWN')
+            table = self.__database.get_table('KNOWN_IP')
 
             # Add the entries to the internal db
             for ip in self.__configs['known']:
@@ -268,7 +166,6 @@ class IpProbe(PassiveNetworkProbe):
                 )
 
                 if type(address) is list():
-
                     for ip in address:
 
                         # Add the Ips in the known table
@@ -286,7 +183,7 @@ class IpProbe(PassiveNetworkProbe):
                             'address'       : ip,
                         }
                     )
-        else:
+        elif self.behaviour == PROBE_OBSERVING:
 
             # Create a new table
             tables = [
@@ -309,86 +206,75 @@ class IpProbe(PassiveNetworkProbe):
         """
 
         # Get the ip layer
-        destination     = pkt[IP].dest
-        source          = pkt[IP].src
+        dest_mac        = pkt[Ether].dest
+        src_mac         = pkt[Ether].src
+        dest_ip         = pkt[IP].dest
+        src_ip          = pkt[IP].src
+
+        dest_data = {
+            'type'          : 'IP|MAC',
+            'seq'           : self._packet_count,
+            'time'          : time.asctime(
+                time.localtime(
+                    time.time()
+                )
+            ),
+            'mac'           : dest_mac,
+            'ip'            : dest_ip
+        }
+
+        src_data = {
+            'type'          : 'IP|MAC',
+            'seq'           : self._packet_count,
+            'time'          : time.asctime(
+                time.localtime(
+                    time.time()
+                )
+            ),
+            'mac'           : src_mac,
+            'ip'            : src_ip
+        }
 
         # We check the dehaviour
-        if self.__configs['behaviour'] == 'MONITOR':
+        if self.behaviour == PROBE_MONITORING:
 
             # We need to check the validity of the ip
             # Get the table
-            known_table = self.__database.get_table(
-                'KNOWN'
+            unknown_table = self._database.get_table(
+                'UNKNOWN_IP'
+            )
+            known_table = self._database.get_table(
+                'KNOWN_IP'
             )
             src_pkt = known_table.search(
-                Query().address == source
+                Query().address == src_ip
             )
             dest_pkt = known_table.search(
-                Query().address == destination
+                Query().address == dest_ip
             )
-            unknown_table = self.__database.get_table(
-                'UNKNOWN'
-            )
-
             if dest_pkt is None:
 
                 # We have an unknown destination ip
                 unknown_table.insert(
-                    {
-                        'type'          : 'IP',
-                        'seq'           : self.__packets_read,
-                        'time'          : time.asctime(
-                            time.localtime(
-                                time.time()
-                            )
-                        ),
-                        'address'       : destination,
-                    }
+                    dest_data
                 )
-            elif src_pkt is None:
+            if src_pkt is None:
 
                 # We have an unknown destination ip
                 unknown_table.insert(
-                    {
-                        'type'          : 'IP',
-                        'seq'           : self.__packets_read,
-                        'time'          : time.asctime(
-                            time.localtime(
-                                time.time()
-                            )
-                        ),
-                        'address'       : source,
-                    }
+                    src_data
                 )
 
         # Just register the IP for logging
-        else:
-            table = self.__database.get_table(
+        elif self.behaviour == PROBE_OBSERVING:
+            table = self._database.get_table(
                 'IP'
             )
             table.insert(
-                {
-                    'type'          : 'IP',
-                    'seq'           : self.__packets_read,
-                    'time'          : time.asctime(
-                        time.localtime(
-                            time.time()
-                        )
-                    ),
-                    'address'       : source,
-                }
+                src_data
             )
             table.insert(
-                {
-                    'type'          : 'IP',
-                    'seq'           : self.__packets_read,
-                    'time'          : time.asctime(
-                        time.localtime(
-                            time.time()
-                        )
-                    ),
-                    'address'       : destination,
-                }
+                dest_data
             )
         return
 

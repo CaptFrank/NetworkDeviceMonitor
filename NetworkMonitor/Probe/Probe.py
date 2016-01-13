@@ -63,22 +63,31 @@ class Probe(threading.Thread):
     __metaclass__   = abc.ABCMeta
 
     # The probe name
-    __name          = None
+    name            = None
+
+    # Description of the probe
+    description     = ''
 
     # The probe type
-    __type          = None
+    type            = None
 
     # Probe definition
-    __definition    = None
+    definition      = None
 
     # The sensor data
-    __data          = None
+    data            = None
 
     # Monitored / Continuous
-    __continuous    = False
+    continuous      = False
+
+    # Probe type groups
+    groups          = []
+
+    # Fields
+    fields          = []
 
     # Data template
-    __template      = None
+    template        = None
 
     # Probe alive?
     __alive         = True

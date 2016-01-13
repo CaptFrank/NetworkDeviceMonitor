@@ -109,6 +109,7 @@ class ProbeDb(TinyDB):
             table = self.table(
                 name
             )
+            table.name = name
 
             # Add the table to the internal db
             self.__tables[name] = table
@@ -128,3 +129,20 @@ class ProbeDb(TinyDB):
             return None
         else:
             return self.__tables[name]
+
+    def get_tables(self):
+        """
+        Gets all the tables in the database.
+
+        :return:
+        """
+
+        # Results
+        results = {}
+
+        for table_name, table_value in \
+                zip(self.__tables.keys(), self.__tables.values()):
+
+            # Add the data to a single dict
+            results[table_name] = table_value.all()
+        return results

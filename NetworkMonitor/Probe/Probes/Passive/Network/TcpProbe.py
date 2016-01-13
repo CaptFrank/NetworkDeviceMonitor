@@ -23,7 +23,8 @@ Imports
 =============================================
 """
 
-from NetworkMonitor.Probe.Probes.Passive.Network.IpProbe import *
+from NetworkMonitor.Probe.Probes.Passive.Network.IpProbe \
+    import *
 
 """
 =============================================
@@ -52,7 +53,7 @@ class TcpProbe(IpProbe):
     If the database is not provided, the IPs are registered and reported
     as alive / dead.
 
-    extends: PassiveNetworkProbe
+    extends: IpProbe
     """
 
     # The class name
@@ -77,14 +78,19 @@ class TcpProbe(IpProbe):
     layer           = TCP
 
     # ====================
-    # Private
+    # Protected
     # ====================
 
-    # Database
-    __database      = None
+    # Local database tables
+    _tables         = [
+        'KNOWN_IP',
+        'UNKNOWN_IP',
+        'KNOWN_PORT',
+    ]
 
-    # Metrics
-    __packets_read  = 0
+    # ====================
+    # Private
+    # ====================
 
     # App configs
     __configs       = None
@@ -92,44 +98,6 @@ class TcpProbe(IpProbe):
     # Time
     __date          = None
 
-    def report(self):
-        """
-        Generate a report based on either the registered ips or the
-        ip correlated to the database.
-
-        :param data:
-        :return:
-        """
-
-        if self.__configs['behaviour'] == 'MONITOR':
-
-            # We need to return the Unknown vs. Known tables
-            known_ip = self.__database.get_table('KNOWN_IP')
-            known_port = self.__database.get_table('KNOWN_PORT')
-            unknown = self.__database.get_table('UNNKNOWN')
-
-            # Get the data
-            unknown = unknown.all()
-            known_addresses = known_ip.all()
-            known_ports = known_port.all()
-
-            # Merge the results and return them
-            return {
-                'known'     : {
-                    'ip'    : known_addresses,
-                    'port'  : known_ports
-                },
-                'unknown'   : unknown,
-            }
-        else:
-
-            # Return all the ips
-            ip = self.__database.get_table('IP')
-            ip_addresses = ip.all()
-
-            return {
-                'ip'        : ip_addresses
-            }
 
     def __setup_db(self):
         """
@@ -142,18 +110,11 @@ class TcpProbe(IpProbe):
         )
 
         # Setup the known database
-        if self.__configs['behaviour'] == 'MONITOR':
-
-            # Create a new db table
-            tables = [
-                'KNOWN_IP',
-                'KNOWN_PORTS',
-                'UNKNOWN',
-            ]
+        if self.behaviour == PROBE_MONITORING:
 
             # We need to check the already registered ips
             self.__database.setup_db(
-                tables
+                self._tables
             )
 
             # Get the table
@@ -169,7 +130,6 @@ class TcpProbe(IpProbe):
                 )
 
                 if type(address) is list():
-
                     for ip in address:
 
                         # Add the Ips in the known table
@@ -200,11 +160,11 @@ class TcpProbe(IpProbe):
                         'port'          : port,
                     }
                 )
-        else:
+        elif self.behaviour == PROBE_OBSERVING:
 
             # Create a new table
             tables = [
-                'IP'
+                'TCP'
             ]
 
             # We need to check the already registered ips
@@ -223,15 +183,15 @@ class TcpProbe(IpProbe):
         """
 
         # Get the ip layer
-        destination         = pkt[IP].dest
-        destination_port    = pkt[TCP].dport
-        source              = pkt[IP].src
-        source_port         = pkt[TCP].sport
+        dest_ip             = pkt[IP].dest
+        dest_port           = pkt[TCP].dport
+        src_ip              = pkt[IP].src
+        src_port            = pkt[TCP].sport
 
         # Correlate IP
         self.__correlate_ip(
-                source, source_port,
-                destination, destination_port
+                src_ip,     src_port,
+                dest_ip,    dest_port
         )
         return
 
@@ -242,8 +202,32 @@ class TcpProbe(IpProbe):
         :return:
         """
 
+        dest_data = {
+            'type'          : 'IP|MAC',
+            'seq'           : self._packet_count,
+            'time'          : time.asctime(
+                time.localtime(
+                    time.time()
+                )
+            ),
+            'mac'           : dst,
+            'ip'            : dst_port
+        }
+
+        src_data = {
+            'type'          : 'IP|MAC',
+            'seq'           : self._packet_count,
+            'time'          : time.asctime(
+                time.localtime(
+                    time.time()
+                )
+            ),
+            'mac'           : src,
+            'ip'            : src_port
+        }
+
         # We check the dehaviour
-        if self.__configs['behaviour'] == 'MONITOR':
+        if self.behaviour == PROBE_MONITORING:
 
             # We need to check the validity of the ip
             # Get the table
@@ -251,18 +235,17 @@ class TcpProbe(IpProbe):
                 'KNOWN_IP'
             )
             unknown_table = self.__database.get_table(
-                'UNKNOWN'
+                'UNKNOWN_IP'
             )
-
             known_port_table = self.__database.get_table(
                 'KNOWN_PORT'
             )
 
             # Address
-            src_pkt = known_ip_table.search(
+            src_pkt_q = known_ip_table.search(
                 Query().address == src
             )
-            dst_pkt = known_ip_table.search(
+            dst_pkt_q = known_ip_table.search(
                 Query().address == dst
             )
 
@@ -275,70 +258,30 @@ class TcpProbe(IpProbe):
             )
 
 
-            if (dst_pkt is None) or \
+            if (dst_pkt_q is None) or \
                     (dst_port_q is None):
 
                 # We have an unknown destination ip
                 unknown_table.insert(
-                    {
-                        'type'          : 'IP|PORT',
-                        'seq'           : self.__packets_read,
-                        'time'          : time.asctime(
-                            time.localtime(
-                                time.time()
-                            )
-                        ),
-                        'address'       : dst,
-                        'port'          : dst_port
-                    }
+                    dest_data
                 )
-            elif (src_pkt is None) or \
+            elif (src_pkt_q is None) or \
                     (src_port_q is None):
 
                 # We have an unknown destination ip
                 unknown_table.insert(
-                    {
-                        'type'          : 'IP|PORT',
-                        'seq'           : self.__packets_read,
-                        'time'          : time.asctime(
-                            time.localtime(
-                                time.time()
-                            )
-                        ),
-                        'address'       : src,
-                        'port'          : src_port
-                    }
+                    src_data
                 )
 
         # Just register the IP for logging
         else:
             table = self.__database.get_table(
-                'IP'
+                'TCP'
             )
             table.insert(
-                {
-                    'type'          : 'IP|PORT',
-                    'seq'           : self.__packets_read,
-                    'time'          : time.asctime(
-                        time.localtime(
-                            time.time()
-                        )
-                    ),
-                    'address'       : src,
-                    'port'          : src_port
-                }
+                dest_data
             )
             table.insert(
-                {
-                    'type'          : 'IP|PORT',
-                    'seq'           : self.__packets_read,
-                    'time'          : time.asctime(
-                        time.localtime(
-                            time.time()
-                        )
-                    ),
-                    'address'       : dst,
-                    'port'          : dst_port
-                }
+                src_data
             )
         return

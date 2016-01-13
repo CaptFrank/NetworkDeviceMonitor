@@ -44,6 +44,13 @@ __author__  =   "gammaRay"
 __version__ =   "1.0"
 __date__    =   "9/28/2015"
 
+PROBE_BEHAVIOURS = [
+    'MONITOR',
+    'OBSERVER'
+]
+PROBE_MONITORING = PROBE_BEHAVIOURS[0]
+PROBE_OBSERVING = PROBE_BEHAVIOURS[1]
+
 """
 =============================================
 Source
@@ -63,6 +70,24 @@ class NetworkProbe(MutableProbe, Probe):
     extends: MutableProbe, Probe
     """
 
+    # Behaviour
+    behaviour          = None
+
+    # The logger
+    _logger             = None
+
+    # The packet count
+    _packet_count       = 0
+
+    # The counter
+    _packet_counter     = 0
+
+    # Database
+    _database           = None
+
+    # Iface that is used to sniff
+    __iface             = None
+
     # Check the probe types
     __types             = {
     }
@@ -71,18 +96,6 @@ class NetworkProbe(MutableProbe, Probe):
     __probe_table       = {
         # Probe type -- Probe Function
     }
-
-    # Iface that is used to sniff
-    __iface             = None
-
-    # The logger
-    _logger             = None
-
-    # The packet count
-    __packet_count      = 0
-
-    # The counter
-    __packet_counter    = 0
 
     def __init__(self, type, iface, queue):
         """
@@ -110,18 +123,62 @@ class NetworkProbe(MutableProbe, Probe):
         )
         return
 
-    @abstractmethod
-    def execute(self, packet):
+    def setup(self):
         """
-        This is the execution method for tha passive
-        probes.
-
-        :param packet:
+        This is the setup method for the probe. It is called
+        to setup the context of the probe itself. In this case
+        the probe needs to
         :return:
         """
-        raise NotImplemented
 
-    @abstractmethod
+        # Register all handles
+        self.set_data(
+            self.data
+        )
+        self.register_type(
+            self.type
+        )
+        self.set_definition(
+            {
+                "type"          : self.get_type(),
+                "name"          : self.name,
+                "description"   : self.description,
+                "default"       : "yes",
+                "help"          : self.description,
+                "tag"           : self.name,
+                "behaviour"     : self.behaviour,
+                "fields"        : PLACEHOLDER_ARRAY,
+                "groups"        : PLACEHOLDER_ARRAY,
+            }
+        )
+        self.set_template(
+            {
+                "definition"    : self.get_definition(),
+                "data"          : PLACEHOLDER_DICT
+            }
+        )
+
+        # Set a new handle
+        self._setup_db()
+        self.logger.info(
+            "Setup complete for probe: %s"
+            %self.name
+        )
+        return
+
+    def execute(self, packet):
+        """
+        Execute the filter / probe.
+
+        :param packet:      The packet that has been read
+        :return:
+        """
+
+        # Update the metrics
+        self.__packet_counter += 1
+        self._correlate(packet)
+        return
+
     def report(self):
         """
         This is the default reporting mechanism for the network
@@ -130,7 +187,15 @@ class NetworkProbe(MutableProbe, Probe):
         :param data:
         :return:
         """
-        raise NotImplemented
+
+        # We get all the data
+        results = self._database.get_tables()
+        template = self.get_template()
+        template['data'] = results
+
+        # Set the data
+        self.set_data(template)
+        return self.get_data()
 
     def _run(self):
         """
@@ -173,6 +238,26 @@ class NetworkProbe(MutableProbe, Probe):
         )
         return
 
+    @abstractmethod
+    def _correlate(self, packet):
+        """
+        Correlates the read data from the internal data.
+
+        :return:
+        """
+        raise NotImplemented
+
+    @abstractmethod
+    def _setup_db(self):
+        """
+        Setup the internal database with the appropriate
+        tables and data peices.
+
+        :return:
+        """
+        raise NotImplemented
+
+
     def __process(self, packet):
         """
         This is the processing method that is used to process the
@@ -185,8 +270,8 @@ class NetworkProbe(MutableProbe, Probe):
         # Report bool
         reported = False
 
-        self.__packet_count     += 1
-        self.__packet_counter   += 1
+        self._packet_count     += 1
+        self._packet_counter   += 1
 
         # Cycle through the probe table
         for probe in self.__probe_table.keys():
@@ -204,7 +289,7 @@ class NetworkProbe(MutableProbe, Probe):
                 )
 
                 # Check the packet count to report...
-                if self.__packet_count >= PACKET_REPORT_MAX:
+                if self._packet_count >= PACKET_REPORT_MAX:
                     object.report()
                     reported = True
 
