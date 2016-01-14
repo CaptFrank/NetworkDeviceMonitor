@@ -27,8 +27,7 @@ Imports
 import time
 from netaddr import *
 from tinydb import Query
-from scapy.layers.inet import *
-from scapy.layers.inet6 import *
+from scapy.layers.all import *
 
 from NetworkMonitor.Storage.ProbeDb \
     import ProbeDb
@@ -196,7 +195,7 @@ class IpProbe(PassiveNetworkProbe):
             )
         return
 
-    def __correlate(self, pkt):
+    def _correlate(self, pkt):
         """
         This is the correlation algorithm that will look at the databases and
         check either the registry or the black list.

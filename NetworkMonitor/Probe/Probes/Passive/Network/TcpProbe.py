@@ -173,7 +173,7 @@ class TcpProbe(IpProbe):
             )
         return
 
-    def __correlate(self, pkt):
+    def _correlate(self, pkt):
         """
         This is the correlation algorithm that will look at the databases and
         check either the registry or the black list.
@@ -189,13 +189,13 @@ class TcpProbe(IpProbe):
         src_port            = pkt[TCP].sport
 
         # Correlate IP
-        self.__correlate_ip(
+        self._correlate_ip(
                 src_ip,     src_port,
                 dest_ip,    dest_port
         )
         return
 
-    def __correlate_ip(self, src, src_port, dst, dst_port):
+    def _correlate_ip(self, src, src_port, dst, dst_port):
         """
         Correlate the ip addresses.
 
@@ -203,27 +203,27 @@ class TcpProbe(IpProbe):
         """
 
         dest_data = {
-            'type'          : 'IP|MAC',
+            'type'          : 'IP|PORT',
             'seq'           : self._packet_count,
             'time'          : time.asctime(
                 time.localtime(
                     time.time()
                 )
             ),
-            'mac'           : dst,
-            'ip'            : dst_port
+            'ip'           : dst,
+            'port'         : dst_port
         }
 
         src_data = {
-            'type'          : 'IP|MAC',
+            'type'          : 'IP|PORT',
             'seq'           : self._packet_count,
             'time'          : time.asctime(
                 time.localtime(
                     time.time()
                 )
             ),
-            'mac'           : src,
-            'ip'            : src_port
+            'ip'            : src,
+            'port'          : src_port
         }
 
         # We check the dehaviour

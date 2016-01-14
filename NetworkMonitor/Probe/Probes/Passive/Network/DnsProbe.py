@@ -132,7 +132,7 @@ class DnsProbe(IpProbe):
                         'address'       : dns,
                     }
                 )
-        else:
+        elif self.behaviour == PROBE_OBSERVING:
 
             # Create a new table
             tables = [
@@ -145,7 +145,7 @@ class DnsProbe(IpProbe):
             )
         return
 
-    def __correlate(self, pkt):
+    def _correlate(self, pkt):
         """
         This is the correlation algorithm that will look at the databases and
         check either the registry or the black list.
@@ -155,19 +155,51 @@ class DnsProbe(IpProbe):
         """
 
         # Get the ip layer
-        dest            = pkt[IP].dest
+        dst            = pkt[IP].dest
         src             = pkt[IP].src
-
-        # Get the ports
-        src_port        = pkt[TCP].sport
-        dest_port       = pkt[TCP].dport
 
         # Get the DNS name
         dns_name        = pkt[DNS]
 
-        # Correlate IP
-        self.__correlate_ip(
-                source, source_port,
-                destination, destination_port
-        )
+        dns_data = {
+            'type'          : 'DNS|IP',
+            'seq'           : self._packet_count,
+            'time'          : time.asctime(
+                time.localtime(
+                    time.time()
+                )
+            ),
+            'dns'           : dns_name,
+            'src'           : src,
+            'dst'           : dst,
+        }
+
+        # We check the dehaviour
+        if self.behaviour == PROBE_MONITORING:
+
+            # We need to check the validity of the ip
+            # Get the table
+            unknown_table = self._database.get_table(
+                'UNKNOWN_DNS'
+            )
+            known_table = self._database.get_table(
+                'KNOWN_DNS'
+            )
+            pkt = known_table.search(
+                Query().address == dns_name
+            )
+            if pkt is None:
+
+                # We have an unknown destination ip
+                unknown_table.insert(
+                    dns_data
+                )
+        # Just register the IP for logging
+        elif self.behaviour == PROBE_OBSERVING:
+            table = self._database.get_table(
+                'DNS'
+            )
+            table.insert(
+                dns_data
+            )
         return
