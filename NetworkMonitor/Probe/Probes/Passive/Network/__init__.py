@@ -22,7 +22,7 @@ Imports
 =============================================
 """
 
-from .DhcpProbe import *
+from .DHCPProbe import *
 from .DnsProbe import *
 from .HttpProbe import *
 from .IpProbe import *
