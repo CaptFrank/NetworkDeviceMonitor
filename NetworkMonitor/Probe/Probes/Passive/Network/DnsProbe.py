@@ -155,7 +155,7 @@ class DnsProbe(IpProbe):
         """
 
         # Get the ip layer
-        dst            = pkt[IP].dest
+        dst             = pkt[IP].dest
         src             = pkt[IP].src
 
         # Get the DNS name
