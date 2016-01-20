@@ -187,15 +187,24 @@ class TcpProbe(IpProbe):
         dest_port           = pkt[TCP].dport
         src_ip              = pkt[IP].src
         src_port            = pkt[TCP].sport
+        ip_len              = pkt[IP].len
+        ip_chksum           = pkt[IP].chksum
+        ip_version          = pkt[IP].version
+        ip_id               = pkt[IP].id
+        ip_ttl              = pkt[IP].ttl
 
         # Correlate IP
         self._correlate_ip(
                 src_ip,     src_port,
-                dest_ip,    dest_port
+                dest_ip,    dest_port,
+                ip_len,     ip_chksum,
+                ip_version, ip_id,
+                ip_ttl
         )
         return
 
-    def _correlate_ip(self, src, src_port, dst, dst_port):
+    def _correlate_ip(self, src, src_port, dst, dst_port, \
+                      ip_len, ip_chksum, ip_version, ip_id, ip_ttl):
         """
         Correlate the ip addresses.
 
@@ -211,7 +220,11 @@ class TcpProbe(IpProbe):
                 )
             ),
             'ip'           : dst,
-            'port'         : dst_port
+            'port'         : dst_port,
+            'length'        : ip_len,
+            'checksum'      : ip_chksum,
+            'ttl'           : ip_ttl,
+            'id'            : ip_id,
         }
 
         src_data = {
@@ -223,7 +236,11 @@ class TcpProbe(IpProbe):
                 )
             ),
             'ip'            : src,
-            'port'          : src_port
+            'port'          : src_port,
+            'length'        : ip_len,
+            'checksum'      : ip_chksum,
+            'ttl'           : ip_ttl,
+            'id'            : ip_id,
         }
 
         # We check the dehaviour

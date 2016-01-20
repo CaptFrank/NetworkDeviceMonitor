@@ -188,11 +188,17 @@ class MacProbe(PassiveNetworkProbe):
         # Get the ip layer
         dest_mac        = pkt[Ether].dest
         src_mac         = pkt[Ether].src
+        type_mac        = pkt[Ether].type
         dest_ip         = pkt[IP].dest
         src_ip          = pkt[IP].src
+        ip_len          = pkt[IP].len
+        ip_chksum       = pkt[IP].chksum
+        ip_version      = pkt[IP].version
+        ip_id           = pkt[IP].id
+        ip_ttl          = pkt[IP].ttl
 
         dest_data = {
-            'type'          : 'MAC|IP',
+            'type'          : 'IP|MAC',
             'seq'           : self._packet_count,
             'time'          : time.asctime(
                 time.localtime(
@@ -200,11 +206,16 @@ class MacProbe(PassiveNetworkProbe):
                 )
             ),
             'mac'           : dest_mac,
+            'type'          : type_mac,
+            'length'        : ip_len,
+            'checksum'      : ip_chksum,
+            'ttl'           : ip_ttl,
+            'id'            : ip_id,
             'ip'            : dest_ip
         }
 
         src_data = {
-            'type'          : 'MAC|IP',
+            'type'          : 'IP|MAC',
             'seq'           : self._packet_count,
             'time'          : time.asctime(
                 time.localtime(
@@ -212,6 +223,11 @@ class MacProbe(PassiveNetworkProbe):
                 )
             ),
             'mac'           : src_mac,
+            'type'          : type_mac,
+            'length'        : ip_len,
+            'checksum'      : ip_chksum,
+            'ttl'           : ip_ttl,
+            'id'            : ip_id,
             'ip'            : src_ip
         }
 

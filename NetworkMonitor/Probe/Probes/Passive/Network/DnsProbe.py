@@ -157,6 +157,11 @@ class DnsProbe(IpProbe):
         # Get the ip layer
         dst             = pkt[IP].dest
         src             = pkt[IP].src
+        ip_len          = pkt[IP].len
+        ip_chksum       = pkt[IP].chksum
+        ip_version      = pkt[IP].version
+        ip_id           = pkt[IP].id
+        ip_ttl          = pkt[IP].ttl
 
         # Get the DNS name
         dns_name        = pkt[DNS]
@@ -172,6 +177,10 @@ class DnsProbe(IpProbe):
             'dns'           : dns_name,
             'src'           : src,
             'dst'           : dst,
+            'length'        : ip_len,
+            'checksum'      : ip_chksum,
+            'ttl'           : ip_ttl,
+            'id'            : ip_id,
         }
 
         # We check the dehaviour
