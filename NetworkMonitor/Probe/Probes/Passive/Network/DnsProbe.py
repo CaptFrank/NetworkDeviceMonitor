@@ -181,6 +181,7 @@ class DnsProbe(IpProbe):
             'checksum'      : ip_chksum,
             'ttl'           : ip_ttl,
             'id'            : ip_id,
+            'version'       : ip_version
         }
 
         # We check the dehaviour
