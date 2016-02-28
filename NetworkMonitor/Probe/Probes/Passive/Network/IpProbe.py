@@ -226,7 +226,7 @@ class IpProbe(PassiveNetworkProbe):
                 )
             ),
             'mac'           : dest_mac,
-            'type'          : type_mac,
+            'iptype'        : type_mac,
             'length'        : ip_len,
             'checksum'      : ip_chksum,
             'ttl'           : ip_ttl,
@@ -244,7 +244,7 @@ class IpProbe(PassiveNetworkProbe):
                 )
             ),
             'mac'           : src_mac,
-            'type'          : type_mac,
+            'iptype'        : type_mac,
             'length'        : ip_len,
             'checksum'      : ip_chksum,
             'ttl'           : ip_ttl,
