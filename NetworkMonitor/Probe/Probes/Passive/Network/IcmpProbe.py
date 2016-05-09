@@ -41,3 +41,7 @@ Variables
 Source
 =============================================
 """
+class IcmpProbe():
+
+    def __init__(self):
+        return

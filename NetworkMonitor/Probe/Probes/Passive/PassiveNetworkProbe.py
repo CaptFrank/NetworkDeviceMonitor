@@ -52,6 +52,9 @@ class PassiveNetworkProbe(NetworkProbe):
     extends: Network Probe
     """
 
+    # Set the default behaviour
+    behaviour       = PROBE_OBSERVING
+
     def __init__(self, type, queue, **kwargs):
         """
         This is the constructor that will set the self
@@ -62,11 +65,11 @@ class PassiveNetworkProbe(NetworkProbe):
         :return:
         """
 
-        # Override the class
-        NetworkProbe.__init__(self, type, kwargs['iface'], queue)
-
         # Register the probe type
         self._register_probe(
             type, self
         )
+
+        # Override the class
+        NetworkProbe.__init__(self, type, kwargs['iface'], queue)
         return

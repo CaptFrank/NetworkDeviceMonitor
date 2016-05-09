@@ -41,3 +41,7 @@ Variables
 Source
 =============================================
 """
+class HttpProbe():
+
+    def __init__(self):
+        return

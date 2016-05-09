@@ -72,7 +72,7 @@ class ArpProbe(MacProbe):
     ]
 
     # Layer filter
-    layer           = ARP
+    layers          = [ARP]
 
     # ====================
     # Protected
@@ -89,10 +89,10 @@ class ArpProbe(MacProbe):
     # ====================
 
     # App configs
-    __configs       = None
+    _configs        = None
 
     # Time
-    __date          = None
+    _date           = None
 
     def __init__(self, queue, configs):
         """
@@ -106,7 +106,8 @@ class ArpProbe(MacProbe):
         """
 
         # Get the configs
-        self.__configs = configs
+        self._configs = configs
+        self._configs['name'] = self.name
 
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
@@ -118,11 +119,54 @@ class ArpProbe(MacProbe):
             }
         )
 
-        # Set the behaviour
-        self.behaviour = self.__configs['behaviour']
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
+        return
+
+    def __setup_db(self):
+        """
+        Setup the probe specific database.
+        :return:
+        """
+        # Create a database
+        self._database = ProbeDb(
+            self._configs['name']
+        )
+
+        # Setup the known database
+        if self.behaviour == PROBE_MONITORING:
+
+            # We need to check the already registered ips
+            self._database.setup_db(
+                self._tables
+            )
+
+            # Get the table
+            table = self._database.get_table('KNOWN_MAC')
+
+            # Add the entries to the internal db
+            for mac in self._configs['known_mac']:
+
+                # Add the Ips in the known table
+                table.insert(
+                    {
+                        'type'          : 'MAC',
+                        'address'       : mac,
+                    }
+                )
+
+        elif self.behaviour == PROBE_OBSERVING:
+
+            # Create a new table
+            tables = [
+                'MAC'
+            ]
+
+            # We need to check the already registered ips
+            self._database.setup_db(
+                tables
+            )
         return
 
 

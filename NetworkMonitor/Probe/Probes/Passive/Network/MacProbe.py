@@ -79,7 +79,7 @@ class MacProbe(PassiveNetworkProbe):
     ]
 
     # Layer filter
-    layer           = Ether
+    layers          = [Ether, IP]
 
     # ====================
     # Protected
@@ -96,10 +96,10 @@ class MacProbe(PassiveNetworkProbe):
     # ====================
 
     # App configs
-    __configs       = None
+    _configs        = None
 
     # Time
-    __date          = None
+    _date           = None
 
     def __init__(self, queue, configs):
         """
@@ -113,7 +113,8 @@ class MacProbe(PassiveNetworkProbe):
         """
 
         # Get the configs
-        self.__configs = configs
+        self._configs = configs
+        self._configs['name'] = self.name
 
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
@@ -126,7 +127,6 @@ class MacProbe(PassiveNetworkProbe):
         )
 
         # Set the behaviour
-        self.behaviour = self.__configs['behaviour']
         self.logger.info(
             "Created a new Probe of type: %s" %self.type
         )
@@ -139,7 +139,7 @@ class MacProbe(PassiveNetworkProbe):
         """
         # Create a database
         self._database = ProbeDb(
-            self.__configs['name']
+            self._configs['name']
         )
 
         # Setup the known database
@@ -154,7 +154,7 @@ class MacProbe(PassiveNetworkProbe):
             table = self._database.get_table('KNOWN_MAC')
 
             # Add the entries to the internal db
-            for mac in self.__configs['known']:
+            for mac in self._configs['known']:
 
                 # Add the Ips in the known table
                 table.insert(
@@ -186,10 +186,10 @@ class MacProbe(PassiveNetworkProbe):
         """
 
         # Get the ip layer
-        dest_mac        = pkt[Ether].dest
+        dest_mac        = pkt[Ether].dst
         src_mac         = pkt[Ether].src
         type_mac        = pkt[Ether].type
-        dest_ip         = pkt[IP].dest
+        dest_ip         = pkt[IP].dst
         src_ip          = pkt[IP].src
         ip_len          = pkt[IP].len
         ip_chksum       = pkt[IP].chksum

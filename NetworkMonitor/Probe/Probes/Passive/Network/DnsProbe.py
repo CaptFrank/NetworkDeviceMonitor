@@ -79,7 +79,7 @@ class DnsProbe(IpProbe):
     ]
 
     # Layer filter
-    layer           = DNS
+    layers          = [DNS, IP]
 
     # ====================
     # Protected
@@ -96,34 +96,34 @@ class DnsProbe(IpProbe):
     # ====================
 
     # App configs
-    __configs       = None
+    _configs        = None
 
     # Time
-    __date          = None
+    _date           = None
 
-    def __setup_db(self):
+    def _setup_db(self):
         """
         Setup the probe specific database.
         :return:
         """
         # Create a database
-        self.__database = ProbeDb(
-            self.__configs['name']
+        self._database = ProbeDb(
+            self._configs['name']
         )
 
         # Setup the known database
         if self.behaviour == PROBE_MONITORING:
 
             # We need to check the already registered ips
-            self.__database.setup_db(
+            self._database.setup_db(
                 self._tables
             )
 
             # Get the table
-            table = self.__database.get_table('KNOWN_DNS')
+            table = self._database.get_table('KNOWN_DNS')
 
             # Add the entries to the internal db
-            for dns in self.__configs['known']:
+            for dns in self._configs['known']:
 
                 # Add the Ips in the known table
                 table.insert(
@@ -140,7 +140,7 @@ class DnsProbe(IpProbe):
             ]
 
             # We need to check the already registered ips
-            self.__database.setup_db(
+            self._database.setup_db(
                 tables
             )
         return
@@ -155,7 +155,7 @@ class DnsProbe(IpProbe):
         """
 
         # Get the ip layer
-        dst             = pkt[IP].dest
+        dst             = pkt[IP].dst
         src             = pkt[IP].src
         ip_len          = pkt[IP].len
         ip_chksum       = pkt[IP].chksum
@@ -174,7 +174,7 @@ class DnsProbe(IpProbe):
                     time.time()
                 )
             ),
-            'dns'           : dns_name,
+            'dns'           : dns_name.__dict__,
             'src'           : src,
             'dst'           : dst,
             'length'        : ip_len,

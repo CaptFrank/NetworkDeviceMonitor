@@ -57,7 +57,7 @@ Source
 =============================================
 """
 
-class NetworkProbe(MutableProbe, Probe):
+class NetworkProbe(Probe):
     """
     This is the base network probing class object.
     It contains the appropriate attributes of a network
@@ -86,14 +86,14 @@ class NetworkProbe(MutableProbe, Probe):
     _database           = None
 
     # Iface that is used to sniff
-    __iface             = None
+    _iface             = None
 
     # Check the probe types
-    __types             = {
+    _types             = {
     }
 
     # Probe table
-    __probe_table       = {
+    _probe_table       = {
         # Probe type -- Probe Function
     }
 
@@ -108,19 +108,11 @@ class NetworkProbe(MutableProbe, Probe):
         """
 
         # Override the class
+        #MutableProbe.__init__(self, self._types)
         Probe.__init__(self, type, queue, False)
-        MutableProbe.__init__(self, self.__types)
 
         # Set the iface
-        self.__iface = iface
-
-        # Run the object
-        self.run(
-            type, queue,
-            **{
-                'iface' : iface
-            }
-        )
+        self._iface = iface
         return
 
     def setup(self):
@@ -175,7 +167,7 @@ class NetworkProbe(MutableProbe, Probe):
         """
 
         # Update the metrics
-        self.__packet_counter += 1
+        self._packet_counter += 1
         self._correlate(packet)
         return
 
@@ -206,7 +198,7 @@ class NetworkProbe(MutableProbe, Probe):
         """
 
         sniff(
-            iface = self.__iface,
+            iface = self._iface,
             prn = self.__process
         )
         return
@@ -222,16 +214,16 @@ class NetworkProbe(MutableProbe, Probe):
         """
 
         # Update the probe table
-        self.__probe_table.update(
+        self._probe_table.update(
             {
                 # Type name, Type callback object
                 type : {
-                    'layer' : obj.layer,
-                    'object': obj
+                    'layers'    : obj.layers,
+                    'object'    : obj
                 }
             }
         )
-        self.__types.update(
+        self._types.update(
             {
                 type : self
             }
@@ -274,26 +266,31 @@ class NetworkProbe(MutableProbe, Probe):
         self._packet_counter   += 1
 
         # Cycle through the probe table
-        for probe in self.__probe_table.keys():
+        for probe in self._probe_table.keys():
 
             # Get the layer
-            layer = self.__probe_table[probe]['layer']
-            object = self.__probe_table[probe]['object']
+            layers = self._probe_table[probe]['layers']
+            object = self._probe_table[probe]['object']
 
-            # Screen the probes....
-            if packet.haslayer(layer):
+            # Check to see if the layers are satisfied
+            for layer in layers:
 
-                # Execute the probe
-                object.execute(
-                    packet
-                )
+                # If there is a missing layer
+                if not packet.haslayer(layer):
+                    return
 
-                # Check the packet count to report...
-                if self._packet_count >= PACKET_REPORT_MAX:
-                    object.report()
-                    reported = True
+            print("*** Found a good packet to read.")
+            # Execute the probe
+            object.execute(
+                packet
+            )
+
+            # Check the packet count to report...
+            if self._packet_count >= PACKET_REPORT_MAX:
+                object.report()
+                reported = True
 
         if reported:
             reported = False
-            self.__packet_counter = 0
+            self._packet_counter = 0
         return

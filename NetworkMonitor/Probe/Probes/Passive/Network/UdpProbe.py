@@ -77,7 +77,7 @@ class UdpProbe(TcpProbe):
     ]
 
     # Layer filter
-    layer           = UDP
+    layers          = [UDP, IP]
 
     # ====================
     # Protected
@@ -110,20 +110,20 @@ class UdpProbe(TcpProbe):
         """
 
         # Get the ip layer
-        dst_ip              = pkt[IP].dest
+        dst_ip              = pkt[IP].dst
         dst_port            = pkt[UDP].dport
         src_ip              = pkt[IP].src
         src_port            = pkt[UDP].sport
-        ip_len          = pkt[IP].len
-        ip_chksum       = pkt[IP].chksum
-        ip_version      = pkt[IP].version
-        ip_id           = pkt[IP].id
-        ip_ttl          = pkt[IP].ttl
+        ip_len              = pkt[IP].len
+        ip_chksum           = pkt[IP].chksum
+        ip_version          = pkt[IP].version
+        ip_id               = pkt[IP].id
+        ip_ttl              = pkt[IP].ttl
 
         # Correlate IP
         self._correlate_ip(
                 src_ip,     src_port,
-                dest_ip,    dest_port,
+                dst_ip,     dst_port,
                 ip_len,     ip_chksum,
                 ip_version, ip_id,
                 ip_ttl

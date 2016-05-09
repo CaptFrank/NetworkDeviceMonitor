@@ -75,7 +75,7 @@ class TcpProbe(IpProbe):
     ]
 
     # Layer filter
-    layer           = TCP
+    layers          = [TCP, IP]
 
     # ====================
     # Protected
@@ -93,35 +93,34 @@ class TcpProbe(IpProbe):
     # ====================
 
     # App configs
-    __configs       = None
+    _configs       = None
 
     # Time
-    __date          = None
+    _date          = None
 
-
-    def __setup_db(self):
+    def _setup_db(self):
         """
         Setup the probe specific database.
         :return:
         """
         # Create a database
-        self.__database = ProbeDb(
-            self.__configs['name']
+        self._database = ProbeDb(
+            self._configs['name']
         )
 
         # Setup the known database
         if self.behaviour == PROBE_MONITORING:
 
             # We need to check the already registered ips
-            self.__database.setup_db(
+            self._database.setup_db(
                 self._tables
             )
 
             # Get the table
-            table = self.__database.get_table('KNOWN_IP')
+            table = self._database.get_table('KNOWN_IP')
 
             # Add the entries to the internal db
-            for ip in self.__configs['known_ip']:
+            for ip in self._configs['known_ip']:
 
                 # We need to convert it into a supported IP
                 # This IP can be a subnet IP that needs to be put into a list
@@ -148,10 +147,10 @@ class TcpProbe(IpProbe):
                         }
                     )
             # Get the table
-            table = self.__database.get_table('KNOWN_PORT')
+            table = self._database.get_table('KNOWN_PORT')
 
             # Add the entries to the internal db
-            for port in self.__configs['known_port']:
+            for port in self._configs['known_port']:
 
                 # Add the Ips in the known table
                 table.insert(
@@ -168,7 +167,7 @@ class TcpProbe(IpProbe):
             ]
 
             # We need to check the already registered ips
-            self.__database.setup_db(
+            self._database.setup_db(
                 tables
             )
         return
@@ -183,8 +182,8 @@ class TcpProbe(IpProbe):
         """
 
         # Get the ip layer
-        dest_ip             = pkt[IP].dest
-        dest_port           = pkt[TCP].dport
+        dst_ip              = pkt[IP].dst
+        dst_port            = pkt[TCP].dport
         src_ip              = pkt[IP].src
         src_port            = pkt[TCP].sport
         ip_len              = pkt[IP].len
@@ -196,7 +195,7 @@ class TcpProbe(IpProbe):
         # Correlate IP
         self._correlate_ip(
                 src_ip,     src_port,
-                dest_ip,    dest_port,
+                dst_ip,     dst_port,
                 ip_len,     ip_chksum,
                 ip_version, ip_id,
                 ip_ttl
@@ -250,13 +249,13 @@ class TcpProbe(IpProbe):
 
             # We need to check the validity of the ip
             # Get the table
-            known_ip_table = self.__database.get_table(
+            known_ip_table = self._database.get_table(
                 'KNOWN_IP'
             )
-            unknown_table = self.__database.get_table(
+            unknown_table = self._database.get_table(
                 'UNKNOWN_IP'
             )
-            known_port_table = self.__database.get_table(
+            known_port_table = self._database.get_table(
                 'KNOWN_PORT'
             )
 
@@ -276,7 +275,6 @@ class TcpProbe(IpProbe):
                 Query().address == dst_port
             )
 
-
             if (dst_pkt_q is None) or \
                     (dst_port_q is None):
 
@@ -293,14 +291,14 @@ class TcpProbe(IpProbe):
                 )
 
         # Just register the IP for logging
-        else:
-            table = self.__database.get_table(
+        elif self.behaviour == PROBE_OBSERVING:
+            table = self._database.get_table(
                 'TCP'
             )
             table.insert(
-                dest_data
+                src_data
             )
             table.insert(
-                src_data
+                dest_data
             )
         return

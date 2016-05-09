@@ -84,7 +84,7 @@ class IpProbe(PassiveNetworkProbe):
     ]
 
     # Layer filter
-    layer           = IP
+    layers          = [Ether, IP]
 
     # ====================
     # Protected
@@ -101,10 +101,10 @@ class IpProbe(PassiveNetworkProbe):
     # ====================
 
     # App configs
-    __configs       = None
+    _configs       = None
 
     # Time
-    __date          = None
+    _date          = None
 
     def __init__(self, queue, configs):
         """
@@ -118,7 +118,8 @@ class IpProbe(PassiveNetworkProbe):
         """
 
         # Get the configs
-        self.__configs = configs
+        self._configs = configs
+        self._configs['name'] = self.name
 
         # Register the probe type as a passive probe
         PassiveNetworkProbe.__init__(
@@ -135,14 +136,14 @@ class IpProbe(PassiveNetworkProbe):
         )
         return
 
-    def __setup_db(self):
+    def _setup_db(self):
         """
         Setup the probe specific database.
         :return:
         """
         # Create a database
-        self.__database = ProbeDb(
-            self.__configs['name']
+        self._database = ProbeDb(
+            self._configs['name']
         )
 
         # Setup the known database
@@ -154,10 +155,10 @@ class IpProbe(PassiveNetworkProbe):
             )
 
             # Get the table
-            table = self.__database.get_table('KNOWN_IP')
+            table = self._database.get_table('KNOWN_IP')
 
             # Add the entries to the internal db
-            for ip in self.__configs['known']:
+            for ip in self._configs['known']:
 
                 # We need to convert it into a supported IP
                 # This IP can be a subnet IP that needs to be put into a list
@@ -191,7 +192,7 @@ class IpProbe(PassiveNetworkProbe):
             ]
 
             # We need to check the already registered ips
-            self.__database.setup_db(
+            self._database.setup_db(
                 tables
             )
         return
@@ -206,10 +207,10 @@ class IpProbe(PassiveNetworkProbe):
         """
 
         # Get the ip layer
-        dest_mac        = pkt[Ether].dest
+        dest_mac        = pkt[Ether].dst
         src_mac         = pkt[Ether].src
         type_mac        = pkt[Ether].type
-        dest_ip         = pkt[IP].dest
+        dest_ip         = pkt[IP].dst
         src_ip          = pkt[IP].src
         ip_len          = pkt[IP].len
         ip_chksum       = pkt[IP].chksum
