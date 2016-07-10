@@ -211,7 +211,8 @@ class MacProbe(PassiveNetworkProbe):
             'checksum'      : ip_chksum,
             'ttl'           : ip_ttl,
             'id'            : ip_id,
-            'ip'            : dest_ip
+            'ip'            : dest_ip,
+            'ver'           : ip_version
         }
 
         src_data = {
@@ -228,7 +229,9 @@ class MacProbe(PassiveNetworkProbe):
             'checksum'      : ip_chksum,
             'ttl'           : ip_ttl,
             'id'            : ip_id,
-            'ip'            : src_ip
+            'ip'            : src_ip,
+            'ver'           : ip_version
+
         }
 
         # We check the dehaviour

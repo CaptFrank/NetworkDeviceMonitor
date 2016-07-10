@@ -43,3 +43,7 @@ Variables
 Source
 =============================================
 """
+class DhcpProbe():
+
+    def __init__(self):
+        return

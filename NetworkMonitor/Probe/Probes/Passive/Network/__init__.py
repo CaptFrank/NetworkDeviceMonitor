@@ -29,7 +29,9 @@ from .IpProbe import *
 from .MacProbe import *
 from .TcpProbe import *
 from .ArpProbe import *
-from .IcmpProbe import *
+from .NtpProbe import *
+from .UdpProbe import *
+from .SnmpProbe import *
 
 """
 =============================================
@@ -49,6 +51,8 @@ PASSIVE_NETWORK_PROBES = {
     'TcpProbe'      : TcpProbe,
     'IpProbe'       : IpProbe,
     'MacProbe'      : MacProbe,
-    'IcmpProbe'     : IcmpProbe,
     'ArpProbe'      : ArpProbe,
+    'NtpProbe'      : NtpProbe,
+    'UdpProbe'      : UdpProbe,
+    'SnmpProbe'     : SnmpProbe
 }
